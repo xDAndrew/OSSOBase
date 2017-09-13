@@ -1,0 +1,27 @@
+﻿<Window x:Class="Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Условные установки" 
+        Width="800" Height="600"
+        MinWidth="800" MinHeight="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Height="24"/>
+            <ToolBar DockPanel.Dock="Top" Height="24" Width="Auto" HorizontalAlignment="Left"/>
+            <StatusBar DockPanel.Dock="Bottom" Height="24"/>
+            
+            <DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Width="40" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Заказчик" Width="*" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Объект" Width="*" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Адрес" Width="*" CanUserResize="False"/>
+                    <DataGridTextColumn Header="У.У." Width="50" CanUserResize="False"/>
+                    <DataGridTextColumn Header="ПКП" Width="120" CanUserResize="False"/>
+                </DataGrid.Columns>
+            </DataGrid> 
+            
+        </DockPanel>
+    </Grid>
+</Window>
