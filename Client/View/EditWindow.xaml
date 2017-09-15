@@ -1,0 +1,287 @@
+﻿<Window x:Class="Client.View.EditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Карточка объекта" 
+        Width="640" Height="540"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Height="24"/>
+
+            <StatusBar DockPanel.Dock="Bottom" Height="24" VerticalAlignment="Bottom">
+            </StatusBar>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="Объект">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Заказчик"/>
+                        <TextBox Height="22" VerticalAlignment="Bottom" Margin="4, 2"></TextBox>
+
+                        <Label Grid.Row="1" Content="Наименование"/>
+                        <TextBox Grid.Row="1" Height="22" VerticalAlignment="Bottom" Margin="4, 2"></TextBox>
+
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="Улица"/>
+                            <ComboBox IsEnabled="True" Height="22" VerticalAlignment="Bottom" Margin="4, 0" IsEditable="True"></ComboBox>
+
+                            <Label Content="Дом" Grid.Column="1"/>
+                            <TextBox Grid.Column="1" Height="22" Margin="4, 0" VerticalAlignment="Bottom"></TextBox>
+
+                            <Label Content="Корпус" Grid.Column="2"/>
+                            <TextBox Grid.Column="2" Height="22" Margin="4, 0" VerticalAlignment="Bottom"></TextBox>
+
+                            <Label Content="Пом." Grid.Column="3"/>
+                            <TextBox Grid.Column="3" Height="22" Margin="4, 0" VerticalAlignment="Bottom"></TextBox>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Прибор приемно-контрольный" Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid Grid.RowSpan="3" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="№" Width="30"/>
+                                <DataGridTextColumn Header="Наименование" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Grid.Row="4" Height="22" Content="Модули"/>
+
+                        <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Width="100" Height="22" HorizontalAlignment="Right"></TextBox>
+
+                        <Label Grid.Column="1" Grid.Row="1" Content="Пароль" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Width="100" Height="22" HorizontalAlignment="Right"></TextBox>
+
+                        <Label Grid.Column="1" Grid.Row="2" Content="Тел. №" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Width="100" Height="22" HorizontalAlignment="Right"></TextBox>
+
+                        <DatePicker Grid.Row="4" Grid.Column="1" Height="24" Margin="8, 0"></DatePicker>
+                    </Grid>
+                </GroupBox>
+
+                <DockPanel Grid.ColumnSpan="2" Grid.Row="1">
+                    <DataGrid DockPanel.Dock="Top" ColumnHeaderHeight="100" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="30" Header="№"/>
+                            <DataGridTextColumn Header="Наименование" Width="160"/>
+                            
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Итого" Width="50"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid DockPanel.Dock="Bottom" VerticalAlignment="Bottom" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ИТОГО:" Width="190"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTemplateColumn Width="*"/>
+                            <DataGridTextColumn Width="50"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

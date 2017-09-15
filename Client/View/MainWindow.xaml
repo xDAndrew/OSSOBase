@@ -11,7 +11,7 @@
             <ToolBar DockPanel.Dock="Top" Height="24" Width="Auto" HorizontalAlignment="Left"/>
             <StatusBar DockPanel.Dock="Bottom" Height="24"/>
             
-            <DataGrid>
+            <DataGrid MouseDoubleClick="DataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="№" Width="40" CanUserResize="False"/>
                     <DataGridTextColumn Header="Заказчик" Width="*" CanUserResize="False"/>
