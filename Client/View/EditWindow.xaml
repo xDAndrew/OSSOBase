@@ -4,7 +4,8 @@
         Title="Карточка объекта" 
         Width="640" Height="540"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
 
     <Grid>
         <DockPanel>
@@ -40,7 +41,7 @@
                         <Label Content="Заказчик"/>
                         <TextBox Height="22" VerticalAlignment="Bottom" Margin="4, 2"></TextBox>
 
-                        <Label Grid.Row="1" Content="Наименование"/>
+                        <Label Grid.Row="1" Content="Наименование объекта"/>
                         <TextBox Grid.Row="1" Height="22" VerticalAlignment="Bottom" Margin="4, 2"></TextBox>
 
                         <Grid Grid.Row="3">
@@ -79,29 +80,38 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <DataGrid Grid.RowSpan="3" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                        <DataGrid Grid.RowSpan="2" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="№" Width="30"/>
                                 <DataGridTextColumn Header="Наименование" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Grid.Row="4" Height="22" Content="Модули"/>
+                        <Button Grid.Row="2" Height="22" Content="Добавить прибор"/>
+
+                        <Label Grid.Row="3" Content="Кол-во шлейфов" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="3" Width="45" Height="22" HorizontalAlignment="Right"/>
 
                         <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Width="100" Height="22" HorizontalAlignment="Right"></TextBox>
+                        <TextBox Grid.Column="1" Width="100" Height="22" HorizontalAlignment="Right"/>
 
-                        <Label Grid.Column="1" Grid.Row="1" Content="Пароль" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Width="100" Height="22" HorizontalAlignment="Right"></TextBox>
+                        <Label Grid.Column="1" Grid.Row="1" Content="Тел. №" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Width="100" Height="22" HorizontalAlignment="Right"/>
 
-                        <Label Grid.Column="1" Grid.Row="2" Content="Тел. №" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Grid.Row="2" Width="100" Height="22" HorizontalAlignment="Right"></TextBox>
+                        <Label Grid.Column="1" Grid.Row="2" Content="Пароль" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Width="100" Height="22" HorizontalAlignment="Right"/>
 
-                        <DatePicker Grid.Row="4" Grid.Column="1" Height="24" Margin="8, 0"></DatePicker>
+                        <DatePicker Grid.Row="3" Grid.Column="1" Height="24" Margin="8, 0"/>
                     </Grid>
                 </GroupBox>
 
                 <DockPanel Grid.ColumnSpan="2" Grid.Row="1">
                     <DataGrid DockPanel.Dock="Top" ColumnHeaderHeight="100" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <ItemsControl>Оборудование</ItemsControl>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="30" Header="№"/>
                             <DataGridTextColumn Header="Наименование" Width="160"/>

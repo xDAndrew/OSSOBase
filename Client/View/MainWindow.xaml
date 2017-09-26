@@ -8,12 +8,16 @@
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top" Height="24"/>
-            <ToolBar DockPanel.Dock="Top" Height="24" Width="Auto" HorizontalAlignment="Left"/>
+            <ToolBar DockPanel.Dock="Top" Height="30" Width="Auto" HorizontalAlignment="Left">
+                <Button Width="24" Height="24" />
+                <Button Width="24" Height="24" />
+                <Separator/>
+                <Button Width="24" Height="24" />
+            </ToolBar>
             <StatusBar DockPanel.Dock="Bottom" Height="24"/>
             
             <DataGrid MouseDoubleClick="DataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="№" Width="40" CanUserResize="False"/>
                     <DataGridTextColumn Header="Заказчик" Width="*" CanUserResize="False"/>
                     <DataGridTextColumn Header="Объект" Width="*" CanUserResize="False"/>
                     <DataGridTextColumn Header="Адрес" Width="*" CanUserResize="False"/>

@@ -15,14 +15,12 @@ using System.Windows.Shapes;
 
 namespace Client
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new ViewModel.VM_MainWindow(this);
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
