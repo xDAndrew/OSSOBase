@@ -92,6 +92,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\EF\EntityInstance.cs" />
+    <Compile Include="Model\EF\Limb.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EF\Object.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -102,6 +106,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MainGridViewItem.cs" />
+    <Compile Include="ViewModel\VM_EditWindow.cs" />
     <Compile Include="ViewModel\VM_MainWindow.cs" />
     <Compile Include="View\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>

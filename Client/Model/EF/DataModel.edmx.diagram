@@ -12,6 +12,8 @@
         <EntityTypeShape EntityType="DataModel.Users" Width="1.5" PointX="10.375" PointY="2" />
         <AssociationConnector Association="DataModel.UsersCards" />
         <AssociationConnector Association="DataModel.ObjectCards" />
+        <EntityTypeShape EntityType="DataModel.Limb" Width="1.5" PointX="5.75" PointY="6.125" />
+        <AssociationConnector Association="DataModel.LimbCards" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

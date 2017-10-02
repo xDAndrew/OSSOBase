@@ -29,5 +29,6 @@ namespace Client.Model.EF
         public virtual DbSet<Object> ObjectSet { get; set; }
         public virtual DbSet<Streets> StreetsSet { get; set; }
         public virtual DbSet<Users> UsersSet { get; set; }
+        public virtual DbSet<Limb> LimbSet { get; set; }
     }
 }

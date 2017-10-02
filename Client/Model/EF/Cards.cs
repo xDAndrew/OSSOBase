@@ -14,12 +14,18 @@ namespace Client.Model.EF
     
     public partial class Cards
     {
+        public Cards()
+        {
+            this.Limb = new HashSet<Limb>();
+        }
+    
         public int Cards_ID { get; set; }
         public int Users_ID { get; set; }
         public int Object_ID { get; set; }
-        public string MakeDate { get; set; }
+        public System.DateTime MakeDate { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual Object Object { get; set; }
+        public virtual ICollection<Limb> Limb { get; set; }
     }
 }

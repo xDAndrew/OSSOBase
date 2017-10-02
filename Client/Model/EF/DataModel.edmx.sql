@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/26/2017 12:31:48
--- Generated from EDMX file: C:\Users\Work\Documents\Visual Studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 10/02/2017 16:31:47
+-- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -43,6 +43,9 @@ GO
 IF OBJECT_ID(N'[dbo].[UsersSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UsersSet];
 GO
+IF OBJECT_ID(N'[dbo].[LimbSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LimbSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -53,7 +56,7 @@ CREATE TABLE [dbo].[CardsSet] (
     [Cards_ID] int IDENTITY(1,1) NOT NULL,
     [Users_ID] int  NOT NULL,
     [Object_ID] int  NOT NULL,
-    [MakeDate] nvarchar(max)  NOT NULL
+    [MakeDate] datetime  NOT NULL
 );
 GO
 
@@ -73,7 +76,7 @@ GO
 CREATE TABLE [dbo].[StreetsSet] (
     [Streets_ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Type] nvarchar(max)  NOT NULL
+    [Type] tinyint  NOT NULL
 );
 GO
 
@@ -83,6 +86,16 @@ CREATE TABLE [dbo].[UsersSet] (
     [Name] nvarchar(max)  NOT NULL,
     [Password] nvarchar(max)  NOT NULL,
     [Place] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'LimbSet'
+CREATE TABLE [dbo].[LimbSet] (
+    [Limb_Id] int IDENTITY(1,1) NOT NULL,
+    [Number] tinyint  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Data] varbinary(max)  NULL,
+    [Cards_ID] int  NOT NULL
 );
 GO
 
@@ -112,6 +125,12 @@ GO
 ALTER TABLE [dbo].[UsersSet]
 ADD CONSTRAINT [PK_UsersSet]
     PRIMARY KEY CLUSTERED ([Users_ID] ASC);
+GO
+
+-- Creating primary key on [Limb_Id] in table 'LimbSet'
+ALTER TABLE [dbo].[LimbSet]
+ADD CONSTRAINT [PK_LimbSet]
+    PRIMARY KEY CLUSTERED ([Limb_Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -158,6 +177,20 @@ ADD CONSTRAINT [FK_ObjectCards]
 CREATE INDEX [IX_FK_ObjectCards]
 ON [dbo].[CardsSet]
     ([Object_ID]);
+GO
+
+-- Creating foreign key on [Cards_ID] in table 'LimbSet'
+ALTER TABLE [dbo].[LimbSet]
+ADD CONSTRAINT [FK_LimbCards]
+    FOREIGN KEY ([Cards_ID])
+    REFERENCES [dbo].[CardsSet]
+        ([Cards_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LimbCards'
+CREATE INDEX [IX_FK_LimbCards]
+ON [dbo].[LimbSet]
+    ([Cards_ID]);
 GO
 
 -- --------------------------------------------------

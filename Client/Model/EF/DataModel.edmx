@@ -10,6 +10,7 @@
     <EntitySet Name="ObjectSet" EntityType="DataModel.Store.ObjectSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StreetsSet" EntityType="DataModel.Store.StreetsSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UsersSet" EntityType="DataModel.Store.UsersSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LimbSet" EntityType="DataModel.Store.LimbSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="StreetsObject" Association="DataModel.Store.StreetsObject">
       <End Role="Streets" EntitySet="StreetsSet" />
       <End Role="Object" EntitySet="ObjectSet" />
@@ -22,6 +23,10 @@
       <End Role="Object" EntitySet="ObjectSet" />
       <End Role="Cards" EntitySet="CardsSet" />
     </AssociationSet>
+    <AssociationSet Name="LimbCards" Association="DataModel.Store.LimbCards">
+      <End Role="Limb" EntitySet="LimbSet" />
+      <End Role="Cards" EntitySet="CardsSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="CardsSet">
     <Key>
@@ -30,7 +35,7 @@
     <Property Name="Cards_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Users_ID" Type="int" Nullable="false" />
     <Property Name="Object_ID" Type="int" Nullable="false" />
-    <Property Name="MakeDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MakeDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="ObjectSet">
     <Key>
@@ -50,7 +55,7 @@
     </Key>
     <Property Name="Streets_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="tinyint" Nullable="false" />
   </EntityType>
   <EntityType Name="UsersSet">
     <Key>
@@ -60,6 +65,16 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Place" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LimbSet">
+    <Key>
+      <PropertyRef Name="Limb_Id" />
+    </Key>
+    <Property Name="Limb_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Number" Type="tinyint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Data" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Cards_ID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="StreetsObject">
     <End Role="Streets" Type="DataModel.Store.StreetsSet" Multiplicity="1" />
@@ -97,6 +112,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="LimbCards">
+    <End Role="Limb" Type="DataModel.Store.LimbSet" Multiplicity="*" />
+    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Cards">
+        <PropertyRef Name="Cards_ID" />
+      </Principal>
+      <Dependent Role="Limb">
+        <PropertyRef Name="Cards_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -118,6 +145,11 @@
             <End Role="Object" EntitySet="ObjectSet" />
             <End Role="Cards" EntitySet="CardsSet" />
           </AssociationSet>
+          <EntitySet Name="LimbSet" EntityType="DataModel.Limb" />
+          <AssociationSet Name="LimbCards" Association="DataModel.LimbCards">
+            <End Role="Limb" EntitySet="LimbSet" />
+            <End Role="Cards" EntitySet="CardsSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Cards">
           <Key>
@@ -128,7 +160,8 @@
           <Property Name="Users_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Object" Relationship="DataModel.ObjectCards" FromRole="Cards" ToRole="Object" />
           <Property Name="Object_ID" Type="Int32" Nullable="false" />
-          <Property Name="MakeDate" Type="String" Nullable="false" />
+          <Property Name="MakeDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Limb" Relationship="DataModel.LimbCards" FromRole="Cards" ToRole="Limb" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -150,7 +183,7 @@
           </Key>
           <Property Name="Streets_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Type" Type="String" Nullable="false" />
+          <Property Name="Type" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Object" Relationship="DataModel.StreetsObject" FromRole="Streets" ToRole="Object" />
         </EntityType>
         <Association Name="StreetsObject">
@@ -199,6 +232,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Limb">
+          <Key>
+            <PropertyRef Name="Limb_Id" />
+          </Key>
+          <Property Name="Limb_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Byte" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Data" Type="Binary" Nullable="true" />
+          <NavigationProperty Name="Cards" Relationship="DataModel.LimbCards" FromRole="Limb" ToRole="Cards" />
+          <Property Name="Cards_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="LimbCards">
+          <End Type="DataModel.Limb" Role="Limb" Multiplicity="*" />
+          <End Type="DataModel.Cards" Role="Cards" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Cards">
+              <PropertyRef Name="Cards_ID" />
+            </Principal>
+            <Dependent Role="Limb">
+              <PropertyRef Name="Cards_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -244,6 +300,17 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Place" ColumnName="Place" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LimbSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Limb)">
+        <MappingFragment StoreEntitySet="LimbSet">
+          <ScalarProperty Name="Limb_Id" ColumnName="Limb_Id" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Cards_ID" ColumnName="Cards_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
