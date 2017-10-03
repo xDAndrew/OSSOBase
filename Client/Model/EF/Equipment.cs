@@ -12,14 +12,19 @@ namespace Client.Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Limb
+    public partial class Equipment
     {
-        public int Limb_ID { get; set; }
-        public byte Number { get; set; }
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public int Equipment_ID { get; set; }
+        public Equipment()
+        {
+            this.Limb = new HashSet<Limb>();
+            this.Cards = new HashSet<Cards>();
+        }
     
-        public virtual Equipment Equipment { get; set; }
+        public int Equipment_ID { get; set; }
+        public byte[] Data { get; set; }
+        public double Amount { get; set; }
+    
+        public virtual ICollection<Limb> Limb { get; set; }
+        public virtual ICollection<Cards> Cards { get; set; }
     }
 }

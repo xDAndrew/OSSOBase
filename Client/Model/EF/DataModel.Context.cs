@@ -29,6 +29,10 @@ namespace Client.Model.EF
         public virtual DbSet<Object> ObjectSet { get; set; }
         public virtual DbSet<Streets> StreetsSet { get; set; }
         public virtual DbSet<Users> UsersSet { get; set; }
+        public virtual DbSet<TSOGroup> TSOGroupSet { get; set; }
+        public virtual DbSet<TSO> TSOSet { get; set; }
+        public virtual DbSet<PKP> PKPSet { get; set; }
+        public virtual DbSet<Equipment> EquipmentSet { get; set; }
         public virtual DbSet<Limb> LimbSet { get; set; }
     }
 }

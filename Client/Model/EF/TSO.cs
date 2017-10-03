@@ -12,14 +12,18 @@ namespace Client.Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Limb
+    public partial class TSO
     {
-        public int Limb_ID { get; set; }
-        public byte Number { get; set; }
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public int Equipment_ID { get; set; }
+        public TSO()
+        {
+            this.Visible = true;
+        }
     
-        public virtual Equipment Equipment { get; set; }
+        public int TSO_ID { get; set; }
+        public string Name { get; set; }
+        public bool Visible { get; set; }
+        public int TSOGroup_ID { get; set; }
+    
+        public virtual TSOGroup TSOGroup { get; set; }
     }
 }

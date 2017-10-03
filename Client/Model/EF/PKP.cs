@@ -12,14 +12,22 @@ namespace Client.Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Limb
+    public partial class PKP
     {
-        public int Limb_ID { get; set; }
-        public byte Number { get; set; }
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public int Equipment_ID { get; set; }
+        public PKP()
+        {
+            this.Cards = new HashSet<Cards>();
+        }
     
-        public virtual Equipment Equipment { get; set; }
+        public int PKP_ID { get; set; }
+        public int Name { get; set; }
+        public string Serial { get; set; }
+        public string Phone { get; set; }
+        public string Password { get; set; }
+        public byte[] Modules { get; set; }
+        public System.DateTime Date { get; set; }
+        public double Amount { get; set; }
+    
+        public virtual ICollection<Cards> Cards { get; set; }
     }
 }

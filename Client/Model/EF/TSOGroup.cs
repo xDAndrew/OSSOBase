@@ -12,14 +12,20 @@ namespace Client.Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Limb
+    public partial class TSOGroup
     {
-        public int Limb_ID { get; set; }
-        public byte Number { get; set; }
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public int Equipment_ID { get; set; }
+        public TSOGroup()
+        {
+            this.Visible = true;
+            this.TSO = new HashSet<TSO>();
+        }
     
-        public virtual Equipment Equipment { get; set; }
+        public int TSOGroup_ID { get; set; }
+        public string Name { get; set; }
+        public double Amount { get; set; }
+        public byte Type { get; set; }
+        public bool Visible { get; set; }
+    
+        public virtual ICollection<TSO> TSO { get; set; }
     }
 }

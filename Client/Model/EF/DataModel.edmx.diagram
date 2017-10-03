@@ -5,15 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="44b61069c0684bc5903da2e1c97e792f" Name="Diagram1" ZoomLevel="88" >
-        <EntityTypeShape EntityType="DataModel.Cards" Width="1.5" PointX="7.625" PointY="2" />
+        <EntityTypeShape EntityType="DataModel.Cards" Width="1.5" PointX="7.625" PointY="4" />
         <EntityTypeShape EntityType="DataModel.Object" Width="1.5" PointX="4.875" PointY="2" />
         <EntityTypeShape EntityType="DataModel.Streets" Width="1.5" PointX="2.375" PointY="2" />
         <AssociationConnector Association="DataModel.StreetsObject" />
         <EntityTypeShape EntityType="DataModel.Users" Width="1.5" PointX="10.375" PointY="2" />
         <AssociationConnector Association="DataModel.UsersCards" />
         <AssociationConnector Association="DataModel.ObjectCards" />
-        <EntityTypeShape EntityType="DataModel.Limb" Width="1.5" PointX="5.75" PointY="6.125" />
-        <AssociationConnector Association="DataModel.LimbCards" />
+        <EntityTypeShape EntityType="DataModel.TSOGroup" Width="1.5" PointX="13.625" PointY="2" />
+        <EntityTypeShape EntityType="DataModel.TSO" Width="1.5" PointX="13.625" PointY="4.625" />
+        <AssociationConnector Association="DataModel.TSOGroupTSO" />
+        <EntityTypeShape EntityType="DataModel.PKP" Width="1.5" PointX="4.875" PointY="5.375" />
+        <EntityTypeShape EntityType="DataModel.Equipment" Width="1.5" PointX="10.5" PointY="4.75" />
+        <EntityTypeShape EntityType="DataModel.Limb" Width="1.5" PointX="10.5" PointY="7.25" />
+        <AssociationConnector Association="DataModel.EquipmentLimb" />
+        <AssociationConnector Association="DataModel.PKPCards" />
+        <AssociationConnector Association="DataModel.EquipmentCards" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,21 +12,14 @@ namespace Client.ViewModel
     class VM_EditWindow : INotifyPropertyChanged
     {
         private View.EditWindow myHNDL;
-        Model.EF.Cards currentCard;
-        Model.EF.Users currentUser;
-        Model.EF.Object currentObject;
 
-        ObservableCollection<Model.EF.Limb> limbs = new ObservableCollection<Model.EF.Limb>();
-        public ObservableCollection<Model.EF.Limb> Limbs
-        {
-            get
-            {
-                return limbs;
-            }
-        }
+        //Переменные карточки
+        private Model.EF.Cards currentCard;
+        private Model.EF.PKP currentPKP;
+        private Model.EF.Object currentObject;
+        private Model.EF.Users currentUser;
 
-
-        #region ObjectProperties
+        #region Object_Properties
         public Model.EF.Object CurrentObject
         {
             get { return currentObject; }
@@ -40,17 +33,45 @@ namespace Client.ViewModel
             get { return streets; }
         }
 
-        public int SelectedIndex
+        //Выбранная улица
+        public int SelectedStreetIndex
         {
             get { return currentObject.Streets_ID; }
             set 
             { 
                 currentObject.Streets_ID = value;
-                OnPropertyChanged("SelectedIndex");
+                OnPropertyChanged("SelectedStreetIndex");
             }
         }
         #endregion
-        #region StatusBarProperties
+
+        #region PKP_Properties
+        public Model.EF.PKP CurrentPKP
+        {
+            get { return currentPKP; }
+            set { currentPKP = value; }
+        }
+
+        //Список приборов
+        ObservableCollection<String> pkpList = new ObservableCollection<String>();
+        public ObservableCollection<String> PKPList
+        {
+            get { return pkpList; }
+        }
+
+        //Выбранный прибор
+        public int SelectedPKPIndex
+        {
+            get { return currentPKP.Name; }
+            set
+            {
+                currentPKP.Name = value;
+                OnPropertyChanged("SelectedPKPIndex");
+            }
+        }
+        #endregion
+
+        #region StatusBar_Data
         public string Date
         {
             get { return currentCard.MakeDate.ToString("dd.MM.yyyy"); }
@@ -62,60 +83,29 @@ namespace Client.ViewModel
         }
         #endregion
 
-        public VM_EditWindow(View.EditWindow HNDL, int? CurrentCard = null)
+        #region ServicesMetods
+        private string GetStreetType(int index)
         {
-            myHNDL = HNDL;
-
-            var sTemp = Model.EF.EntityInstance.DBContext.StreetsSet.Where(p => p.Streets_ID > 0).ToList();
-            foreach (var item in sTemp)
+            switch (index)
             {
-                string tmp_str = item.Name + " ";
-                switch (item.Type)
-                {
-                    case 0:
-                        tmp_str += "тр.";
-                        break;
-                    case 1:
-                        tmp_str += "пр.";
-                        break;
-                    case 2:
-                        tmp_str += "ул.";
-                        break;
-                    case 3:
-                        tmp_str += "пер.";
-                        break;
-                    case 4:
-                        tmp_str += "пр-д";
-                        break;
-                    case 5:
-                        tmp_str += "т.";
-                        break;
-                    case 6:
-                        tmp_str += "пл.";
-                        break;
-                }
-                streets.Add(tmp_str);
+                case 0:
+                    return "тр.";
+                case 1:
+                    return "пр.";
+                case 2:
+                    return "ул.";
+                case 3:
+                    return "пер.";
+                case 4:
+                    return "пр-д";
+                case 5:
+                    return "т.";
+                case 6:
+                    return "пл.";
+                default:
+                    return "";
             }
-
-            if (CurrentCard == null)
-            {
-                var o = new Model.EF.Object();
-                o.Owner = "Пуцко";
-                o.Name = "Хата";
-                o.Home = "10";
-                o.Corp = "a";
-                o.Room = "50";
-                o.Streets_ID = 0;
-                CurrentObject = o;
-
-                currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
-                currentCard = new Model.EF.Cards();
-                currentCard.MakeDate = DateTime.Now;
-            }
-            else
-            {
-
-            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -123,6 +113,56 @@ namespace Client.ViewModel
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+        #endregion
+
+        public VM_EditWindow(View.EditWindow HNDL, int? CurrentCardId = null)
+        {
+            myHNDL = HNDL;
+
+            var sTemp = Model.EF.EntityInstance.DBContext.StreetsSet.OrderBy(p => p.Name).Where(p => p.Streets_ID > 0).ToList();
+            foreach (var item in sTemp)
+            {
+                streets.Add(item.Name + " " + GetStreetType(item.Type));
+            }
+
+            var PKPGroupIndex = Model.EF.EntityInstance.DBContext.TSOGroupSet.First(p => p.Type == 0);
+            var pkpTemp = Model.EF.EntityInstance.DBContext.TSOSet.OrderBy(p => p.Name).Where(p => p.TSOGroup_ID == PKPGroupIndex.TSOGroup_ID && p.Visible == true).ToList();
+            foreach (var item in pkpTemp)
+            {
+                pkpList.Add(item.Name);
+            }
+
+            if (CurrentCardId == null)
+            {
+                currentCard = new Model.EF.Cards();
+                currentObject = new Model.EF.Object();
+                currentPKP = new Model.EF.PKP();
+
+                if (Model.EF.EntityInstance.UserID > 0)
+                {
+                    currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                }
+                currentCard.MakeDate = DateTime.Now;
+
+                currentObject.Owner = "Owner";
+                currentObject.Name = "Name";
+                currentObject.Home = "Home";
+                currentObject.Corp = "Corp";
+                currentObject.Room = "Room";
+
+                currentPKP.Name = -1;
+                currentPKP.Date = DateTime.Now;
+                currentPKP.Serial = "Serial";
+                currentPKP.Password = "Password";
+                currentPKP.Phone = "Phone";
+
+                currentObject.Streets_ID = -1;
+            }
+            else
+            {
+
+            }
         }
     }
 }
