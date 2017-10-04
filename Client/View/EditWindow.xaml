@@ -1,8 +1,9 @@
 ﻿<Window x:Class="Client.View.EditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding CurrentPKP.Serial}" 
-        Width="640" Height="540"
+        xmlns:local="clr-namespace:Client"
+        Title="{Binding ResultLimb.arg0}" 
+        Width="700" Height="540"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         ShowInTaskbar="False">
@@ -98,18 +99,19 @@
                         <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей"/>
 
                         <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Width="100" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Serial}"/>
+                        <TextBox Grid.Column="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Serial}"/>
 
                         <Label Grid.Column="1" Grid.Row="1" Content="Тел. №" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Width="100" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Phone}"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Phone}"/>
 
                         <Label Grid.Column="1" Grid.Row="2" Content="Пароль" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Grid.Row="2" Width="100" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Password}"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Password}"/>
 
                         <DatePicker Grid.Row="2" Height="24" Margin="8, 0" ToolTip="Дата ввода в эксплуатацию" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Date}"/>
 
                         <Label Grid.Column="0" Grid.Row="3" Content="Кол-во шлейфов" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <TextBox Grid.Column="0" Grid.Row="3" Width="40" Margin="8, 0" Height="22" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                        <TextBox Grid.Column="0" Grid.Row="3" Width="40" Margin="8, 0" Height="22" DockPanel.Dock="Right" HorizontalAlignment="Right"
+                                 Text="{Binding LimbsCount}" IsReadOnly="True"/>
                         
                         <DockPanel Grid.Row="3" Grid.Column="1">
                             <Button Width="22" Height="22" Content="+" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="4, 0" ToolTip="Добавить шлейф"/>
@@ -129,18 +131,18 @@
                               ItemsSource="{Binding Limbs}" VerticalScrollBarVisibility="Visible" SelectionUnit="Cell">
 
                             <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <ItemsControl>Оборудование</ItemsControl>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <ItemsControl>Оборудование</ItemsControl>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="30" Header="№" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Наименование" Width="160"/>
+                            <DataGridTextColumn Width="25" Header="№" IsReadOnly="True" Binding="{Binding Number}"/>
+                            <DataGridTextColumn Header="Наименование" Width="140" Binding="{Binding Name}"/>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg0}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.ResultLimb.arg0, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -148,17 +150,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
-                                <DataGridTextColumn.Header>
-                                    <TextBlock Text="" Width="Auto" Height="Auto">
-                                        <TextBlock.LayoutTransform>
-                                            <RotateTransform Angle="-90"/>
-                                        </TextBlock.LayoutTransform>
-                                    </TextBlock>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg1}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -168,7 +160,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg2}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -178,7 +170,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg3}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -188,7 +180,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg4}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -198,7 +190,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg5}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -208,7 +200,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg6}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -218,7 +210,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg7}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -228,7 +220,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg8}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -238,7 +230,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg9}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -248,7 +240,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg10}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -258,7 +250,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg11}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -268,7 +260,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg12}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -278,7 +270,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*">
+                            <DataGridTextColumn Width="*" Binding="{Binding arg13}">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
@@ -288,28 +280,115 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="Итого" Width="50"/>
+                            <DataGridTextColumn Width="*" Binding="{Binding arg14}">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Итого" Width="45"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid Grid.Row="1" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" VerticalScrollBarVisibility="Visible">
+                    <DataGrid Grid.Row="1" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" 
+                              CanUserSortColumns="False" VerticalScrollBarVisibility="Visible" DataContext="{Binding Path=ResultLimb}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ИТОГО:" Width="195"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTemplateColumn Width="*"/>
-                            <DataGridTextColumn Width="50"/>
+                            <DataGridTextColumn Header="ИТОГО:" Width="170"/>
+
+                            <DataGridTemplateColumn Width="*">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="{Binding DataContext.arg0, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                </DataGridTemplateColumn.Header>
+                            </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg1, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg2, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg3, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg4, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg5, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg6, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg7, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg8, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg9, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg10, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg11, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg12, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg13, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Width="*">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.arg14, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Width="45"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     </Grid>

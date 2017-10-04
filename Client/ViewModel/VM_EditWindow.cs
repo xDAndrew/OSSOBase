@@ -71,7 +71,36 @@ namespace Client.ViewModel
         }
         #endregion
 
-        #region StatusBar_Data
+        #region Equipment_properties
+        private ObservableCollection<Model.Limb> limbs = new ObservableCollection<Model.Limb>();
+        public ObservableCollection<Model.Limb> Limbs
+        {
+            get
+            {
+                return limbs;
+            }
+        }
+
+        public int LimbsCount
+        {
+            get
+            {
+                return limbs.Count;
+            }
+            set { }
+        }
+
+        Model.Limb TSO_Summ;
+        public Model.Limb TSOSumm
+        {
+            get
+            {
+                return TSO_Summ;
+            }
+        }
+        #endregion
+
+        #region StatusBar_Properties
         public string Date
         {
             get { return currentCard.MakeDate.ToString("dd.MM.yyyy"); }
@@ -108,18 +137,8 @@ namespace Client.ViewModel
             
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        void LoadComboBoxItems()
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
-        #endregion
-
-        public VM_EditWindow(View.EditWindow HNDL, int? CurrentCardId = null)
-        {
-            myHNDL = HNDL;
-
             var sTemp = Model.EF.EntityInstance.DBContext.StreetsSet.OrderBy(p => p.Name).Where(p => p.Streets_ID > 0).ToList();
             foreach (var item in sTemp)
             {
@@ -132,6 +151,19 @@ namespace Client.ViewModel
             {
                 pkpList.Add(item.Name);
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+        #endregion
+
+        public VM_EditWindow(View.EditWindow HNDL, int? CurrentCardId = null)
+        {
+            myHNDL = HNDL;
 
             if (CurrentCardId == null)
             {
@@ -139,11 +171,27 @@ namespace Client.ViewModel
                 currentObject = new Model.EF.Object();
                 currentPKP = new Model.EF.PKP();
 
+                LoadComboBoxItems();
+
                 if (Model.EF.EntityInstance.UserID > 0)
                 {
                     currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
                 }
                 currentCard.MakeDate = DateTime.Now;
+
+                for (int i = 0; i < 80; i++)
+                {
+                    limbs.Add(new Model.Limb(new Model.EF.Limb()));
+                }
+
+                TSO_Summ = new Model.Limb();
+                foreach (var item in limbs)
+                {
+                    for (int i = 0; i < 15; i++)
+                    {
+                        TSO_Summ[i] += item[i];
+                    }
+                }
 
                 currentObject.Owner = "Owner";
                 currentObject.Name = "Name";
