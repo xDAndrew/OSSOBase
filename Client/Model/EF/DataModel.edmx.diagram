@@ -17,7 +17,7 @@
         <AssociationConnector Association="DataModel.TSOGroupTSO" />
         <EntityTypeShape EntityType="DataModel.PKP" Width="1.5" PointX="4.875" PointY="5.375" />
         <EntityTypeShape EntityType="DataModel.Equipment" Width="1.5" PointX="10.5" PointY="4.75" />
-        <EntityTypeShape EntityType="DataModel.Limb" Width="1.5" PointX="10.5" PointY="7.25" />
+        <EntityTypeShape EntityType="DataModel.Limb" Width="1.5" PointX="10.5" PointY="7.375" />
         <AssociationConnector Association="DataModel.EquipmentLimb" />
         <AssociationConnector Association="DataModel.PKPCards" />
         <AssociationConnector Association="DataModel.EquipmentCards" />

@@ -117,7 +117,7 @@
     <Compile Include="Model\EF\Users.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\MainGridViewItem.cs" />
+    <Compile Include="Model\Limb.cs" />
     <Compile Include="ViewModel\VM_EditWindow.cs" />
     <Compile Include="ViewModel\VM_MainWindow.cs" />
     <Compile Include="View\EditWindow.xaml.cs">

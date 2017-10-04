@@ -140,7 +140,7 @@
 
                             <DataGridTextColumn Width="*">
                                 <DataGridTextColumn.Header>
-                                    <TextBlock Text="" Width="Auto" Height="Auto">
+                                        <TextBlock Text="" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
