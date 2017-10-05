@@ -114,8 +114,8 @@
                                  Text="{Binding LimbsCount}" IsReadOnly="True"/>
                         
                         <DockPanel Grid.Row="3" Grid.Column="1">
-                            <Button Width="22" Height="22" Content="+" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="4, 0" ToolTip="Добавить шлейф"/>
-                            <Button Width="22" Height="22" Content="-" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="4, 0" ToolTip="Удалить шлейф"/>
+                            <Button Width="22" Height="22" Content="+" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="4, 0" ToolTip="Добавить шлейф" Command="{Binding Path=AddLimb}"/>
+                            <Button Width="22" Height="22" Content="-" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="4, 0" ToolTip="Удалить шлейф" Command="{Binding Path=DelLimb}"/>
                         </DockPanel>
                     </Grid>
                 </GroupBox>
@@ -142,7 +142,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg0}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.ResultLimb.arg0, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.TSOSumm.arg0, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -290,11 +290,11 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="Итого" Width="45"/>
+                            <DataGridTextColumn Header="Итого" Width="45" Binding="{Binding Summ}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DataGrid Grid.Row="1" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" 
-                              CanUserSortColumns="False" VerticalScrollBarVisibility="Visible" DataContext="{Binding Path=ResultLimb}">
+                              CanUserSortColumns="False" VerticalScrollBarVisibility="Visible" DataContext="{Binding Path=TSOSumm}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ИТОГО:" Width="170"/>
 

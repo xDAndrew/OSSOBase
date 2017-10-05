@@ -18,8 +18,8 @@ namespace Client.Model.EF
         public byte Number { get; set; }
         public string Name { get; set; }
         public byte[] Data { get; set; }
-        public int Equipment_ID { get; set; }
+        public int CardsCards_ID { get; set; }
     
-        public virtual Equipment Equipment { get; set; }
+        public virtual Cards Cards { get; set; }
     }
 }

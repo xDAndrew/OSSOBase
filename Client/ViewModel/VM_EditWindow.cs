@@ -179,7 +179,7 @@ namespace Client.ViewModel
                 }
                 currentCard.MakeDate = DateTime.Now;
 
-                for (int i = 0; i < 80; i++)
+                for (int i = 0; i < 1; i++)
                 {
                     limbs.Add(new Model.Limb(new Model.EF.Limb()));
                 }
@@ -212,5 +212,36 @@ namespace Client.ViewModel
 
             }
         }
+
+        #region Commands
+        private Command addLimb;
+        public Command AddLimb
+        {
+            get
+            {
+                return addLimb ?? (addLimb = new Command(obj =>
+                {
+                    limbs.Add(new Model.Limb(new Model.EF.Limb()));
+                    OnPropertyChanged("LimbsCount");
+                }));
+            }
+        }
+
+        private Command delLimb;
+        public Command DelLimb
+        {
+            get
+            {
+                return delLimb ?? (delLimb = new Command(obj =>
+                {
+                    if (limbs.Count > 0)
+                    {
+                        limbs.RemoveAt(limbs.Count - 1);
+                    }
+                    OnPropertyChanged("LimbsCount");
+                }));
+            }
+        }
+        #endregion
     }
 }

@@ -13,7 +13,6 @@
     <EntitySet Name="TSOGroupSet" EntityType="DataModel.Store.TSOGroupSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TSOSet" EntityType="DataModel.Store.TSOSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PKPSet" EntityType="DataModel.Store.PKPSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="EquipmentSet" EntityType="DataModel.Store.EquipmentSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LimbSet" EntityType="DataModel.Store.LimbSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="StreetsObject" Association="DataModel.Store.StreetsObject">
       <End Role="Streets" EntitySet="StreetsSet" />
@@ -31,16 +30,12 @@
       <End Role="TSOGroup" EntitySet="TSOGroupSet" />
       <End Role="TSO" EntitySet="TSOSet" />
     </AssociationSet>
-    <AssociationSet Name="EquipmentLimb" Association="DataModel.Store.EquipmentLimb">
-      <End Role="Equipment" EntitySet="EquipmentSet" />
-      <End Role="Limb" EntitySet="LimbSet" />
-    </AssociationSet>
     <AssociationSet Name="PKPCards" Association="DataModel.Store.PKPCards">
       <End Role="PKP" EntitySet="PKPSet" />
       <End Role="Cards" EntitySet="CardsSet" />
     </AssociationSet>
-    <AssociationSet Name="EquipmentCards" Association="DataModel.Store.EquipmentCards">
-      <End Role="Equipment" EntitySet="EquipmentSet" />
+    <AssociationSet Name="LimbCards" Association="DataModel.Store.LimbCards">
+      <End Role="Limb" EntitySet="LimbSet" />
       <End Role="Cards" EntitySet="CardsSet" />
     </AssociationSet>
   </EntityContainer>
@@ -51,9 +46,10 @@
     <Property Name="Cards_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Users_ID" Type="int" Nullable="false" />
     <Property Name="Object_ID" Type="int" Nullable="false" />
-    <Property Name="MakeDate" Type="datetime" Nullable="false" />
     <Property Name="PKP_ID" Type="int" Nullable="false" />
     <Property Name="Equipment_ID" Type="int" Nullable="false" />
+    <Property Name="MakeDate" Type="datetime" Nullable="false" />
+    <Property Name="UUSumm" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="ObjectSet">
     <Key>
@@ -116,14 +112,6 @@
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="Amount" Type="float" Nullable="false" />
   </EntityType>
-  <EntityType Name="EquipmentSet">
-    <Key>
-      <PropertyRef Name="Equipment_ID" />
-    </Key>
-    <Property Name="Equipment_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-    <Property Name="Amount" Type="float" Nullable="false" />
-  </EntityType>
   <EntityType Name="LimbSet">
     <Key>
       <PropertyRef Name="Limb_ID" />
@@ -132,7 +120,7 @@
     <Property Name="Number" Type="tinyint" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-    <Property Name="Equipment_ID" Type="int" Nullable="false" />
+    <Property Name="CardsCards_ID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="StreetsObject">
     <End Role="Streets" Type="DataModel.Store.StreetsSet" Multiplicity="1" />
@@ -182,18 +170,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="EquipmentLimb">
-    <End Role="Equipment" Type="DataModel.Store.EquipmentSet" Multiplicity="1" />
-    <End Role="Limb" Type="DataModel.Store.LimbSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Equipment">
-        <PropertyRef Name="Equipment_ID" />
-      </Principal>
-      <Dependent Role="Limb">
-        <PropertyRef Name="Equipment_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="PKPCards">
     <End Role="PKP" Type="DataModel.Store.PKPSet" Multiplicity="1" />
     <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="*" />
@@ -206,15 +182,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="EquipmentCards">
-    <End Role="Equipment" Type="DataModel.Store.EquipmentSet" Multiplicity="1" />
-    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="*" />
+  <Association Name="LimbCards">
+    <End Role="Limb" Type="DataModel.Store.LimbSet" Multiplicity="*" />
+    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="1" />
     <ReferentialConstraint>
-      <Principal Role="Equipment">
-        <PropertyRef Name="Equipment_ID" />
+      <Principal Role="Cards">
+        <PropertyRef Name="Cards_ID" />
       </Principal>
-      <Dependent Role="Cards">
-        <PropertyRef Name="Equipment_ID" />
+      <Dependent Role="Limb">
+        <PropertyRef Name="CardsCards_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -246,18 +222,13 @@
             <End Role="TSO" EntitySet="TSOSet" />
           </AssociationSet>
           <EntitySet Name="PKPSet" EntityType="DataModel.PKP" />
-          <EntitySet Name="EquipmentSet" EntityType="DataModel.Equipment" />
           <EntitySet Name="LimbSet" EntityType="DataModel.Limb" />
-          <AssociationSet Name="EquipmentLimb" Association="DataModel.EquipmentLimb">
-            <End Role="Equipment" EntitySet="EquipmentSet" />
-            <End Role="Limb" EntitySet="LimbSet" />
-          </AssociationSet>
           <AssociationSet Name="PKPCards" Association="DataModel.PKPCards">
             <End Role="PKP" EntitySet="PKPSet" />
             <End Role="Cards" EntitySet="CardsSet" />
           </AssociationSet>
-          <AssociationSet Name="EquipmentCards" Association="DataModel.EquipmentCards">
-            <End Role="Equipment" EntitySet="EquipmentSet" />
+          <AssociationSet Name="LimbCards" Association="DataModel.LimbCards">
+            <End Role="Limb" EntitySet="LimbSet" />
             <End Role="Cards" EntitySet="CardsSet" />
           </AssociationSet>
         </EntityContainer>
@@ -270,11 +241,12 @@
           <Property Name="Users_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Object" Relationship="DataModel.ObjectCards" FromRole="Cards" ToRole="Object" />
           <Property Name="Object_ID" Type="Int32" Nullable="false" />
-          <Property Name="MakeDate" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="PKP" Relationship="DataModel.PKPCards" FromRole="Cards" ToRole="PKP" />
           <Property Name="PKP_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Equipment" Relationship="DataModel.EquipmentCards" FromRole="Cards" ToRole="Equipment" />
           <Property Name="Equipment_ID" Type="Int32" Nullable="false" />
+          <Property Name="MakeDate" Type="DateTime" Nullable="false" />
+          <Property Name="UUSumm" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Limb" Relationship="DataModel.LimbCards" FromRole="Cards" ToRole="Limb" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -392,16 +364,6 @@
           <Property Name="Amount" Type="Double" Nullable="false" />
           <NavigationProperty Name="Cards" Relationship="DataModel.PKPCards" FromRole="PKP" ToRole="Cards" />
         </EntityType>
-        <EntityType Name="Equipment">
-          <Key>
-            <PropertyRef Name="Equipment_ID" />
-          </Key>
-          <Property Name="Equipment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Data" Type="Binary" Nullable="false" />
-          <Property Name="Amount" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Limb" Relationship="DataModel.EquipmentLimb" FromRole="Equipment" ToRole="Limb" />
-          <NavigationProperty Name="Cards" Relationship="DataModel.EquipmentCards" FromRole="Equipment" ToRole="Cards" />
-        </EntityType>
         <EntityType Name="Limb">
           <Key>
             <PropertyRef Name="Limb_ID" />
@@ -410,21 +372,9 @@
           <Property Name="Number" Type="Byte" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Data" Type="Binary" Nullable="false" />
-          <NavigationProperty Name="Equipment" Relationship="DataModel.EquipmentLimb" FromRole="Limb" ToRole="Equipment" />
-          <Property Name="Equipment_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cards" Relationship="DataModel.LimbCards" FromRole="Limb" ToRole="Cards" />
+          <Property Name="CardsCards_ID" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="EquipmentLimb">
-          <End Type="DataModel.Equipment" Role="Equipment" Multiplicity="1" />
-          <End Type="DataModel.Limb" Role="Limb" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Equipment">
-              <PropertyRef Name="Equipment_ID" />
-            </Principal>
-            <Dependent Role="Limb">
-              <PropertyRef Name="Equipment_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PKPCards">
           <End Type="DataModel.PKP" Role="PKP" Multiplicity="1" />
           <End Type="DataModel.Cards" Role="Cards" Multiplicity="*" />
@@ -437,15 +387,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="EquipmentCards">
-          <End Type="DataModel.Equipment" Role="Equipment" Multiplicity="1" />
-          <End Type="DataModel.Cards" Role="Cards" Multiplicity="*" />
+        <Association Name="LimbCards">
+          <End Type="DataModel.Limb" Role="Limb" Multiplicity="*" />
+          <End Type="DataModel.Cards" Role="Cards" Multiplicity="1" />
           <ReferentialConstraint>
-            <Principal Role="Equipment">
-              <PropertyRef Name="Equipment_ID" />
+            <Principal Role="Cards">
+              <PropertyRef Name="Cards_ID" />
             </Principal>
-            <Dependent Role="Cards">
-              <PropertyRef Name="Equipment_ID" />
+            <Dependent Role="Limb">
+              <PropertyRef Name="CardsCards_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -461,9 +411,10 @@
           <ScalarProperty Name="Cards_ID" ColumnName="Cards_ID" />
           <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
           <ScalarProperty Name="Object_ID" ColumnName="Object_ID" />
-          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
           <ScalarProperty Name="PKP_ID" ColumnName="PKP_ID" />
           <ScalarProperty Name="Equipment_ID" ColumnName="Equipment_ID" />
+          <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
+          <ScalarProperty Name="UUSumm" ColumnName="UUSumm" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -534,15 +485,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EquipmentSet">
-      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Equipment)">
-        <MappingFragment StoreEntitySet="EquipmentSet">
-          <ScalarProperty Name="Equipment_ID" ColumnName="Equipment_ID" />
-          <ScalarProperty Name="Data" ColumnName="Data" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="LimbSet">
       <EntityTypeMapping TypeName="IsTypeOf(DataModel.Limb)">
         <MappingFragment StoreEntitySet="LimbSet">
@@ -550,7 +492,7 @@
           <ScalarProperty Name="Number" ColumnName="Number" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Data" ColumnName="Data" />
-          <ScalarProperty Name="Equipment_ID" ColumnName="Equipment_ID" />
+          <ScalarProperty Name="CardsCards_ID" ColumnName="CardsCards_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

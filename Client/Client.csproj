@@ -93,9 +93,6 @@
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\EF\EntityInstance.cs" />
-    <Compile Include="Model\EF\Equipment.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\EF\Limb.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -118,6 +115,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Limb.cs" />
+    <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\VM_EditWindow.cs" />
     <Compile Include="ViewModel\VM_MainWindow.cs" />
     <Compile Include="View\EditWindow.xaml.cs">

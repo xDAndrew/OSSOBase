@@ -7,20 +7,18 @@
       <Diagram DiagramId="44b61069c0684bc5903da2e1c97e792f" Name="Diagram1" ZoomLevel="88" >
         <EntityTypeShape EntityType="DataModel.Cards" Width="1.5" PointX="7.625" PointY="4" />
         <EntityTypeShape EntityType="DataModel.Object" Width="1.5" PointX="4.875" PointY="2" />
-        <EntityTypeShape EntityType="DataModel.Streets" Width="1.5" PointX="2.375" PointY="2" />
+        <EntityTypeShape EntityType="DataModel.Streets" Width="1.5" PointX="2.375" PointY="2.5" />
         <AssociationConnector Association="DataModel.StreetsObject" />
         <EntityTypeShape EntityType="DataModel.Users" Width="1.5" PointX="10.375" PointY="2" />
         <AssociationConnector Association="DataModel.UsersCards" />
         <AssociationConnector Association="DataModel.ObjectCards" />
-        <EntityTypeShape EntityType="DataModel.TSOGroup" Width="1.5" PointX="13.625" PointY="2" />
-        <EntityTypeShape EntityType="DataModel.TSO" Width="1.5" PointX="13.625" PointY="4.625" />
+        <EntityTypeShape EntityType="DataModel.TSOGroup" Width="1.5" PointX="13.625" PointY="2.625" />
+        <EntityTypeShape EntityType="DataModel.TSO" Width="1.5" PointX="13.625" PointY="5.125" />
         <AssociationConnector Association="DataModel.TSOGroupTSO" />
-        <EntityTypeShape EntityType="DataModel.PKP" Width="1.5" PointX="4.875" PointY="5.375" />
-        <EntityTypeShape EntityType="DataModel.Equipment" Width="1.5" PointX="10.5" PointY="4.75" />
-        <EntityTypeShape EntityType="DataModel.Limb" Width="1.5" PointX="10.5" PointY="7.375" />
-        <AssociationConnector Association="DataModel.EquipmentLimb" />
+        <EntityTypeShape EntityType="DataModel.PKP" Width="1.5" PointX="4.875" PointY="5.875" />
+        <EntityTypeShape EntityType="DataModel.Limb" Width="1.5" PointX="10.375" PointY="5.875" />
         <AssociationConnector Association="DataModel.PKPCards" />
-        <AssociationConnector Association="DataModel.EquipmentCards" />
+        <AssociationConnector Association="DataModel.LimbCards" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

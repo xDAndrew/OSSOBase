@@ -32,7 +32,6 @@ namespace Client.Model.EF
         public virtual DbSet<TSOGroup> TSOGroupSet { get; set; }
         public virtual DbSet<TSO> TSOSet { get; set; }
         public virtual DbSet<PKP> PKPSet { get; set; }
-        public virtual DbSet<Equipment> EquipmentSet { get; set; }
         public virtual DbSet<Limb> LimbSet { get; set; }
     }
 }

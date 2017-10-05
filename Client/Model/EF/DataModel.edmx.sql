@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/04/2017 09:09:41
--- Generated from EDMX file: c:\users\work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 10/05/2017 17:19:52
+-- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -29,14 +29,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_TSOGroupTSO]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TSOSet] DROP CONSTRAINT [FK_TSOGroupTSO];
 GO
-IF OBJECT_ID(N'[dbo].[FK_EquipmentLimb]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LimbSet] DROP CONSTRAINT [FK_EquipmentLimb];
-GO
 IF OBJECT_ID(N'[dbo].[FK_PKPCards]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_PKPCards];
-GO
-IF OBJECT_ID(N'[dbo].[FK_EquipmentCards]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_EquipmentCards];
 GO
 
 -- --------------------------------------------------
@@ -64,9 +58,6 @@ GO
 IF OBJECT_ID(N'[dbo].[PKPSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PKPSet];
 GO
-IF OBJECT_ID(N'[dbo].[EquipmentSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[EquipmentSet];
-GO
 IF OBJECT_ID(N'[dbo].[LimbSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[LimbSet];
 GO
@@ -80,9 +71,10 @@ CREATE TABLE [dbo].[CardsSet] (
     [Cards_ID] int IDENTITY(1,1) NOT NULL,
     [Users_ID] int  NOT NULL,
     [Object_ID] int  NOT NULL,
-    [MakeDate] datetime  NOT NULL,
     [PKP_ID] int  NOT NULL,
-    [Equipment_ID] int  NOT NULL
+    [Equipment_ID] int  NOT NULL,
+    [MakeDate] datetime  NOT NULL,
+    [UUSumm] float  NOT NULL
 );
 GO
 
@@ -147,21 +139,13 @@ CREATE TABLE [dbo].[PKPSet] (
 );
 GO
 
--- Creating table 'EquipmentSet'
-CREATE TABLE [dbo].[EquipmentSet] (
-    [Equipment_ID] int IDENTITY(1,1) NOT NULL,
-    [Data] varbinary(max)  NOT NULL,
-    [Amount] float  NOT NULL
-);
-GO
-
 -- Creating table 'LimbSet'
 CREATE TABLE [dbo].[LimbSet] (
     [Limb_ID] int IDENTITY(1,1) NOT NULL,
     [Number] tinyint  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Data] varbinary(max)  NOT NULL,
-    [Equipment_ID] int  NOT NULL
+    [CardsCards_ID] int  NOT NULL
 );
 GO
 
@@ -209,12 +193,6 @@ GO
 ALTER TABLE [dbo].[PKPSet]
 ADD CONSTRAINT [PK_PKPSet]
     PRIMARY KEY CLUSTERED ([PKP_ID] ASC);
-GO
-
--- Creating primary key on [Equipment_ID] in table 'EquipmentSet'
-ALTER TABLE [dbo].[EquipmentSet]
-ADD CONSTRAINT [PK_EquipmentSet]
-    PRIMARY KEY CLUSTERED ([Equipment_ID] ASC);
 GO
 
 -- Creating primary key on [Limb_ID] in table 'LimbSet'
@@ -283,20 +261,6 @@ ON [dbo].[TSOSet]
     ([TSOGroup_ID]);
 GO
 
--- Creating foreign key on [Equipment_ID] in table 'LimbSet'
-ALTER TABLE [dbo].[LimbSet]
-ADD CONSTRAINT [FK_EquipmentLimb]
-    FOREIGN KEY ([Equipment_ID])
-    REFERENCES [dbo].[EquipmentSet]
-        ([Equipment_ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_EquipmentLimb'
-CREATE INDEX [IX_FK_EquipmentLimb]
-ON [dbo].[LimbSet]
-    ([Equipment_ID]);
-GO
-
 -- Creating foreign key on [PKP_ID] in table 'CardsSet'
 ALTER TABLE [dbo].[CardsSet]
 ADD CONSTRAINT [FK_PKPCards]
@@ -311,18 +275,18 @@ ON [dbo].[CardsSet]
     ([PKP_ID]);
 GO
 
--- Creating foreign key on [Equipment_ID] in table 'CardsSet'
-ALTER TABLE [dbo].[CardsSet]
-ADD CONSTRAINT [FK_EquipmentCards]
-    FOREIGN KEY ([Equipment_ID])
-    REFERENCES [dbo].[EquipmentSet]
-        ([Equipment_ID])
+-- Creating foreign key on [CardsCards_ID] in table 'LimbSet'
+ALTER TABLE [dbo].[LimbSet]
+ADD CONSTRAINT [FK_LimbCards]
+    FOREIGN KEY ([CardsCards_ID])
+    REFERENCES [dbo].[CardsSet]
+        ([Cards_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_EquipmentCards'
-CREATE INDEX [IX_FK_EquipmentCards]
-ON [dbo].[CardsSet]
-    ([Equipment_ID]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_LimbCards'
+CREATE INDEX [IX_FK_LimbCards]
+ON [dbo].[LimbSet]
+    ([CardsCards_ID]);
 GO
 
 -- --------------------------------------------------

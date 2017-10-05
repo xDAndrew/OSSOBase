@@ -10,6 +10,7 @@ namespace Client.Model
     {
         EF.Limb data;
         int[] arr = new int[15];
+        double summ;
 
         public Limb(EF.Limb data = null)
         {
@@ -19,6 +20,7 @@ namespace Client.Model
                 arr[0] = 1;
                 arr[5] = 3;
             }
+            summ = 3.456;
         }
 
         public int Number
@@ -38,6 +40,18 @@ namespace Client.Model
             set
             {
                 data.Name = value;
+            }
+        }
+
+        public string Summ
+        {
+            get
+            {
+                return string.Format("{0:f2}", summ);
+            }
+            set
+            {
+                summ = double.Parse(value);
             }
         }
 
