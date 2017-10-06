@@ -55,6 +55,18 @@ namespace Client.Model
             }
         }
 
+        public double naturalSumm
+        {
+            get
+            {
+                return summ;
+            }
+            set
+            {
+                summ = value;
+            }
+        }
+
         #region arguments
         public string arg0
         {

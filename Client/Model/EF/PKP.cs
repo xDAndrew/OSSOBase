@@ -26,7 +26,7 @@ namespace Client.Model.EF
         public string Password { get; set; }
         public byte[] Modules { get; set; }
         public System.DateTime Date { get; set; }
-        public double Amount { get; set; }
+        public double UUAmount { get; set; }
     
         public virtual ICollection<Cards> Cards { get; set; }
     }

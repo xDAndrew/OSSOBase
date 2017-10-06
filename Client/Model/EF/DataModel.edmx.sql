@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/05/2017 17:19:52
--- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 10/05/2017 20:28:21
+-- Generated from EDMX file: C:\Users\Андрей\Source\Repos\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -31,6 +31,9 @@ IF OBJECT_ID(N'[dbo].[FK_TSOGroupTSO]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_PKPCards]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_PKPCards];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LimbCards]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LimbSet] DROP CONSTRAINT [FK_LimbCards];
 GO
 
 -- --------------------------------------------------
@@ -135,7 +138,7 @@ CREATE TABLE [dbo].[PKPSet] (
     [Password] nvarchar(max)  NOT NULL,
     [Modules] varbinary(max)  NOT NULL,
     [Date] datetime  NOT NULL,
-    [Amount] float  NOT NULL
+    [UUAmount] float  NOT NULL
 );
 GO
 

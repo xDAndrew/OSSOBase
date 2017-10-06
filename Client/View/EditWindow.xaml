@@ -293,6 +293,7 @@
                             <DataGridTextColumn Header="Итого" Width="45" Binding="{Binding Summ}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                        
                     <DataGrid Grid.Row="1" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" 
                               CanUserSortColumns="False" VerticalScrollBarVisibility="Visible" DataContext="{Binding Path=TSOSumm}">
                         <DataGrid.Columns>
@@ -388,7 +389,12 @@
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
-                                <DataGridTextColumn Width="45"/>
+                                <DataGridTemplateColumn Width="45">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text="{Binding DataContext.Summ, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </DataGridTemplateColumn.Header>
+                                </DataGridTemplateColumn>
+                            
                         </DataGrid.Columns>
                     </DataGrid>
                     </Grid>

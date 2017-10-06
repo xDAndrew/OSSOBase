@@ -98,6 +98,19 @@ namespace Client.ViewModel
                 return TSO_Summ;
             }
         }
+
+        double UUsumm;
+        public double UUSumm
+        {
+            get
+            {
+                return UUsumm;
+            }
+            set
+            {
+                UUsumm = value;
+            }
+        }
         #endregion
 
         #region StatusBar_Properties
@@ -191,6 +204,8 @@ namespace Client.ViewModel
                     {
                         TSO_Summ[i] += item[i];
                     }
+
+                    UUSumm += item.naturalSumm;
                 }
 
                 currentObject.Owner = "Owner";

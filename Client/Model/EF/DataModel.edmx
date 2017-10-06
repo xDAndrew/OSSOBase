@@ -110,7 +110,7 @@
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Modules" Type="varbinary(max)" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="Amount" Type="float" Nullable="false" />
+    <Property Name="UUAmount" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="LimbSet">
     <Key>
@@ -361,7 +361,7 @@
           <Property Name="Password" Type="String" Nullable="false" />
           <Property Name="Modules" Type="Binary" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" />
-          <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="UUAmount" Type="Double" Nullable="false" />
           <NavigationProperty Name="Cards" Relationship="DataModel.PKPCards" FromRole="PKP" ToRole="Cards" />
         </EntityType>
         <EntityType Name="Limb">
@@ -481,7 +481,7 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Modules" ColumnName="Modules" />
           <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="UUAmount" ColumnName="UUAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
