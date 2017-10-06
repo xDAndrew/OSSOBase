@@ -15,12 +15,6 @@ namespace Client.Model
         public Limb(EF.Limb data = null)
         {
             this.data = data;
-            if (data != null)
-            {
-                arr[0] = 1;
-                arr[5] = 3;
-            }
-            summ = 3.456;
         }
 
         public int Number

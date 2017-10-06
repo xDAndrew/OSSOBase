@@ -23,7 +23,6 @@ namespace Client.Model.EF
         public int Users_ID { get; set; }
         public int Object_ID { get; set; }
         public int PKP_ID { get; set; }
-        public int Equipment_ID { get; set; }
         public System.DateTime MakeDate { get; set; }
         public double UUSumm { get; set; }
     

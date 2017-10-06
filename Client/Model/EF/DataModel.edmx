@@ -14,6 +14,9 @@
     <EntitySet Name="TSOSet" EntityType="DataModel.Store.TSOSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PKPSet" EntityType="DataModel.Store.PKPSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LimbSet" EntityType="DataModel.Store.LimbSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PKPModelsSet" EntityType="DataModel.Store.PKPModelsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ModulesSet" EntityType="DataModel.Store.ModulesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PKP_ModulesSet" EntityType="DataModel.Store.PKP_ModulesSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="StreetsObject" Association="DataModel.Store.StreetsObject">
       <End Role="Streets" EntitySet="StreetsSet" />
       <End Role="Object" EntitySet="ObjectSet" />
@@ -38,6 +41,18 @@
       <End Role="Limb" EntitySet="LimbSet" />
       <End Role="Cards" EntitySet="CardsSet" />
     </AssociationSet>
+    <AssociationSet Name="PKPPKPModels" Association="DataModel.Store.PKPPKPModels">
+      <End Role="PKP" EntitySet="PKPSet" />
+      <End Role="PKPModels" EntitySet="PKPModelsSet" />
+    </AssociationSet>
+    <AssociationSet Name="ModulesPKP_Modules" Association="DataModel.Store.ModulesPKP_Modules">
+      <End Role="Modules" EntitySet="ModulesSet" />
+      <End Role="PKP_Modules" EntitySet="PKP_ModulesSet" />
+    </AssociationSet>
+    <AssociationSet Name="PKPPKP_Modules" Association="DataModel.Store.PKPPKP_Modules">
+      <End Role="PKP" EntitySet="PKPSet" />
+      <End Role="PKP_Modules" EntitySet="PKP_ModulesSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="CardsSet">
     <Key>
@@ -47,7 +62,6 @@
     <Property Name="Users_ID" Type="int" Nullable="false" />
     <Property Name="Object_ID" Type="int" Nullable="false" />
     <Property Name="PKP_ID" Type="int" Nullable="false" />
-    <Property Name="Equipment_ID" Type="int" Nullable="false" />
     <Property Name="MakeDate" Type="datetime" Nullable="false" />
     <Property Name="UUSumm" Type="float" Nullable="false" />
   </EntityType>
@@ -104,13 +118,12 @@
       <PropertyRef Name="PKP_ID" />
     </Key>
     <Property Name="PKP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="int" Nullable="false" />
     <Property Name="Serial" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Modules" Type="varbinary(max)" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="UUAmount" Type="float" Nullable="false" />
+    <Property Name="PKPModels_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LimbSet">
     <Key>
@@ -120,7 +133,33 @@
     <Property Name="Number" Type="tinyint" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-    <Property Name="CardsCards_ID" Type="int" Nullable="false" />
+    <Property Name="Cards_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PKPModelsSet">
+    <Key>
+      <PropertyRef Name="PKPModels_ID" />
+    </Key>
+    <Property Name="PKPModels_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Visible" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ModulesSet">
+    <Key>
+      <PropertyRef Name="Modules_ID" />
+    </Key>
+    <Property Name="Modules_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Visible" Type="bit" Nullable="false" />
+    <Property Name="UUCount" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PKP_ModulesSet">
+    <Key>
+      <PropertyRef Name="PKP_Modules_ID" />
+    </Key>
+    <Property Name="PKP_Modules_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Modules_ID" Type="int" Nullable="false" />
+    <Property Name="PKP_ID" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="StreetsObject">
     <End Role="Streets" Type="DataModel.Store.StreetsSet" Multiplicity="1" />
@@ -190,7 +229,43 @@
         <PropertyRef Name="Cards_ID" />
       </Principal>
       <Dependent Role="Limb">
-        <PropertyRef Name="CardsCards_ID" />
+        <PropertyRef Name="Cards_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PKPPKPModels">
+    <End Role="PKP" Type="DataModel.Store.PKPSet" Multiplicity="*" />
+    <End Role="PKPModels" Type="DataModel.Store.PKPModelsSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="PKPModels">
+        <PropertyRef Name="PKPModels_ID" />
+      </Principal>
+      <Dependent Role="PKP">
+        <PropertyRef Name="PKPModels_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ModulesPKP_Modules">
+    <End Role="Modules" Type="DataModel.Store.ModulesSet" Multiplicity="1" />
+    <End Role="PKP_Modules" Type="DataModel.Store.PKP_ModulesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modules">
+        <PropertyRef Name="Modules_ID" />
+      </Principal>
+      <Dependent Role="PKP_Modules">
+        <PropertyRef Name="Modules_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PKPPKP_Modules">
+    <End Role="PKP" Type="DataModel.Store.PKPSet" Multiplicity="1" />
+    <End Role="PKP_Modules" Type="DataModel.Store.PKP_ModulesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PKP">
+        <PropertyRef Name="PKP_ID" />
+      </Principal>
+      <Dependent Role="PKP_Modules">
+        <PropertyRef Name="PKP_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -231,6 +306,21 @@
             <End Role="Limb" EntitySet="LimbSet" />
             <End Role="Cards" EntitySet="CardsSet" />
           </AssociationSet>
+          <EntitySet Name="PKPModelsSet" EntityType="DataModel.PKPModels" />
+          <AssociationSet Name="PKPPKPModels" Association="DataModel.PKPPKPModels">
+            <End Role="PKP" EntitySet="PKPSet" />
+            <End Role="PKPModels" EntitySet="PKPModelsSet" />
+          </AssociationSet>
+          <EntitySet Name="ModulesSet" EntityType="DataModel.Modules" />
+          <EntitySet Name="PKP_ModulesSet" EntityType="DataModel.PKP_Modules" />
+          <AssociationSet Name="ModulesPKP_Modules" Association="DataModel.ModulesPKP_Modules">
+            <End Role="Modules" EntitySet="ModulesSet" />
+            <End Role="PKP_Modules" EntitySet="PKP_ModulesSet" />
+          </AssociationSet>
+          <AssociationSet Name="PKPPKP_Modules" Association="DataModel.PKPPKP_Modules">
+            <End Role="PKP" EntitySet="PKPSet" />
+            <End Role="PKP_Modules" EntitySet="PKP_ModulesSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Cards">
           <Key>
@@ -243,7 +333,6 @@
           <Property Name="Object_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PKP" Relationship="DataModel.PKPCards" FromRole="Cards" ToRole="PKP" />
           <Property Name="PKP_ID" Type="Int32" Nullable="false" />
-          <Property Name="Equipment_ID" Type="Int32" Nullable="false" />
           <Property Name="MakeDate" Type="DateTime" Nullable="false" />
           <Property Name="UUSumm" Type="Double" Nullable="false" />
           <NavigationProperty Name="Limb" Relationship="DataModel.LimbCards" FromRole="Cards" ToRole="Limb" />
@@ -355,14 +444,15 @@
             <PropertyRef Name="PKP_ID" />
           </Key>
           <Property Name="PKP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="Int32" Nullable="false" />
           <Property Name="Serial" Type="String" Nullable="false" />
           <Property Name="Phone" Type="String" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" />
-          <Property Name="Modules" Type="Binary" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" />
           <Property Name="UUAmount" Type="Double" Nullable="false" />
           <NavigationProperty Name="Cards" Relationship="DataModel.PKPCards" FromRole="PKP" ToRole="Cards" />
+          <NavigationProperty Name="PKPModels" Relationship="DataModel.PKPPKPModels" FromRole="PKP" ToRole="PKPModels" />
+          <Property Name="PKPModels_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PKP_Modules" Relationship="DataModel.PKPPKP_Modules" FromRole="PKP" ToRole="PKP_Modules" />
         </EntityType>
         <EntityType Name="Limb">
           <Key>
@@ -373,7 +463,7 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Data" Type="Binary" Nullable="false" />
           <NavigationProperty Name="Cards" Relationship="DataModel.LimbCards" FromRole="Limb" ToRole="Cards" />
-          <Property Name="CardsCards_ID" Type="Int32" Nullable="false" />
+          <Property Name="Cards_ID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="PKPCards">
           <End Type="DataModel.PKP" Role="PKP" Multiplicity="1" />
@@ -395,7 +485,73 @@
               <PropertyRef Name="Cards_ID" />
             </Principal>
             <Dependent Role="Limb">
-              <PropertyRef Name="CardsCards_ID" />
+              <PropertyRef Name="Cards_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PKPModels">
+          <Key>
+            <PropertyRef Name="PKPModels_ID" />
+          </Key>
+          <Property Name="PKPModels_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PKP" Relationship="DataModel.PKPPKPModels" FromRole="PKPModels" ToRole="PKP" />
+        </EntityType>
+        <Association Name="PKPPKPModels">
+          <End Type="DataModel.PKP" Role="PKP" Multiplicity="*" />
+          <End Type="DataModel.PKPModels" Role="PKPModels" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="PKPModels">
+              <PropertyRef Name="PKPModels_ID" />
+            </Principal>
+            <Dependent Role="PKP">
+              <PropertyRef Name="PKPModels_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Modules">
+          <Key>
+            <PropertyRef Name="Modules_ID" />
+          </Key>
+          <Property Name="Modules_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PKP_Modules" Relationship="DataModel.ModulesPKP_Modules" FromRole="Modules" ToRole="PKP_Modules" />
+          <Property Name="UUCount" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PKP_Modules">
+          <Key>
+            <PropertyRef Name="PKP_Modules_ID" />
+          </Key>
+          <Property Name="PKP_Modules_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Modules" Relationship="DataModel.ModulesPKP_Modules" FromRole="PKP_Modules" ToRole="Modules" />
+          <Property Name="Modules_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PKP" Relationship="DataModel.PKPPKP_Modules" FromRole="PKP_Modules" ToRole="PKP" />
+          <Property Name="PKP_ID" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ModulesPKP_Modules">
+          <End Type="DataModel.Modules" Role="Modules" Multiplicity="1" />
+          <End Type="DataModel.PKP_Modules" Role="PKP_Modules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modules">
+              <PropertyRef Name="Modules_ID" />
+            </Principal>
+            <Dependent Role="PKP_Modules">
+              <PropertyRef Name="Modules_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PKPPKP_Modules">
+          <End Type="DataModel.PKP" Role="PKP" Multiplicity="1" />
+          <End Type="DataModel.PKP_Modules" Role="PKP_Modules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PKP">
+              <PropertyRef Name="PKP_ID" />
+            </Principal>
+            <Dependent Role="PKP_Modules">
+              <PropertyRef Name="PKP_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -412,7 +568,6 @@
           <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
           <ScalarProperty Name="Object_ID" ColumnName="Object_ID" />
           <ScalarProperty Name="PKP_ID" ColumnName="PKP_ID" />
-          <ScalarProperty Name="Equipment_ID" ColumnName="Equipment_ID" />
           <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
           <ScalarProperty Name="UUSumm" ColumnName="UUSumm" />
         </MappingFragment>
@@ -475,13 +630,12 @@
       <EntityTypeMapping TypeName="IsTypeOf(DataModel.PKP)">
         <MappingFragment StoreEntitySet="PKPSet">
           <ScalarProperty Name="PKP_ID" ColumnName="PKP_ID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Serial" ColumnName="Serial" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Modules" ColumnName="Modules" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="UUAmount" ColumnName="UUAmount" />
+          <ScalarProperty Name="PKPModels_ID" ColumnName="PKPModels_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -492,7 +646,36 @@
           <ScalarProperty Name="Number" ColumnName="Number" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Data" ColumnName="Data" />
-          <ScalarProperty Name="CardsCards_ID" ColumnName="CardsCards_ID" />
+          <ScalarProperty Name="Cards_ID" ColumnName="Cards_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PKPModelsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.PKPModels)">
+        <MappingFragment StoreEntitySet="PKPModelsSet">
+          <ScalarProperty Name="PKPModels_ID" ColumnName="PKPModels_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Visible" ColumnName="Visible" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ModulesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Modules)">
+        <MappingFragment StoreEntitySet="ModulesSet">
+          <ScalarProperty Name="Modules_ID" ColumnName="Modules_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Visible" ColumnName="Visible" />
+          <ScalarProperty Name="UUCount" ColumnName="UUCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PKP_ModulesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.PKP_Modules)">
+        <MappingFragment StoreEntitySet="PKP_ModulesSet">
+          <ScalarProperty Name="PKP_Modules_ID" ColumnName="PKP_Modules_ID" />
+          <ScalarProperty Name="Modules_ID" ColumnName="Modules_ID" />
+          <ScalarProperty Name="PKP_ID" ColumnName="PKP_ID" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

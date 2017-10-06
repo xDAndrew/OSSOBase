@@ -12,64 +12,24 @@ namespace Client.ViewModel
     class VM_EditWindow : INotifyPropertyChanged
     {
         private View.EditWindow myHNDL;
-
-        //Переменные карточки
-        private Model.EF.Cards currentCard;
-        private Model.EF.PKP currentPKP;
-        private Model.EF.Object currentObject;
-        private Model.EF.Users currentUser;
-
-        #region Object_Properties
-        public Model.EF.Object CurrentObject
+        
+        private Model.M_Object currentObject;
+        public Model.M_Object CurrentObject
         {
             get { return currentObject; }
             set { currentObject = value; }
         }
 
-        //Наименования улиц
-        ObservableCollection<String> streets = new ObservableCollection<String>();
-        public ObservableCollection<String> Streets
-        {
-            get { return streets; }
-        }
-
-        //Выбранная улица
-        public int SelectedStreetIndex
-        {
-            get { return currentObject.Streets_ID; }
-            set 
-            { 
-                currentObject.Streets_ID = value;
-                OnPropertyChanged("SelectedStreetIndex");
-            }
-        }
-        #endregion
-
-        #region PKP_Properties
-        public Model.EF.PKP CurrentPKP
+        private Model.M_PKP currentPKP;
+        public Model.M_PKP CurrentPKP
         {
             get { return currentPKP; }
             set { currentPKP = value; }
         }
 
-        //Список приборов
-        ObservableCollection<String> pkpList = new ObservableCollection<String>();
-        public ObservableCollection<String> PKPList
-        {
-            get { return pkpList; }
-        }
-
-        //Выбранный прибор
-        public int SelectedPKPIndex
-        {
-            get { return currentPKP.Name; }
-            set
-            {
-                currentPKP.Name = value;
-                OnPropertyChanged("SelectedPKPIndex");
-            }
-        }
-        #endregion
+        //Переменные карточки
+        private Model.EF.Cards currentCard;
+        private Model.EF.Users currentUser;
 
         #region Equipment_properties
         private ObservableCollection<Model.Limb> limbs = new ObservableCollection<Model.Limb>();
@@ -126,46 +86,6 @@ namespace Client.ViewModel
         #endregion
 
         #region ServicesMetods
-        private string GetStreetType(int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    return "тр.";
-                case 1:
-                    return "пр.";
-                case 2:
-                    return "ул.";
-                case 3:
-                    return "пер.";
-                case 4:
-                    return "пр-д";
-                case 5:
-                    return "т.";
-                case 6:
-                    return "пл.";
-                default:
-                    return "";
-            }
-            
-        }
-
-        void LoadComboBoxItems()
-        {
-            var sTemp = Model.EF.EntityInstance.DBContext.StreetsSet.OrderBy(p => p.Name).Where(p => p.Streets_ID > 0).ToList();
-            foreach (var item in sTemp)
-            {
-                streets.Add(item.Name + " " + GetStreetType(item.Type));
-            }
-
-            var PKPGroupIndex = Model.EF.EntityInstance.DBContext.TSOGroupSet.First(p => p.Type == 0);
-            var pkpTemp = Model.EF.EntityInstance.DBContext.TSOSet.OrderBy(p => p.Name).Where(p => p.TSOGroup_ID == PKPGroupIndex.TSOGroup_ID && p.Visible == true).ToList();
-            foreach (var item in pkpTemp)
-            {
-                pkpList.Add(item.Name);
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
@@ -180,22 +100,21 @@ namespace Client.ViewModel
 
             if (CurrentCardId == null)
             {
+                currentObject = new Model.M_Object();
+                currentPKP = new Model.M_PKP();
+
                 currentCard = new Model.EF.Cards();
-                currentObject = new Model.EF.Object();
-                currentPKP = new Model.EF.PKP();
+                
+                //if (Model.EF.EntityInstance.UserID > 0)
+                //{
+                //    currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                //}
+                //currentCard.MakeDate = DateTime.Now;
 
-                LoadComboBoxItems();
-
-                if (Model.EF.EntityInstance.UserID > 0)
-                {
-                    currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
-                }
-                currentCard.MakeDate = DateTime.Now;
-
-                for (int i = 0; i < 1; i++)
-                {
-                    limbs.Add(new Model.Limb(new Model.EF.Limb()));
-                }
+                //for (int i = 0; i < 1; i++)
+                //{
+                //    limbs.Add(new Model.Limb(new Model.EF.Limb()));
+                //}
 
                 TSO_Summ = new Model.Limb();
                 foreach (var item in limbs)
@@ -207,20 +126,6 @@ namespace Client.ViewModel
 
                     UUSumm += item.naturalSumm;
                 }
-
-                currentObject.Owner = "Owner";
-                currentObject.Name = "Name";
-                currentObject.Home = "Home";
-                currentObject.Corp = "Corp";
-                currentObject.Room = "Room";
-
-                currentPKP.Name = -1;
-                currentPKP.Date = DateTime.Now;
-                currentPKP.Serial = "Serial";
-                currentPKP.Password = "Password";
-                currentPKP.Phone = "Phone";
-
-                currentObject.Streets_ID = -1;
             }
             else
             {
@@ -254,6 +159,22 @@ namespace Client.ViewModel
                         limbs.RemoveAt(limbs.Count - 1);
                     }
                     OnPropertyChanged("LimbsCount");
+                }));
+            }
+        }
+
+        private ViewModel.Command openTSOList;
+        public ViewModel.Command OpenTSOList
+        {
+            get
+            {
+                return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
+                {
+                    var wTemp = new View.TSOWindow();
+                    var cTemp = new VM_TSOWindow();
+                    wTemp.Owner = myHNDL;
+                    wTemp.DataContext = cTemp;
+                    wTemp.ShowDialog();
                 }));
             }
         }

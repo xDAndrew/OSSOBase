@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/05/2017 20:28:21
--- Generated from EDMX file: C:\Users\Андрей\Source\Repos\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 10/06/2017 13:39:17
+-- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -35,6 +35,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_LimbCards]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LimbSet] DROP CONSTRAINT [FK_LimbCards];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PKPPKPModels]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PKPSet] DROP CONSTRAINT [FK_PKPPKPModels];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ModulesPKP_Modules]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PKP_ModulesSet] DROP CONSTRAINT [FK_ModulesPKP_Modules];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PKPPKP_Modules]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PKP_ModulesSet] DROP CONSTRAINT [FK_PKPPKP_Modules];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -64,6 +73,15 @@ GO
 IF OBJECT_ID(N'[dbo].[LimbSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[LimbSet];
 GO
+IF OBJECT_ID(N'[dbo].[PKPModelsSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PKPModelsSet];
+GO
+IF OBJECT_ID(N'[dbo].[ModulesSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ModulesSet];
+GO
+IF OBJECT_ID(N'[dbo].[PKP_ModulesSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PKP_ModulesSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -75,7 +93,6 @@ CREATE TABLE [dbo].[CardsSet] (
     [Users_ID] int  NOT NULL,
     [Object_ID] int  NOT NULL,
     [PKP_ID] int  NOT NULL,
-    [Equipment_ID] int  NOT NULL,
     [MakeDate] datetime  NOT NULL,
     [UUSumm] float  NOT NULL
 );
@@ -132,13 +149,12 @@ GO
 -- Creating table 'PKPSet'
 CREATE TABLE [dbo].[PKPSet] (
     [PKP_ID] int IDENTITY(1,1) NOT NULL,
-    [Name] int  NOT NULL,
     [Serial] nvarchar(max)  NOT NULL,
     [Phone] nvarchar(max)  NOT NULL,
     [Password] nvarchar(max)  NOT NULL,
-    [Modules] varbinary(max)  NOT NULL,
     [Date] datetime  NOT NULL,
-    [UUAmount] float  NOT NULL
+    [UUAmount] float  NOT NULL,
+    [PKPModels_ID] int  NOT NULL
 );
 GO
 
@@ -148,7 +164,33 @@ CREATE TABLE [dbo].[LimbSet] (
     [Number] tinyint  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Data] varbinary(max)  NOT NULL,
-    [CardsCards_ID] int  NOT NULL
+    [Cards_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'PKPModelsSet'
+CREATE TABLE [dbo].[PKPModelsSet] (
+    [PKPModels_ID] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Visible] bit  NOT NULL
+);
+GO
+
+-- Creating table 'ModulesSet'
+CREATE TABLE [dbo].[ModulesSet] (
+    [Modules_ID] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Visible] bit  NOT NULL,
+    [UUCount] float  NOT NULL
+);
+GO
+
+-- Creating table 'PKP_ModulesSet'
+CREATE TABLE [dbo].[PKP_ModulesSet] (
+    [PKP_Modules_ID] int IDENTITY(1,1) NOT NULL,
+    [Modules_ID] int  NOT NULL,
+    [PKP_ID] int  NOT NULL,
+    [Count] int  NOT NULL
 );
 GO
 
@@ -202,6 +244,24 @@ GO
 ALTER TABLE [dbo].[LimbSet]
 ADD CONSTRAINT [PK_LimbSet]
     PRIMARY KEY CLUSTERED ([Limb_ID] ASC);
+GO
+
+-- Creating primary key on [PKPModels_ID] in table 'PKPModelsSet'
+ALTER TABLE [dbo].[PKPModelsSet]
+ADD CONSTRAINT [PK_PKPModelsSet]
+    PRIMARY KEY CLUSTERED ([PKPModels_ID] ASC);
+GO
+
+-- Creating primary key on [Modules_ID] in table 'ModulesSet'
+ALTER TABLE [dbo].[ModulesSet]
+ADD CONSTRAINT [PK_ModulesSet]
+    PRIMARY KEY CLUSTERED ([Modules_ID] ASC);
+GO
+
+-- Creating primary key on [PKP_Modules_ID] in table 'PKP_ModulesSet'
+ALTER TABLE [dbo].[PKP_ModulesSet]
+ADD CONSTRAINT [PK_PKP_ModulesSet]
+    PRIMARY KEY CLUSTERED ([PKP_Modules_ID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -278,10 +338,10 @@ ON [dbo].[CardsSet]
     ([PKP_ID]);
 GO
 
--- Creating foreign key on [CardsCards_ID] in table 'LimbSet'
+-- Creating foreign key on [Cards_ID] in table 'LimbSet'
 ALTER TABLE [dbo].[LimbSet]
 ADD CONSTRAINT [FK_LimbCards]
-    FOREIGN KEY ([CardsCards_ID])
+    FOREIGN KEY ([Cards_ID])
     REFERENCES [dbo].[CardsSet]
         ([Cards_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -289,7 +349,49 @@ ADD CONSTRAINT [FK_LimbCards]
 -- Creating non-clustered index for FOREIGN KEY 'FK_LimbCards'
 CREATE INDEX [IX_FK_LimbCards]
 ON [dbo].[LimbSet]
-    ([CardsCards_ID]);
+    ([Cards_ID]);
+GO
+
+-- Creating foreign key on [PKPModels_ID] in table 'PKPSet'
+ALTER TABLE [dbo].[PKPSet]
+ADD CONSTRAINT [FK_PKPPKPModels]
+    FOREIGN KEY ([PKPModels_ID])
+    REFERENCES [dbo].[PKPModelsSet]
+        ([PKPModels_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PKPPKPModels'
+CREATE INDEX [IX_FK_PKPPKPModels]
+ON [dbo].[PKPSet]
+    ([PKPModels_ID]);
+GO
+
+-- Creating foreign key on [Modules_ID] in table 'PKP_ModulesSet'
+ALTER TABLE [dbo].[PKP_ModulesSet]
+ADD CONSTRAINT [FK_ModulesPKP_Modules]
+    FOREIGN KEY ([Modules_ID])
+    REFERENCES [dbo].[ModulesSet]
+        ([Modules_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ModulesPKP_Modules'
+CREATE INDEX [IX_FK_ModulesPKP_Modules]
+ON [dbo].[PKP_ModulesSet]
+    ([Modules_ID]);
+GO
+
+-- Creating foreign key on [PKP_ID] in table 'PKP_ModulesSet'
+ALTER TABLE [dbo].[PKP_ModulesSet]
+ADD CONSTRAINT [FK_PKPPKP_Modules]
+    FOREIGN KEY ([PKP_ID])
+    REFERENCES [dbo].[PKPSet]
+        ([PKP_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PKPPKP_Modules'
+CREATE INDEX [IX_FK_PKPPKP_Modules]
+ON [dbo].[PKP_ModulesSet]
+    ([PKP_ID]);
 GO
 
 -- --------------------------------------------------

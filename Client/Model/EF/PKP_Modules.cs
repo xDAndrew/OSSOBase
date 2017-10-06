@@ -12,14 +12,14 @@ namespace Client.Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Limb
+    public partial class PKP_Modules
     {
-        public int Limb_ID { get; set; }
-        public byte Number { get; set; }
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public int Cards_ID { get; set; }
+        public int PKP_Modules_ID { get; set; }
+        public int Modules_ID { get; set; }
+        public int PKP_ID { get; set; }
+        public int Count { get; set; }
     
-        public virtual Cards Cards { get; set; }
+        public virtual Modules Modules { get; set; }
+        public virtual PKP PKP { get; set; }
     }
 }

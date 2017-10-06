@@ -17,17 +17,19 @@ namespace Client.Model.EF
         public PKP()
         {
             this.Cards = new HashSet<Cards>();
+            this.PKP_Modules = new HashSet<PKP_Modules>();
         }
     
         public int PKP_ID { get; set; }
-        public int Name { get; set; }
         public string Serial { get; set; }
         public string Phone { get; set; }
         public string Password { get; set; }
-        public byte[] Modules { get; set; }
         public System.DateTime Date { get; set; }
         public double UUAmount { get; set; }
+        public int PKPModels_ID { get; set; }
     
         public virtual ICollection<Cards> Cards { get; set; }
+        public virtual PKPModels PKPModels { get; set; }
+        public virtual ICollection<PKP_Modules> PKP_Modules { get; set; }
     }
 }
