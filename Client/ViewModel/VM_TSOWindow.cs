@@ -19,7 +19,6 @@ namespace Client.ViewModel
         }
 
         private List<Model.EF.Modules> Modules;
-        private ObservableCollection<string> ModulesViewList = new ObservableCollection<string>();
         double UUSumm = 0.0;
 
         public VM_TSOWindow(int? ID = null)
@@ -33,11 +32,6 @@ namespace Client.ViewModel
             else
             {
 
-            }
-
-            foreach (var item in Modules)
-            {
-                ModulesViewList.Add(item.Name);
             }
         }
 
