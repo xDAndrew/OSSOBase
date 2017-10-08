@@ -12,14 +12,14 @@ namespace Client.Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Limb
+    public partial class Cards_TSO
     {
-        public int Limb_ID { get; set; }
+        public int Id { get; set; }
+        public int TSO_ID { get; set; }
         public byte Number { get; set; }
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
         public int Cards_ID { get; set; }
     
+        public virtual TSO TSO { get; set; }
         public virtual Cards Cards { get; set; }
     }
 }

@@ -3,20 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Client.Model
 {
     class M_PKP
     {
         EF.PKP data;
+        PKPModel.Modul_Collection moduls = new PKPModel.Modul_Collection();
+
         List<string> PKP = new List<string>();
         int sIndex = -1;
 
-        public M_PKP(int? ID = null)
+        View.EditWindow OwnerLink;
+
+        public M_PKP(View.EditWindow HWND, int? ID = null)
         {
+            OwnerLink = HWND;
+
             if (ID != null)
             {
                 data = EF.EntityInstance.DBContext.PKPSet.First(p => p.PKP_ID == ID.Value);
+                moduls.Load(ID.Value);
             }
             else
             {
@@ -69,6 +77,26 @@ namespace Client.Model
         {
             get { return data.Date; }
             set { data.Date = value; }
+        }
+        #endregion
+
+        #region Commands
+        private ViewModel.Command openTSOList;
+        public ViewModel.Command OpenTSOList
+        {
+            get
+            {
+                return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
+                {
+                    var wTemp = new View.TSOWindow();
+                    var cTemp = new ViewModel.VM_TSOWindow(moduls, wTemp);
+                    wTemp.Owner = OwnerLink;
+                    wTemp.DataContext = cTemp;
+                    wTemp.ShowDialog();
+                    moduls.Save(data.PKP_ID);
+                    Model.EF.EntityInstance.DBContext.SaveChanges();
+                }));
+            }
         }
         #endregion
     }

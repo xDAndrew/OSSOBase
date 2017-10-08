@@ -95,8 +95,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <ComboBox Height="22" Margin="8, 0" ItemsSource="{Binding Path=CurrentPKP.PKPList}" SelectedIndex="{Binding PKPIndex}"/>
-                        <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей" Command="{Binding OpenTSOList}"/>
+                        <ComboBox Height="22" Margin="8, 0" ItemsSource="{Binding Path=CurrentPKP.PKPList}" SelectedIndex="{Binding CurrentPKP.PKPIndex}"/>
+                        <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей" Command="{Binding CurrentPKP.OpenTSOList}"/>
 
                         <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
                         <TextBox Grid.Column="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Serial}"/>
@@ -128,7 +128,7 @@
                         </Grid.RowDefinitions>
 
                         <DataGrid DockPanel.Dock="Top" ColumnHeaderHeight="100" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" AutoGenerateColumns="False"
-                              ItemsSource="{Binding Limbs}" VerticalScrollBarVisibility="Visible" SelectionUnit="Cell">
+                              ItemsSource="{Binding CurrentEquipment.Branches}" VerticalScrollBarVisibility="Visible" SelectionUnit="Cell">
 
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
@@ -140,9 +140,9 @@
                             <DataGridTextColumn Width="25" Header="№" IsReadOnly="True" Binding="{Binding Number}"/>
                             <DataGridTextColumn Header="Наименование" Width="140" Binding="{Binding Name}"/>
 
-                            <DataGridTextColumn Width="*" Binding="{Binding arg0}">
+                                <DataGridTextColumn Width="*" Binding="{Binding arg0}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg0, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[0], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -152,7 +152,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg1}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg1, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[1], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -162,7 +162,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg2}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg2, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[2], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -172,7 +172,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg3}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg3, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[3], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -182,7 +182,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg4}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg4, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[4], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -192,7 +192,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg5}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg5, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[5], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -202,7 +202,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg6}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg6, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[6], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -212,7 +212,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg7}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg7, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[7], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -222,7 +222,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg8}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg8, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[8], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -232,7 +232,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg9}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg9, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[9], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -242,7 +242,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg10}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg10, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[10], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -252,7 +252,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg11}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg11, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[11], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -262,7 +262,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg12}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg12, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[12], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -272,7 +272,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg13}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg13, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[13], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -282,7 +282,7 @@
 
                             <DataGridTextColumn Width="*" Binding="{Binding arg14}">
                                 <DataGridTextColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Euipment.arg14, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Models[14], RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="Auto" Height="Auto">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-90"/>
                                         </TextBlock.LayoutTransform>
@@ -295,7 +295,7 @@
                     </DataGrid>
                         
                     <DataGrid Grid.Row="1" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" 
-                              CanUserSortColumns="False" VerticalScrollBarVisibility="Visible" DataContext="{Binding Path=TSOSumm}">
+                              CanUserSortColumns="False" VerticalScrollBarVisibility="Visible" DataContext="{Binding Path=CurrentEquipment.Results}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ИТОГО:" Width="170"/>
 

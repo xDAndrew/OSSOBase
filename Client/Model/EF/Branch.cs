@@ -12,26 +12,14 @@ namespace Client.Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Cards
+    public partial class Branch
     {
-        public Cards()
-        {
-            this.Branch = new HashSet<Branch>();
-            this.Cards_TSO = new HashSet<Cards_TSO>();
-        }
-    
+        public int Branch_ID { get; set; }
+        public byte Number { get; set; }
+        public string Name { get; set; }
+        public byte[] Data { get; set; }
         public int Cards_ID { get; set; }
-        public int Users_ID { get; set; }
-        public int Object_ID { get; set; }
-        public int PKP_ID { get; set; }
-        public System.DateTime MakeDate { get; set; }
-        public int Equipment_Id { get; set; }
-        public string Amount { get; set; }
     
-        public virtual Users Users { get; set; }
-        public virtual Object Object { get; set; }
-        public virtual PKP PKP { get; set; }
-        public virtual ICollection<Branch> Branch { get; set; }
-        public virtual ICollection<Cards_TSO> Cards_TSO { get; set; }
+        public virtual Cards Cards { get; set; }
     }
 }

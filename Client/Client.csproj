@@ -62,6 +62,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\EF\Branch.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EF\Cards_TSO.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EquipmentModel\Branch.cs" />
+    <Compile Include="Model\EquipmentModel\Equipment.cs" />
+    <Compile Include="Model\EquipmentModel\TSOModel.cs" />
+    <Compile Include="Model\EquipmentModel\TSO_Collection.cs" />
+    <Compile Include="Model\PKPModel\Modul_Collection.cs" />
+    <Compile Include="Model\PKPModel\Modul_Item.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
     <Compile Include="View\TSOWindow.xaml.cs">
       <DependentUpon>TSOWindow.xaml</DependentUpon>
@@ -97,9 +109,6 @@
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\EF\EntityInstance.cs" />
-    <Compile Include="Model\EF\Limb.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\EF\Modules.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -127,7 +136,6 @@
     <Compile Include="Model\EF\Users.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Limb.cs" />
     <Compile Include="Model\M_Object.cs" />
     <Compile Include="Model\M_PKP.cs" />
     <Compile Include="ViewModel\Command.cs" />

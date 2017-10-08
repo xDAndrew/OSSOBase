@@ -17,13 +17,15 @@ namespace Client.Model.EF
         public TSO()
         {
             this.Visible = true;
+            this.Equipment_TSO = new HashSet<Cards_TSO>();
         }
     
         public int TSO_ID { get; set; }
         public string Name { get; set; }
         public bool Visible { get; set; }
-        public int TSOGroup_ID { get; set; }
+        public int Group_ID { get; set; }
     
         public virtual TSOGroup TSOGroup { get; set; }
+        public virtual ICollection<Cards_TSO> Equipment_TSO { get; set; }
     }
 }

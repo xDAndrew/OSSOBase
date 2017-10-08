@@ -4,78 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client.Model
+namespace Client.Model.EquipmentModel
 {
-    class Limb
+    class Branch
     {
-        EF.Limb data;
-        int[] arr = new int[15];
-        double summ;
+        Model.EF.Branch data;
 
-        public Limb(EF.Limb data = null)
+        int[] arr = new int[15];
+
+        //Прямо из БД он подтянет все нужны сведения
+        public Branch(Model.EF.Branch data)
         {
             this.data = data;
+            //Парсим бинарные данные из даты в массив
         }
 
-        public int Number
+        public Branch(byte num)
         {
-            get
+            //Создается новая запись БД
+            this.data = new Model.EF.Branch();
+            this.data.Number = num;
+            for (int i = 0; i < 15; i++)
             {
-                return data.Number;
+                arr[i] = i + 1;
             }
         }
 
-        public string Name
-        {
-            get
-            {
-                return data.Name;
-            }
-            set
-            {
-                data.Name = value;
-            }
-        }
-
-        public string Summ
-        {
-            get
-            {
-                return string.Format("{0:f2}", summ);
-            }
-            set
-            {
-                summ = double.Parse(value);
-            }
-        }
-
-        public double naturalSumm
-        {
-            get
-            {
-                return summ;
-            }
-            set
-            {
-                summ = value;
-            }
-        }
-
-        #region arguments
+        #region Arguments
         public string arg0
         {
-            get
+            get 
             {
-                if (arr[0] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[0].ToString();
+                if (arr[0] > 0) return arr[0].ToString();
+                return "";
             }
-            set
-            {
-                int res = 0;
+            set 
+            { 
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[0] = res;
@@ -87,16 +52,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[1] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[1].ToString();
+                if (arr[1] > 0) return arr[1].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[1] = res;
@@ -108,16 +69,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[2] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[2].ToString();
+                if (arr[2] > 0) return arr[2].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[2] = res;
@@ -129,16 +86,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[3] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[3].ToString();
+                if (arr[3] > 0) return arr[3].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[3] = res;
@@ -150,16 +103,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[4] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[4].ToString();
+                if (arr[4] > 0) return arr[4].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[4] = res;
@@ -171,16 +120,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[5] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[5].ToString();
+                if (arr[5] > 0) return arr[5].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[5] = res;
@@ -192,16 +137,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[6] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[6].ToString();
+                if (arr[6] > 0) return arr[6].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[6] = res;
@@ -213,16 +154,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[7] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[7].ToString();
+                if (arr[7] > 0) return arr[7].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[7] = res;
@@ -234,16 +171,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[8] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[8].ToString();
+                if (arr[8] > 0) return arr[8].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[8] = res;
@@ -255,16 +188,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[9] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[9].ToString();
+                if (arr[9] > 0) return arr[9].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[9] = res;
@@ -276,16 +205,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[10] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[10].ToString();
+                if (arr[10] > 0) return arr[10].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[10] = res;
@@ -297,16 +222,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[11] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[11].ToString();
+                if (arr[11] > 0) return arr[11].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[11] = res;
@@ -318,16 +239,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[12] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[12].ToString();
+                if (arr[12] > 0) return arr[12].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[12] = res;
@@ -339,16 +256,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[13] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[13].ToString();
+                if (arr[13] > 0) return arr[13].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[13] = res;
@@ -360,16 +273,12 @@ namespace Client.Model
         {
             get
             {
-                if (arr[14] == 0)
-                {
-                    return "";
-                }
-                else
-                    return arr[14].ToString();
+                if (arr[14] > 0) return arr[14].ToString();
+                return "";
             }
             set
             {
-                int res = 0;
+                int res;
                 if (int.TryParse(value, out res) && res >= 0)
                 {
                     arr[14] = res;
@@ -377,6 +286,17 @@ namespace Client.Model
             }
         }
         #endregion
+
+        public int Number
+        {
+            get { return data.Number; }
+        }
+
+        public string Name
+        {
+            get { return data.Name; }
+            set { data.Name = value; }
+        }
 
         public int this[int index]
         {
@@ -390,10 +310,22 @@ namespace Client.Model
             }
         }
 
-        public static byte[] getBinary()
+        public int Summ
         {
-            int bin = 123;
-            return BitConverter.GetBytes(bin);
+            get 
+            {
+                int summ = 0;
+                foreach (var item in arr)
+                {
+                    summ += item;
+                }
+                return summ;
+            }
+        }
+
+        public void save(int ID)
+        {
+            //Сохраняемся в БД
         }
     }
 }

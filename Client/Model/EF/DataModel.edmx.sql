@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/06/2017 13:39:17
--- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 10/08/2017 20:50:26
+-- Generated from EDMX file: C:\Users\Андрей\Source\Repos\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -94,7 +94,8 @@ CREATE TABLE [dbo].[CardsSet] (
     [Object_ID] int  NOT NULL,
     [PKP_ID] int  NOT NULL,
     [MakeDate] datetime  NOT NULL,
-    [UUSumm] float  NOT NULL
+    [Equipment_Id] int  NOT NULL,
+    [Amount] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -132,7 +133,6 @@ CREATE TABLE [dbo].[TSOGroupSet] (
     [TSOGroup_ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Amount] float  NOT NULL,
-    [Type] tinyint  NOT NULL,
     [Visible] bit  NOT NULL
 );
 GO
@@ -142,7 +142,7 @@ CREATE TABLE [dbo].[TSOSet] (
     [TSO_ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Visible] bit  NOT NULL,
-    [TSOGroup_ID] int  NOT NULL
+    [Group_ID] int  NOT NULL
 );
 GO
 
@@ -158,9 +158,9 @@ CREATE TABLE [dbo].[PKPSet] (
 );
 GO
 
--- Creating table 'LimbSet'
-CREATE TABLE [dbo].[LimbSet] (
-    [Limb_ID] int IDENTITY(1,1) NOT NULL,
+-- Creating table 'BranchSet'
+CREATE TABLE [dbo].[BranchSet] (
+    [Branch_ID] int IDENTITY(1,1) NOT NULL,
     [Number] tinyint  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Data] varbinary(max)  NOT NULL,
@@ -191,6 +191,15 @@ CREATE TABLE [dbo].[PKP_ModulesSet] (
     [Modules_ID] int  NOT NULL,
     [PKP_ID] int  NOT NULL,
     [Count] int  NOT NULL
+);
+GO
+
+-- Creating table 'Cards_TSOSet'
+CREATE TABLE [dbo].[Cards_TSOSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [TSO_ID] int  NOT NULL,
+    [Number] tinyint  NOT NULL,
+    [Cards_ID] int  NOT NULL
 );
 GO
 
@@ -240,10 +249,10 @@ ADD CONSTRAINT [PK_PKPSet]
     PRIMARY KEY CLUSTERED ([PKP_ID] ASC);
 GO
 
--- Creating primary key on [Limb_ID] in table 'LimbSet'
-ALTER TABLE [dbo].[LimbSet]
-ADD CONSTRAINT [PK_LimbSet]
-    PRIMARY KEY CLUSTERED ([Limb_ID] ASC);
+-- Creating primary key on [Branch_ID] in table 'BranchSet'
+ALTER TABLE [dbo].[BranchSet]
+ADD CONSTRAINT [PK_BranchSet]
+    PRIMARY KEY CLUSTERED ([Branch_ID] ASC);
 GO
 
 -- Creating primary key on [PKPModels_ID] in table 'PKPModelsSet'
@@ -262,6 +271,12 @@ GO
 ALTER TABLE [dbo].[PKP_ModulesSet]
 ADD CONSTRAINT [PK_PKP_ModulesSet]
     PRIMARY KEY CLUSTERED ([PKP_Modules_ID] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Cards_TSOSet'
+ALTER TABLE [dbo].[Cards_TSOSet]
+ADD CONSTRAINT [PK_Cards_TSOSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -310,10 +325,10 @@ ON [dbo].[CardsSet]
     ([Object_ID]);
 GO
 
--- Creating foreign key on [TSOGroup_ID] in table 'TSOSet'
+-- Creating foreign key on [Group_ID] in table 'TSOSet'
 ALTER TABLE [dbo].[TSOSet]
 ADD CONSTRAINT [FK_TSOGroupTSO]
-    FOREIGN KEY ([TSOGroup_ID])
+    FOREIGN KEY ([Group_ID])
     REFERENCES [dbo].[TSOGroupSet]
         ([TSOGroup_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -321,7 +336,7 @@ ADD CONSTRAINT [FK_TSOGroupTSO]
 -- Creating non-clustered index for FOREIGN KEY 'FK_TSOGroupTSO'
 CREATE INDEX [IX_FK_TSOGroupTSO]
 ON [dbo].[TSOSet]
-    ([TSOGroup_ID]);
+    ([Group_ID]);
 GO
 
 -- Creating foreign key on [PKP_ID] in table 'CardsSet'
@@ -336,20 +351,6 @@ ADD CONSTRAINT [FK_PKPCards]
 CREATE INDEX [IX_FK_PKPCards]
 ON [dbo].[CardsSet]
     ([PKP_ID]);
-GO
-
--- Creating foreign key on [Cards_ID] in table 'LimbSet'
-ALTER TABLE [dbo].[LimbSet]
-ADD CONSTRAINT [FK_LimbCards]
-    FOREIGN KEY ([Cards_ID])
-    REFERENCES [dbo].[CardsSet]
-        ([Cards_ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_LimbCards'
-CREATE INDEX [IX_FK_LimbCards]
-ON [dbo].[LimbSet]
-    ([Cards_ID]);
 GO
 
 -- Creating foreign key on [PKPModels_ID] in table 'PKPSet'
@@ -392,6 +393,48 @@ ADD CONSTRAINT [FK_PKPPKP_Modules]
 CREATE INDEX [IX_FK_PKPPKP_Modules]
 ON [dbo].[PKP_ModulesSet]
     ([PKP_ID]);
+GO
+
+-- Creating foreign key on [TSO_ID] in table 'Cards_TSOSet'
+ALTER TABLE [dbo].[Cards_TSOSet]
+ADD CONSTRAINT [FK_TSOEquipment_TSO]
+    FOREIGN KEY ([TSO_ID])
+    REFERENCES [dbo].[TSOSet]
+        ([TSO_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TSOEquipment_TSO'
+CREATE INDEX [IX_FK_TSOEquipment_TSO]
+ON [dbo].[Cards_TSOSet]
+    ([TSO_ID]);
+GO
+
+-- Creating foreign key on [Cards_ID] in table 'BranchSet'
+ALTER TABLE [dbo].[BranchSet]
+ADD CONSTRAINT [FK_CardsBranch]
+    FOREIGN KEY ([Cards_ID])
+    REFERENCES [dbo].[CardsSet]
+        ([Cards_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CardsBranch'
+CREATE INDEX [IX_FK_CardsBranch]
+ON [dbo].[BranchSet]
+    ([Cards_ID]);
+GO
+
+-- Creating foreign key on [Cards_ID] in table 'Cards_TSOSet'
+ALTER TABLE [dbo].[Cards_TSOSet]
+ADD CONSTRAINT [FK_CardsCards_TSO]
+    FOREIGN KEY ([Cards_ID])
+    REFERENCES [dbo].[CardsSet]
+        ([Cards_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CardsCards_TSO'
+CREATE INDEX [IX_FK_CardsCards_TSO]
+ON [dbo].[Cards_TSOSet]
+    ([Cards_ID]);
 GO
 
 -- --------------------------------------------------

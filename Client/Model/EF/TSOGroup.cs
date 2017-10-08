@@ -23,7 +23,6 @@ namespace Client.Model.EF
         public int TSOGroup_ID { get; set; }
         public string Name { get; set; }
         public double Amount { get; set; }
-        public byte Type { get; set; }
         public bool Visible { get; set; }
     
         public virtual ICollection<TSO> TSO { get; set; }
