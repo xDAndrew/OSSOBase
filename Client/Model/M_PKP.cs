@@ -94,7 +94,7 @@ namespace Client.Model
                     wTemp.DataContext = cTemp;
                     wTemp.ShowDialog();
                     moduls.Save(data.PKP_ID);
-                    Model.EF.EntityInstance.DBContext.SaveChanges();
+                    //Model.EF.EntityInstance.DBContext.SaveChanges();
                 }));
             }
         }

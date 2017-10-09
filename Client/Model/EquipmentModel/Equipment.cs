@@ -30,6 +30,7 @@ namespace Client.Model.EquipmentModel
         public Equipment()
         {
             results = new Branch(0);
+            results.SetVisibleSetting(true);
 
             var b = Model.EF.EntityInstance.DBContext.BranchSet.Where(p => p.Cards_ID == 1).ToList();
             foreach (var item in b)

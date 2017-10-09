@@ -128,11 +128,11 @@
                         </Grid.RowDefinitions>
 
                         <DataGrid DockPanel.Dock="Top" ColumnHeaderHeight="100" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" AutoGenerateColumns="False"
-                              ItemsSource="{Binding CurrentEquipment.Branches}" VerticalScrollBarVisibility="Visible" SelectionUnit="Cell">
+                              ItemsSource="{Binding BranchesProperty}" VerticalScrollBarVisibility="Visible" SelectionUnit="Cell">
 
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
-                                    <ItemsControl>Оборудование</ItemsControl>
+                                    <MenuItem Header="Оборудование" Command="{Binding OpenTSOEdit}"/>
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
 
@@ -295,103 +295,103 @@
                     </DataGrid>
                         
                     <DataGrid Grid.Row="1" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" 
-                              CanUserSortColumns="False" VerticalScrollBarVisibility="Visible" DataContext="{Binding Path=CurrentEquipment.Results}">
+                              CanUserSortColumns="False" VerticalScrollBarVisibility="Visible">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ИТОГО:" Width="170"/>
 
                             <DataGridTemplateColumn Width="*">
                                 <DataGridTemplateColumn.Header>
-                                    <TextBlock Text="{Binding DataContext.arg0, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg0, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                 </DataGridTemplateColumn.Header>
                             </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg1, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg1, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg2, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg2, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg3, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg3, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg4, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg4, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg5, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg5, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg6, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg6, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg7, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg7, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg8, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg8, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg9, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg9, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg10, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg10, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg11, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg11, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg12, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg12, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg13, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg13, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="*">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.arg14, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.arg14, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
 
                                 <DataGridTemplateColumn Width="45">
                                     <DataGridTemplateColumn.Header>
-                                        <TextBlock Text="{Binding DataContext.Summ, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                        <TextBlock Text="{Binding DataContext.CurrentEquipment.Results.Summ, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
                                     </DataGridTemplateColumn.Header>
                                 </DataGridTemplateColumn>
                             

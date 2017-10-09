@@ -1,28 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Client.Model.EquipmentModel
 {
     class TSO_Collection
     {
-        List<TSOModel> data = new List<TSOModel>();
-
         public TSO_Collection()
         {
-            //for (int i = 0; i < 15; i++)
-            //{
-            var n = new Model.EF.TSO();
-            n.Name = "Привет ";
-            n.Group_ID = 3;
-            data.Add(new TSOModel(n));
-            //}
+            var temp = Model.EF.EntityInstance.DBContext.TSOSet.Where(p => p.TSO_ID % 2 == 0).ToList();
+            foreach (var item in temp)
+            {
+                data.Add(new TSO_Item(item));
+            }
         }
 
-        public List<TSOModel> Items
+        ObservableCollection<TSO_Item> data = new ObservableCollection<TSO_Item>();
+        public ObservableCollection<TSO_Item> Items
         {
             get { return data; }
         }
@@ -31,7 +25,7 @@ namespace Client.Model.EquipmentModel
         {
             get
             {
-                if (data[index] != null)
+                if (index < data.Count)
                 {
                     return data[index].Name;
                 }

@@ -14,6 +14,8 @@ namespace Client.Model.EquipmentModel
         double UUAmount = 0.0;
         int[] arr = new int[15];
 
+        bool nullVisible = false;
+
         //Прямо из БД он подтянет все нужны сведения
         public Branch(Model.EF.Branch data)
         {
@@ -42,6 +44,7 @@ namespace Client.Model.EquipmentModel
             get 
             {
                 if (arr[0] > 0) return arr[0].ToString();
+                if (arr[0] == 0 && nullVisible) return arr[0].ToString();
                 return "";
             }
             set 
@@ -59,6 +62,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[1] > 0) return arr[1].ToString();
+                if (arr[1] == 0 && nullVisible) return arr[1].ToString();
                 return "";
             }
             set
@@ -76,6 +80,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[2] > 0) return arr[2].ToString();
+                if (arr[2] == 0 && nullVisible) return arr[2].ToString();
                 return "";
             }
             set
@@ -93,6 +98,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[3] > 0) return arr[3].ToString();
+                if (arr[3] == 0 && nullVisible) return arr[3].ToString();
                 return "";
             }
             set
@@ -110,6 +116,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[4] > 0) return arr[4].ToString();
+                if (arr[4] == 0 && nullVisible) return arr[4].ToString();
                 return "";
             }
             set
@@ -127,6 +134,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[5] > 0) return arr[5].ToString();
+                if (arr[5] == 0 && nullVisible) return arr[5].ToString();
                 return "";
             }
             set
@@ -144,6 +152,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[6] > 0) return arr[6].ToString();
+                if (arr[6] == 0 && nullVisible) return arr[6].ToString();
                 return "";
             }
             set
@@ -161,6 +170,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[7] > 0) return arr[7].ToString();
+                if (arr[7] == 0 && nullVisible) return arr[7].ToString();
                 return "";
             }
             set
@@ -178,6 +188,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[8] > 0) return arr[8].ToString();
+                if (arr[8] == 0 && nullVisible) return arr[8].ToString();
                 return "";
             }
             set
@@ -195,6 +206,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[9] > 0) return arr[9].ToString();
+                if (arr[9] == 0 && nullVisible) return arr[9].ToString();
                 return "";
             }
             set
@@ -212,6 +224,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[10] > 0) return arr[10].ToString();
+                if (arr[10] == 0 && nullVisible) return arr[10].ToString();
                 return "";
             }
             set
@@ -229,6 +242,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[11] > 0) return arr[11].ToString();
+                if (arr[11] == 0 && nullVisible) return arr[11].ToString();
                 return "";
             }
             set
@@ -246,6 +260,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[12] > 0) return arr[12].ToString();
+                if (arr[12] == 0 && nullVisible) return arr[12].ToString();
                 return "";
             }
             set
@@ -263,6 +278,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[13] > 0) return arr[13].ToString();
+                if (arr[13] == 0 && nullVisible) return arr[13].ToString();
                 return "";
             }
             set
@@ -280,6 +296,7 @@ namespace Client.Model.EquipmentModel
             get
             {
                 if (arr[14] > 0) return arr[14].ToString();
+                if (arr[14] == 0 && nullVisible) return arr[14].ToString();
                 return "";
             }
             set
@@ -292,6 +309,11 @@ namespace Client.Model.EquipmentModel
             }
         }
         #endregion
+
+        public void SetVisibleSetting(bool v)
+        {
+            nullVisible = v;
+        }
 
         public int Number
         {

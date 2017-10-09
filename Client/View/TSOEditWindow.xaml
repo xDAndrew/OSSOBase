@@ -30,7 +30,7 @@
             <Button Grid.Row="1" Content="&lt;&lt;" Height="20" Width="30" VerticalAlignment="Top" Margin="0, 8" IsEnabled="{Binding DelButtonStatus}" Command="{Binding DelModul}"/>
         </Grid>
 
-        <ListBox Margin="8, 40, 8, 4" ItemsSource="{Binding Path=ModulsList}" SelectedIndex="{Binding SelectedItemLB}">
+        <ListBox Margin="8, 40, 8, 4" ItemsSource="{Binding TSO}" SelectedIndex="{Binding TSOIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="3">
@@ -40,7 +40,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Grid.Column="2" Margin="8, 8, 8, 4">
+        <ListBox Grid.Column="2" Margin="8,8,8,4" ItemsSource="{Binding ActiveTSOList}" SelectedIndex="{Binding ActiveTSOIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="3">
@@ -53,10 +53,16 @@
         <Button Grid.Row="1" Grid.Column="2" Width="100" Height="22" HorizontalAlignment="Right" Margin="8, 0" Content="Сохранить" Command="{Binding SaveChange}"/>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="3" Height="22" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding Count}"/>
-            <Separator/>
-            <TextBlock Text="{Binding Summ}"/>
         </StatusBar>
-        
-        <ComboBox Grid.Row="0" Height="22" Margin="8, 8" VerticalAlignment="Top"/>
+
+        <ComboBox Grid.Row="0" Height="22" Margin="8, 8" VerticalAlignment="Top" ItemsSource="{Binding Groups}" SelectedIndex="{Binding GroupsIndex}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Path=Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </Grid>
 </Window>

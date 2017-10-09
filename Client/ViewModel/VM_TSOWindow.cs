@@ -18,7 +18,6 @@ namespace Client.ViewModel
         ObservableCollection<Model.EF.Modules> modulsList = new ObservableCollection<Model.EF.Modules>();
         Model.PKPModel.Modul_Collection moduls = new Model.PKPModel.Modul_Collection();
         
-
         public VM_TSOWindow(Model.PKPModel.Modul_Collection data, View.TSOWindow WinReference)
         {
             this.OriginalLink = data;
@@ -33,6 +32,24 @@ namespace Client.ViewModel
             moduls.SetUpdateStatus( () => { OnPropertyChanged("Summ"); });
             LoadModulsList();
 
+            if (Moduls.Count > 0)
+            {
+                Index = 0;
+            }
+            else
+            {
+                Index = -1;
+            }
+
+            if (ModulsList.Count > 0)
+            {
+                SelectedItemLB = 0;
+            }
+            else
+            {
+                SelectedItemLB = -1;
+            }
+            
             OnPropertyChanged("SetButtonStatus");
             OnPropertyChanged("DelButtonStatus");
         }
@@ -65,6 +82,7 @@ namespace Client.ViewModel
             set 
             {
                 selectedItemDG = value;
+                OnPropertyChanged("SetButtonStatus");
                 OnPropertyChanged("DelButtonStatus");
             }
         }
@@ -111,18 +129,20 @@ namespace Client.ViewModel
                 {
                     if (SelectedItemLB >= 0)
                     {
-                        moduls.Items.Add(new Model.PKPModel.Modul_Item(modulsList[selectedItemLB]));
-
-                        modulsList.RemoveAt(selectedItemLB);
-                        if (modulsList.Count > 0)
+                        if (moduls.Items.Count < 11)
                         {
-                            SelectedItemLB = 0;
+                            moduls.Items.Add(new Model.PKPModel.Modul_Item(modulsList[selectedItemLB]));
+                            modulsList.RemoveAt(selectedItemLB);
+                            if (modulsList.Count > 0)
+                            {
+                                SelectedItemLB = 0;
+                            }
+                            Index = 0;
+                            moduls.SetUpdateStatus( () => { OnPropertyChanged("Summ"); });
+                            OnPropertyChanged("SetButtonStatus");
+                            OnPropertyChanged("Summ");
+                            OnPropertyChanged("Count");
                         }
-                        Index = 0;
-                        moduls.SetUpdateStatus(() => { OnPropertyChanged("Summ"); });
-                        OnPropertyChanged("SetButtonStatus");
-                        OnPropertyChanged("Summ");
-                        OnPropertyChanged("Count");
                     }
                 }));
             }
@@ -187,6 +207,7 @@ namespace Client.ViewModel
                     modulsList.Add(item);
                 }
             }
+
             if (modulsList.Count > 0) SelectedItemLB = 0;
         }
 

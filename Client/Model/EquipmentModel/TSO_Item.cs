@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace Client.Model.EquipmentModel
 {
-    class TSOModel
+    class TSO_Item
     {
         Model.EF.TSO data;
         double UUAmount = 0.0;
 
-        public TSOModel(Model.EF.TSO data)
+        public TSO_Item(Model.EF.TSO data)
         {
             this.data = data;
-            //this.UUAmount = Model.EF.EntityInstance.DBContext.TSOGroupSet.First(p => p.TSOGroup_ID == data.Group_ID).Amount;
+            try
+            {
+                this.UUAmount = Model.EF.EntityInstance.DBContext.TSOGroupSet.First(p => p.TSOGroup_ID == data.Group_ID).Amount;
+            }
+            catch { }
+        }
+
+        public int Id
+        {
+            get { return data.TSO_ID; }
         }
 
         public string Name

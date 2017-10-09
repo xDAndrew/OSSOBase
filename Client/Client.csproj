@@ -70,7 +70,7 @@
     </Compile>
     <Compile Include="Model\EquipmentModel\Branch.cs" />
     <Compile Include="Model\EquipmentModel\Equipment.cs" />
-    <Compile Include="Model\EquipmentModel\TSOModel.cs" />
+    <Compile Include="Model\EquipmentModel\TSO_Item.cs" />
     <Compile Include="Model\EquipmentModel\TSO_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
