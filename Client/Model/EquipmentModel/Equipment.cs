@@ -31,8 +31,11 @@ namespace Client.Model.EquipmentModel
         {
             results = new Branch(0);
 
-            branches.Add(new Branch(1));
-            branches.Add(new Branch(2));
+            var b = Model.EF.EntityInstance.DBContext.BranchSet.Where(p => p.Cards_ID == 1).ToList();
+            foreach (var item in b)
+            {
+                Branches.Add(new Model.EquipmentModel.Branch(item));
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Client.ViewModel
 {
     class VM_EditWindow : INotifyPropertyChanged
     {
-        private View.EditWindow myHNDL;
+        private View.EditWindow WinLink;
         
         private Model.M_Object currentObject;
         public Model.M_Object CurrentObject
@@ -49,48 +49,17 @@ namespace Client.ViewModel
         //}
         #endregion
 
-        #region ServicesMetods
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
-        #endregion
-
         public VM_EditWindow(View.EditWindow HNDL, int? CurrentCardId = null)
         {
-            myHNDL = HNDL;
+            WinLink = HNDL;
 
             if (CurrentCardId == null)
             {
                 currentObject = new Model.M_Object();
-                currentPKP = new Model.M_PKP(myHNDL);
+                currentPKP = new Model.M_PKP(WinLink);
                 currentEquipment = new Model.EquipmentModel.Equipment();
 
                 currentCard = new Model.EF.Cards();
-
-                //if (Model.EF.EntityInstance.UserID > 0)
-                //{
-                //    currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
-                //}
-                //currentCard.MakeDate = DateTime.Now;
-
-                //for (int i = 0; i < 1; i++)
-                //{
-                //    limbs.Add(new Model.Limb(new Model.EF.Limb()));
-                //}
-
-                //TSO_Summ = new Model.Limb();
-                //foreach (var item in limbs)
-                //{
-                //    for (int i = 0; i < 15; i++)
-                //    {
-                //        TSO_Summ[i] += item[i];
-                //    }
-
-                //    UUSumm += item.naturalSumm;
-                //}
             }
             else
             {
@@ -127,6 +96,15 @@ namespace Client.ViewModel
         //        }));
         //    }
         //}
+        #endregion
+
+        #region ServicesMetods
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
         #endregion
     }
 }

@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Client.Model.EquipmentModel
 {
     class Branch
     {
         Model.EF.Branch data;
-
+        double UUAmount = 0.0;
         int[] arr = new int[15];
 
         //Прямо из БД он подтянет все нужны сведения
         public Branch(Model.EF.Branch data)
         {
-            this.data = data;
             //Парсим бинарные данные из даты в массив
+            this.data = data;
+
+            var buff = new MemoryStream(data.Data);
+            arr = (int[])new BinaryFormatter().Deserialize(buff);
         }
 
         public Branch(byte num)
@@ -24,9 +29,10 @@ namespace Client.Model.EquipmentModel
             //Создается новая запись БД
             this.data = new Model.EF.Branch();
             this.data.Number = num;
+            this.data.Name = "Привет";
             for (int i = 0; i < 15; i++)
             {
-                arr[i] = i + 1;
+                arr[i] = i;
             }
         }
 
@@ -310,7 +316,13 @@ namespace Client.Model.EquipmentModel
             }
         }
 
-        public int Summ
+        public double Summ
+        {
+            get { return this.UUAmount; }
+            set { this.UUAmount = value; }
+        }
+
+        public int SummTSO
         {
             get 
             {
@@ -323,9 +335,25 @@ namespace Client.Model.EquipmentModel
             }
         }
 
-        public void save(int ID)
+        public void Save(int ID)
         {
-            //Сохраняемся в БД
+            var mem = new MemoryStream();
+            var formatter = new BinaryFormatter();
+
+            data.Cards_ID = ID;
+            
+            formatter.Serialize(mem, arr);
+            data.Data = mem.GetBuffer();
+
+            Model.EF.EntityInstance.DBContext.BranchSet.Add(data);
+            try
+            {
+                Model.EF.EntityInstance.DBContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/08/2017 20:50:26
--- Generated from EDMX file: C:\Users\Андрей\Source\Repos\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 10/09/2017 11:53:31
+-- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -32,9 +32,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PKPCards]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_PKPCards];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LimbCards]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LimbSet] DROP CONSTRAINT [FK_LimbCards];
-GO
 IF OBJECT_ID(N'[dbo].[FK_PKPPKPModels]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PKPSet] DROP CONSTRAINT [FK_PKPPKPModels];
 GO
@@ -43,6 +40,15 @@ IF OBJECT_ID(N'[dbo].[FK_ModulesPKP_Modules]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_PKPPKP_Modules]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PKP_ModulesSet] DROP CONSTRAINT [FK_PKPPKP_Modules];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TSOEquipment_TSO]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Cards_TSOSet] DROP CONSTRAINT [FK_TSOEquipment_TSO];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CardsBranch]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[BranchSet] DROP CONSTRAINT [FK_CardsBranch];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CardsCards_TSO]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Cards_TSOSet] DROP CONSTRAINT [FK_CardsCards_TSO];
 GO
 
 -- --------------------------------------------------
@@ -70,8 +76,8 @@ GO
 IF OBJECT_ID(N'[dbo].[PKPSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PKPSet];
 GO
-IF OBJECT_ID(N'[dbo].[LimbSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LimbSet];
+IF OBJECT_ID(N'[dbo].[BranchSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BranchSet];
 GO
 IF OBJECT_ID(N'[dbo].[PKPModelsSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PKPModelsSet];
@@ -81,6 +87,9 @@ IF OBJECT_ID(N'[dbo].[ModulesSet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[PKP_ModulesSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PKP_ModulesSet];
+GO
+IF OBJECT_ID(N'[dbo].[Cards_TSOSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Cards_TSOSet];
 GO
 
 -- --------------------------------------------------
@@ -94,7 +103,6 @@ CREATE TABLE [dbo].[CardsSet] (
     [Object_ID] int  NOT NULL,
     [PKP_ID] int  NOT NULL,
     [MakeDate] datetime  NOT NULL,
-    [Equipment_Id] int  NOT NULL,
     [Amount] nvarchar(max)  NOT NULL
 );
 GO

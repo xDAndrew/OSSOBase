@@ -74,7 +74,11 @@
     <Compile Include="Model\EquipmentModel\TSO_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
+    <Compile Include="ViewModel\VM_TSOEditWindow.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
+    <Compile Include="View\TSOEditWindow.xaml.cs">
+      <DependentUpon>TSOEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TSOWindow.xaml.cs">
       <DependentUpon>TSOWindow.xaml</DependentUpon>
     </Compile>
@@ -148,6 +152,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\TSOEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TSOWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

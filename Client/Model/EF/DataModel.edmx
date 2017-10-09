@@ -72,7 +72,6 @@
     <Property Name="Object_ID" Type="int" Nullable="false" />
     <Property Name="PKP_ID" Type="int" Nullable="false" />
     <Property Name="MakeDate" Type="datetime" Nullable="false" />
-    <Property Name="Equipment_Id" Type="int" Nullable="false" />
     <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="ObjectSet">
@@ -385,7 +384,6 @@
           <NavigationProperty Name="PKP" Relationship="DataModel.PKPCards" FromRole="Cards" ToRole="PKP" />
           <Property Name="PKP_ID" Type="Int32" Nullable="false" />
           <Property Name="MakeDate" Type="DateTime" Nullable="false" />
-          <Property Name="Equipment_Id" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="String" Nullable="false" />
           <NavigationProperty Name="Branch" Relationship="DataModel.CardsBranch" FromRole="Cards" ToRole="Branch" />
           <NavigationProperty Name="Cards_TSO" Relationship="DataModel.CardsCards_TSO" FromRole="Cards" ToRole="Cards_TSO" />
@@ -657,7 +655,6 @@
           <ScalarProperty Name="Object_ID" ColumnName="Object_ID" />
           <ScalarProperty Name="PKP_ID" ColumnName="PKP_ID" />
           <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
-          <ScalarProperty Name="Equipment_Id" ColumnName="Equipment_Id" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
         </MappingFragment>
       </EntityTypeMapping>

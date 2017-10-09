@@ -6,19 +6,19 @@
     <edmx:Diagrams>
       <Diagram DiagramId="44b61069c0684bc5903da2e1c97e792f" Name="Diagram1" ZoomLevel="88" >
         <EntityTypeShape EntityType="DataModel.Cards" Width="1.5" PointX="7.625" PointY="4" />
-        <EntityTypeShape EntityType="DataModel.Object" Width="1.5" PointX="4.875" PointY="2" />
-        <EntityTypeShape EntityType="DataModel.Streets" Width="1.5" PointX="2.375" PointY="2" />
+        <EntityTypeShape EntityType="DataModel.Object" Width="1.5" PointX="4.875" PointY="2.625" />
+        <EntityTypeShape EntityType="DataModel.Streets" Width="1.5" PointX="2.5" PointY="2.625" />
         <AssociationConnector Association="DataModel.StreetsObject" />
         <EntityTypeShape EntityType="DataModel.Users" Width="1.5" PointX="7.625" PointY="1.375" />
         <AssociationConnector Association="DataModel.UsersCards" />
         <AssociationConnector Association="DataModel.ObjectCards" />
-        <EntityTypeShape EntityType="DataModel.TSOGroup" Width="1.5" PointX="12.25" PointY="2.125" />
+        <EntityTypeShape EntityType="DataModel.TSOGroup" Width="1.5" PointX="12.25" PointY="2" />
         <EntityTypeShape EntityType="DataModel.TSO" Width="1.5" PointX="12.25" PointY="4.625" />
         <AssociationConnector Association="DataModel.TSOGroupTSO" />
         <EntityTypeShape EntityType="DataModel.PKP" Width="1.5" PointX="4.875" PointY="5.875" />
         <EntityTypeShape EntityType="DataModel.Branch" Width="1.5" PointX="7.625" PointY="7.875" />
         <AssociationConnector Association="DataModel.PKPCards" />
-        <EntityTypeShape EntityType="DataModel.PKPModels" Width="1.5" PointX="2.375" PointY="5.875" />
+        <EntityTypeShape EntityType="DataModel.PKPModels" Width="1.5" PointX="2.5" PointY="5.875" />
         <AssociationConnector Association="DataModel.PKPPKPModels" />
         <EntityTypeShape EntityType="DataModel.Modules" Width="1.5" PointX="2.375" PointY="9.75" />
         <EntityTypeShape EntityType="DataModel.PKP_Modules" Width="1.5" PointX="4.875" PointY="9.75" />

@@ -25,12 +25,12 @@ namespace Client.ViewModel
             this.WinLink = WinReference;
 
             //Клонируем оригинальный список и работаем дальше с ним
-            for (int i = 0; i < data.Count; i++)
+            for (int i = 0; i < data.Items.Count; i++)
             {
-                moduls.Add(OriginalLink[i]);
+                moduls.Items.Add(OriginalLink.Items[i]);
             }
 
-            moduls.SetUpdateStatus(UpdateSumm);
+            moduls.SetUpdateStatus( () => { OnPropertyChanged("Summ"); });
             LoadModulsList();
 
             OnPropertyChanged("SetButtonStatus");
@@ -98,7 +98,7 @@ namespace Client.ViewModel
 
         public string Count
         {
-            get { return moduls.Count + "/11"; }
+            get { return moduls.Items.Count + "/11"; }
         }
 
         #region Commands
@@ -111,7 +111,7 @@ namespace Client.ViewModel
                 {
                     if (SelectedItemLB >= 0)
                     {
-                        moduls.Add(new Model.PKPModel.Modul_Item(modulsList[selectedItemLB]));
+                        moduls.Items.Add(new Model.PKPModel.Modul_Item(modulsList[selectedItemLB]));
 
                         modulsList.RemoveAt(selectedItemLB);
                         if (modulsList.Count > 0)
@@ -119,7 +119,7 @@ namespace Client.ViewModel
                             SelectedItemLB = 0;
                         }
                         Index = 0;
-                        moduls.SetUpdateStatus(UpdateSumm);
+                        moduls.SetUpdateStatus(() => { OnPropertyChanged("Summ"); });
                         OnPropertyChanged("SetButtonStatus");
                         OnPropertyChanged("Summ");
                         OnPropertyChanged("Count");
@@ -135,8 +135,8 @@ namespace Client.ViewModel
             {
                 return delModul ?? (delModul = new Command(obj =>
                 {
-                    moduls.Delete(selectedItemDG);
-                    if (moduls.Count > 0) Index = 0;
+                    moduls.Items.Remove(selectedItemDG);
+                    if (moduls.Items.Count > 0) Index = 0;
                     LoadModulsList();
                     OnPropertyChanged("SetButtonStatus");
                     OnPropertyChanged("DelButtonStatus");
@@ -154,9 +154,9 @@ namespace Client.ViewModel
                 return saveChange ?? (saveChange = new Command(obj =>
                 {
                     OriginalLink.Items.Clear();
-                    for (int i = 0; i < moduls.Count; i++ )
+                    for (int i = 0; i < moduls.Items.Count; i++ )
                     {
-                        OriginalLink.Add(moduls[i]);
+                        OriginalLink.Items.Add(moduls.Items[i]);
                     }
                     
                     WinLink.Close();
@@ -166,23 +166,17 @@ namespace Client.ViewModel
         #endregion
 
         #region Service
-        private void UpdateSumm()
-        {
-            OnPropertyChanged("Summ");
-        }
-
         private void LoadModulsList()
         {
-            modulsList.Clear();
-
             //Заполняет список доступных модулей
+            modulsList.Clear();
             var temp = Model.EF.EntityInstance.DBContext.ModulesSet.Where(p => p.Visible).ToList();
             foreach (var item in temp)
             {
                 bool del = false;
-                for (int i = 0; i < moduls.Count; i++)
+                for (int i = 0; i < moduls.Items.Count; i++)
                 {
-                    if (item.Modules_ID == moduls[i].Id)
+                    if (item.Modules_ID == moduls.Items[i].Id)
                     {
                         del = true;
                         break;

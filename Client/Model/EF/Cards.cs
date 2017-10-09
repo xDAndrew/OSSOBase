@@ -25,7 +25,6 @@ namespace Client.Model.EF
         public int Object_ID { get; set; }
         public int PKP_ID { get; set; }
         public System.DateTime MakeDate { get; set; }
-        public int Equipment_Id { get; set; }
         public string Amount { get; set; }
     
         public virtual Users Users { get; set; }

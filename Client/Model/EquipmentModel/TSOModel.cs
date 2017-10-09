@@ -14,7 +14,7 @@ namespace Client.Model.EquipmentModel
         public TSOModel(Model.EF.TSO data)
         {
             this.data = data;
-            this.UUAmount = Model.EF.EntityInstance.DBContext.TSOGroupSet.First(p => p.TSOGroup_ID == data.Group_ID).Amount;
+            //this.UUAmount = Model.EF.EntityInstance.DBContext.TSOGroupSet.First(p => p.TSOGroup_ID == data.Group_ID).Amount;
         }
 
         public string Name

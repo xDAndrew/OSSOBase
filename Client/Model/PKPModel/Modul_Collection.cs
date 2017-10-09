@@ -19,45 +19,11 @@ namespace Client.Model.PKPModel
             }
         }
 
-        public void Add(Modul_Item item)
-        {
-            items.Add(item);
-        }
-
-        public Modul_Item this[int index]
-        {
-            get
-            {
-                return items[index];
-            }
-        }
-
-        public void Delete(Modul_Item item)
-        {
-            items.Remove(item);
-        }
-
         public ObservableCollection<Modul_Item> Items
         {
             get
             {
                 return items;
-            }
-        }
-
-        public int Count
-        {
-            get { return items.Count; }
-        }
-
-        public void Load(int ID)
-        {
-            var temp = EF.EntityInstance.DBContext.PKP_ModulesSet.Where(p => p.PKP_ID == ID).ToList();
-            foreach (var item in temp)
-            {
-                var tempItem = new Modul_Item(EF.EntityInstance.DBContext.ModulesSet.First(p => p.Modules_ID == item.Modules_ID));
-                tempItem.Count = item.Count.ToString();
-                items.Add(tempItem);
             }
         }
 
@@ -74,6 +40,17 @@ namespace Client.Model.PKPModel
             foreach (var item in items)
             {
                 item.Save(ID);
+            }
+        }
+
+        public void Load(int ID)
+        {
+            var temp = EF.EntityInstance.DBContext.PKP_ModulesSet.Where(p => p.PKP_ID == ID).ToList();
+            foreach (var item in temp)
+            {
+                var tempItem = new Modul_Item(EF.EntityInstance.DBContext.ModulesSet.First(p => p.Modules_ID == item.Modules_ID));
+                tempItem.Count = item.Count.ToString();
+                items.Add(tempItem);
             }
         }
 

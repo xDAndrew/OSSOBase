@@ -13,13 +13,13 @@ namespace Client.Model.EquipmentModel
 
         public TSO_Collection()
         {
-            for (int i = 0; i < 15; i++)
-            {
-                var n = new Model.EF.TSO();
-                n.Name = "Привет " + i.ToString();
-                n.Group_ID = 3;
-                data.Add(new TSOModel(n));
-            }
+            //for (int i = 0; i < 15; i++)
+            //{
+            var n = new Model.EF.TSO();
+            n.Name = "Привет ";
+            n.Group_ID = 3;
+            data.Add(new TSOModel(n));
+            //}
         }
 
         public List<TSOModel> Items
@@ -31,12 +31,14 @@ namespace Client.Model.EquipmentModel
         {
             get
             {
-                try
+                if (data[index] != null)
                 {
                     return data[index].Name;
                 }
-                catch { }
-                return "";
+                else
+                {
+                    return "";
+                }
             }
         }
     }
