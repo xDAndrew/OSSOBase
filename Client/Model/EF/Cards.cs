@@ -25,7 +25,7 @@ namespace Client.Model.EF
         public int Object_ID { get; set; }
         public int PKP_ID { get; set; }
         public System.DateTime MakeDate { get; set; }
-        public string Amount { get; set; }
+        public double Amount { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual Object Object { get; set; }

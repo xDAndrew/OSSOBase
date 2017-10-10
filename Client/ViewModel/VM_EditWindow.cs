@@ -36,12 +36,15 @@ namespace Client.ViewModel
         { 
             get 
             { 
-                return currentEquipment; 
+                return currentEquipment;
             } 
         }
 
-        //Переменные карточки
-        private Model.EF.Cards currentCard;
+        private Model.M_Card currentCard;
+        public Model.M_Card CurrentCard
+        {
+            get { return currentCard; }
+        }
         //private Model.EF.Users currentUser;
 
         #region StatusBar_Properties
@@ -62,11 +65,11 @@ namespace Client.ViewModel
 
             if (CurrentCardId == null)
             {
+                currentCard = new Model.M_Card(new Model.EF.Cards());
+
                 currentObject = new Model.M_Object();
                 currentPKP = new Model.M_PKP(WinLink);
                 currentEquipment = new Model.EquipmentModel.Equipment();
-
-                currentCard = new Model.EF.Cards();
             }
             else
             {
@@ -87,18 +90,22 @@ namespace Client.ViewModel
                 item.Summ = 0.0;
                 for (int i = 0; i < 15; i++)
                 {
-                    currentEquipment.Results[i] += item[i];
                     if (i < currentEquipment.Models.Items.Count)
                     {
                         item.Summ += item[i] * currentEquipment.Models.Items[i].UU;
                     }
+                    else
+                    {
+                        item[i] = 0;
+                    }
+                    currentEquipment.Results[i] += item[i];
                 }
 
                 int iterator = 0;
                 int n = 0;
                 while (iterator < item.SummTSO)
                 {
-                    if (iterator % 11 == 0)
+                    if (iterator % 10 == 0)
                     {
                         n++;
                     }
@@ -133,6 +140,7 @@ namespace Client.ViewModel
                     wTemp.DataContext = cTemp;
                     wTemp.ShowDialog();
                     CountUU();
+                    currentEquipment.Clear();
                 }));
             }
         }

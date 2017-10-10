@@ -29,12 +29,12 @@ namespace Client.Model
                 streets.Add(item.Name + " " + GetStreetType(item.Type));
             }
 
-            data.Owner = "Owner";
-            data.Name = "Name";
-            data.Room = "Room";
-            data.Corp = "Corp";
-            data.Home = "Home";
-            sIndex = -1;
+            //data.Owner = "Owner";
+            //data.Name = "Name";
+            //data.Room = "Room";
+            //data.Corp = "Corp";
+            //data.Home = "Home";
+            //sIndex = -1;
         }
 
         public void SaveObject()

@@ -72,6 +72,7 @@
     <Compile Include="Model\EquipmentModel\Equipment.cs" />
     <Compile Include="Model\EquipmentModel\TSO_Item.cs" />
     <Compile Include="Model\EquipmentModel\TSO_Collection.cs" />
+    <Compile Include="Model\M_Card.cs" />
     <Compile Include="Model\PKPModel\Modul_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
     <Compile Include="ViewModel\VM_TSOEditWindow.cs" />

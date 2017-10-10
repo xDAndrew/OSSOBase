@@ -29,6 +29,14 @@ namespace Client.Model.EquipmentModel
             get { return results; }
         }
 
+        public void Clear()
+        {
+            foreach (var item in branches)
+            {
+                item.Clear();
+            }
+        }
+
         public int LimbsCount
         {
             get { return Branches.Count; }

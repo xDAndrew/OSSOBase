@@ -37,9 +37,9 @@ namespace Client.Model
                 PKP.Add(item.Name);
             }
 
-            data.Serial = "Serial";
-            data.Password = "Password";
-            data.Phone = "Phone";
+            //data.Serial = "Serial";
+            //data.Password = "Password";
+            //data.Phone = "Phone";
             data.Date = DateTime.Now;
         }
 
@@ -73,10 +73,10 @@ namespace Client.Model
             set { data.Password = value; }
         }
 
-        public DateTime Date
+        public string Date
         {
-            get { return data.Date; }
-            set { data.Date = value; }
+            get { return data.Date.ToString("dd MM yyyy"); }
+            set { data.Date = Convert.ToDateTime(value); }
         }
 
         public PKPModel.Modul_Collection Moduls

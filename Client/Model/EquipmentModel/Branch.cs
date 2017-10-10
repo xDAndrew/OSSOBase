@@ -37,10 +37,28 @@ namespace Client.Model.EquipmentModel
             this.data = new Model.EF.Branch();
             this.data.Number = num;
             this.data.Name = "";
-            for (int i = 0; i < 15; i++)
-            {
-                arr[i] = 0;
-            }
+            Clear();
+        }
+
+        public void Clear()
+        {
+            arg0 = "0";
+            arg1 = "0";
+            arg2 = "0";
+            arg3 = "0";
+            arg4 = "0";
+            arg5 = "0";
+            arg6 = "0";
+            arg7 = "0";
+            arg8 = "0";
+            arg9 = "0";
+            arg10 = "0";
+            arg11 = "0";
+            arg12 = "0";
+            arg13 = "0";
+            arg14 = "0";
+            Summ = 0;
+            
         }
 
         #region Arguments

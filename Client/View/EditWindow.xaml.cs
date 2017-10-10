@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace Client.View
 {
-    /// <summary>
-    /// Логика взаимодействия для EditWindow.xaml
-    /// </summary>
     public partial class EditWindow : Window
     {
         public EditWindow()
