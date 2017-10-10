@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.ViewModel
 {
-    class VM_TSOEditWindow
+    class VM_TSOEditWindow : INotifyPropertyChanged
     {
         View.TSOEditWindow WinLink;
 
@@ -31,21 +33,37 @@ namespace Client.ViewModel
             {
                 groupsIndex = value;
                 LoadTSOList(value);
+                if (TSOList.Count > 0)
+                {
+                    TSOIndex = 0;
+                }
             }
         }
 
-        private int TSO_index;
+        private int TSO_index = -1;
         public int TSOIndex
         {
             get { return TSO_index; }
-            set { TSO_index = value; }
+            set 
+            { 
+                TSO_index = value;
+                OnPropertyChanged("TSOIndex");
+                OnPropertyChanged("DelButtonStatus");
+                OnPropertyChanged("SetButtonStatus");
+            }
         }
 
-        private int activeTSOIndex;
+        private int activeTSOIndex = -1;
         public int ActiveTSOIndex
         {
             get { return activeTSOIndex; }
-            set { activeTSOIndex = value; }
+            set 
+            { 
+                activeTSOIndex = value;
+                OnPropertyChanged("ActiveTSOIndex");
+                OnPropertyChanged("DelButtonStatus");
+                OnPropertyChanged("SetButtonStatus");
+            }
         }
 
         private Model.EquipmentModel.TSO_Collection activeTSOListLink;
@@ -125,11 +143,29 @@ namespace Client.ViewModel
             {
                 return setModul ?? (setModul = new Command(obj =>
                 {
-                    if (TSO_index > -1)
+                    if (TSO_index > -1 && tempActiveTSOList.Items.Count < 15)
                     {
-
-                        tempActiveTSOList.Items.Insert((activeTSOIndex > -1 ? activeTSOIndex : 0), new Model.EquipmentModel.TSO_Item(TSOList[TSO_index]));
+                        if (activeTSOIndex == -1)
+                        {
+                            tempActiveTSOList.Items.Add(new Model.EquipmentModel.TSO_Item(TSOList[TSO_index]));
+                        }
+                        else
+                        {
+                            tempActiveTSOList.Items.Insert(activeTSOIndex + 1, new Model.EquipmentModel.TSO_Item(TSOList[TSO_index]));
+                        }
                         TSO.Remove(TSOList[TSO_index]);
+                        if (TSOList.Count > 0)
+                        {
+                            TSOIndex = 0;
+                        }
+
+                        if (ActiveTSOList.Count > 0 && ActiveTSOIndex == -1)
+                        {
+                            ActiveTSOIndex = 0;
+                        }
+                        OnPropertyChanged("DelButtonStatus");
+                        OnPropertyChanged("SetButtonStatus");
+                        OnPropertyChanged("Count");
                     }
                 }));
             }
@@ -147,6 +183,17 @@ namespace Client.ViewModel
                         tempActiveTSOList.Items.Remove(tempActiveTSOList.Items[activeTSOIndex]);
                     }
                     LoadTSOList(GroupsIndex);
+                    if (TSOList.Count > 0)
+                    {
+                        TSOIndex = 0;
+                    }
+                    if (ActiveTSOList.Count > 0)
+                    {
+                        ActiveTSOIndex = 0;
+                    }
+                    OnPropertyChanged("DelButtonStatus");
+                    OnPropertyChanged("SetButtonStatus");
+                    OnPropertyChanged("Count");
                 }));
             }
         }
@@ -168,6 +215,15 @@ namespace Client.ViewModel
                     WinLink.Close();
                 }));
             }
+        }
+        #endregion
+
+        #region ServicesMetods
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
         #endregion
     }

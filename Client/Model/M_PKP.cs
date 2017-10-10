@@ -78,6 +78,11 @@ namespace Client.Model
             get { return data.Date; }
             set { data.Date = value; }
         }
+
+        public PKPModel.Modul_Collection Moduls
+        {
+            get { return moduls; }
+        }
         #endregion
 
         #region Commands

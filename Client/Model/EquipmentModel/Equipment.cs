@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.Model.EquipmentModel
 {
-    class Equipment
+    class Equipment : INotifyPropertyChanged
     {
         private TSO_Collection TSOModels = new TSO_Collection();
         public TSO_Collection Models
@@ -27,6 +29,20 @@ namespace Client.Model.EquipmentModel
             get { return results; }
         }
 
+        public int LimbsCount
+        {
+            get { return Branches.Count; }
+            set { }
+        }
+
+        public void setUpdateMethod(Branch.Update method)
+        {
+            foreach (var item in branches)
+            {
+                item.UpdateStatus = method;
+            }
+        }
+
         public Equipment()
         {
             results = new Branch(0);
@@ -38,5 +54,14 @@ namespace Client.Model.EquipmentModel
                 Branches.Add(new Model.EquipmentModel.Branch(item));
             }
         }
+
+        #region ServicesMetods
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+        #endregion
     }
 }

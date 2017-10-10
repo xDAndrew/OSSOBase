@@ -14,17 +14,30 @@ namespace Client.ViewModel
         private View.EditWindow WinLink;
         
         private Model.M_Object currentObject;
-        public Model.M_Object CurrentObject { get { return currentObject; } }
+        public Model.M_Object CurrentObject
+        { 
+            get 
+            { 
+                return currentObject; 
+            } 
+        }
 
         private Model.M_PKP currentPKP;
-        public Model.M_PKP CurrentPKP { get { return currentPKP; } }
+        public Model.M_PKP CurrentPKP
+        { 
+            get 
+            { 
+                return currentPKP; 
+            } 
+        }
 
         private Model.EquipmentModel.Equipment currentEquipment;
-        public Model.EquipmentModel.Equipment CurrentEquipment { get { return currentEquipment; } }
-
-        public ObservableCollection<Model.EquipmentModel.Branch> BranchesProperty
-        {
-            get { return currentEquipment.Branches; }
+        public Model.EquipmentModel.Equipment CurrentEquipment 
+        { 
+            get 
+            { 
+                return currentEquipment; 
+            } 
         }
 
         //Переменные карточки
@@ -42,12 +55,6 @@ namespace Client.ViewModel
         //    get { return currentUser.Place + " " + currentUser.Name; }
         //}
         #endregion
-
-        public int LimbsCount
-        {
-            get { return currentEquipment.Branches.Count; }
-            set { }
-        }
 
         public VM_EditWindow(View.EditWindow HNDL, int? CurrentCardId = null)
         {
@@ -73,6 +80,7 @@ namespace Client.ViewModel
             {
                 currentEquipment.Results[i] = 0;
             }
+            currentEquipment.Results.Summ = 0;
 
             foreach (var item in currentEquipment.Branches)
             {
@@ -85,9 +93,29 @@ namespace Client.ViewModel
                         item.Summ += item[i] * currentEquipment.Models.Items[i].UU;
                     }
                 }
-                System.Windows.MessageBox.Show(item.Summ.ToString());
+
+                int iterator = 0;
+                int n = 0;
+                while (iterator < item.SummTSO)
+                {
+                    if (iterator % 11 == 0)
+                    {
+                        n++;
+                    }
+                    iterator++;
+                }
+
+                if (item.SummTSO > 0)
+                {
+                    double temp = n * 0.05;
+                    item.Summ += temp;
+                    if (item.Number == 1 && item.Summ >= 0.05) item.Summ -= 0.05;
+                }
+
+                currentEquipment.Results.Summ += item.Summ;
             }
 
+            currentEquipment.Results.Summ += currentPKP.Moduls.FullSumm;
             OnPropertyChanged("CurrentEquipment");
         }
 
@@ -116,9 +144,11 @@ namespace Client.ViewModel
             {
                 return addLimb ?? (addLimb = new Command(obj =>
                 {
-                    byte t = (byte)LimbsCount;
+                    byte t = (byte)currentEquipment.LimbsCount;
                     t++;
                     currentEquipment.Branches.Add(new Model.EquipmentModel.Branch(t));
+                    currentEquipment.setUpdateMethod(CountUU);
+                    CountUU();
                     OnPropertyChanged("LimbsCount");
                 }));
             }
@@ -134,6 +164,7 @@ namespace Client.ViewModel
                     if (currentEquipment.Branches.Count > 0)
                     {
                         currentEquipment.Branches.RemoveAt(currentEquipment.Branches.Count - 1);
+                        CountUU();
                     }
                     OnPropertyChanged("LimbsCount");
                 }));

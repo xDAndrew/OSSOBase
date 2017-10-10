@@ -5,16 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Client.Model.EquipmentModel
 {
-    class Branch
+    class Branch : INotifyPropertyChanged
     {
         Model.EF.Branch data;
         double UUAmount = 0.0;
         int[] arr = new int[15];
 
         bool nullVisible = false;
+
+        public delegate void Update();
+        public Update UpdateStatus;
 
         //Прямо из БД он подтянет все нужны сведения
         public Branch(Model.EF.Branch data)
@@ -31,10 +36,10 @@ namespace Client.Model.EquipmentModel
             //Создается новая запись БД
             this.data = new Model.EF.Branch();
             this.data.Number = num;
-            this.data.Name = "Привет";
+            this.data.Name = "";
             for (int i = 0; i < 15; i++)
             {
-                arr[i] = i;
+                arr[i] = 0;
             }
         }
 
@@ -54,6 +59,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[0] = res;
                 }
+                else
+                {
+                    if (value == "") arr[0] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg0");
             }
         }
 
@@ -72,6 +86,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[1] = res;
                 }
+                else
+                {
+                    if (value == "") arr[1] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg1");
             }
         }
 
@@ -90,6 +113,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[2] = res;
                 }
+                else
+                {
+                    if (value == "") arr[2] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg2");
             }
         }
 
@@ -108,6 +140,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[3] = res;
                 }
+                else
+                {
+                    if (value == "") arr[3] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg3");
             }
         }
 
@@ -126,6 +167,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[4] = res;
                 }
+                else
+                {
+                    if (value == "") arr[4] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg4");
             }
         }
 
@@ -144,6 +194,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[5] = res;
                 }
+                else
+                {
+                    if (value == "") arr[5] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg5");
             }
         }
 
@@ -162,6 +221,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[6] = res;
                 }
+                else
+                {
+                    if (value == "") arr[6] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg6");
             }
         }
 
@@ -180,6 +248,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[7] = res;
                 }
+                else
+                {
+                    if (value == "") arr[7] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg7");
             }
         }
 
@@ -198,6 +275,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[8] = res;
                 }
+                else
+                {
+                    if (value == "") arr[8] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg8");
             }
         }
 
@@ -216,6 +302,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[9] = res;
                 }
+                else
+                {
+                    if (value == "") arr[9] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg9");
             }
         }
 
@@ -234,6 +329,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[10] = res;
                 }
+                else
+                {
+                    if (value == "") arr[10] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg10");
             }
         }
 
@@ -252,6 +356,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[11] = res;
                 }
+                else
+                {
+                    if (value == "") arr[11] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg11");
             }
         }
 
@@ -270,6 +383,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[12] = res;
                 }
+                else
+                {
+                    if (value == "") arr[12] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg12");
             }
         }
 
@@ -288,6 +410,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[13] = res;
                 }
+                else
+                {
+                    if (value == "") arr[13] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg13");
             }
         }
 
@@ -306,6 +437,15 @@ namespace Client.Model.EquipmentModel
                 {
                     arr[14] = res;
                 }
+                else
+                {
+                    if (value == "") arr[14] = 0;
+                }
+                if (UpdateStatus != null)
+                {
+                    UpdateStatus();
+                }
+                OnPropertyChanged("arg14");
             }
         }
         #endregion
@@ -341,7 +481,11 @@ namespace Client.Model.EquipmentModel
         public double Summ
         {
             get { return this.UUAmount; }
-            set { this.UUAmount = value; }
+            set 
+            { 
+                this.UUAmount = value;
+                OnPropertyChanged("Summ");
+            }
         }
 
         public int SummTSO
@@ -368,14 +512,15 @@ namespace Client.Model.EquipmentModel
             data.Data = mem.GetBuffer();
 
             Model.EF.EntityInstance.DBContext.BranchSet.Add(data);
-            try
-            {
-                Model.EF.EntityInstance.DBContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
         }
+
+        #region ServicesMetods
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+        #endregion
     }
 }

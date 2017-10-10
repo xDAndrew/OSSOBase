@@ -8,11 +8,11 @@ namespace Client.Model.EquipmentModel
     {
         public TSO_Collection()
         {
-            var temp = Model.EF.EntityInstance.DBContext.TSOSet.Where(p => p.TSO_ID % 2 == 0).ToList();
-            foreach (var item in temp)
-            {
-                data.Add(new TSO_Item(item));
-            }
+            //var temp = Model.EF.EntityInstance.DBContext.TSOSet.Where(p => p.TSO_ID % 2 == 0).ToList();
+            //foreach (var item in temp)
+            //{
+            //    data.Add(new TSO_Item(item));
+            //}
         }
 
         ObservableCollection<TSO_Item> data = new ObservableCollection<TSO_Item>();
