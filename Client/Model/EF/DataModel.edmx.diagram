@@ -5,20 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="44b61069c0684bc5903da2e1c97e792f" Name="Diagram1" ZoomLevel="68" >
-        <EntityTypeShape EntityType="DataModel.Cards" Width="1.5" PointX="17.375" PointY="8.375" />
-        <EntityTypeShape EntityType="DataModel.Object" Width="1.5" PointX="14.625" PointY="7" />
-        <EntityTypeShape EntityType="DataModel.Streets" Width="1.5" PointX="12.25" PointY="7" />
+        <EntityTypeShape EntityType="DataModel.Cards" Width="1.5" PointX="17.375" PointY="8.75" />
+        <EntityTypeShape EntityType="DataModel.Object" Width="1.5" PointX="14.625" PointY="6.625" />
+        <EntityTypeShape EntityType="DataModel.Streets" Width="1.5" PointX="12.25" PointY="6.625" />
         <AssociationConnector Association="DataModel.StreetsObject" />
         <EntityTypeShape EntityType="DataModel.Users" Width="1.5" PointX="17.375" PointY="5.75" />
         <AssociationConnector Association="DataModel.UsersCards" />
-        <AssociationConnector Association="DataModel.ObjectCards" />
         <EntityTypeShape EntityType="DataModel.TSOGroup" Width="1.5" PointX="22" PointY="6.375" />
         <EntityTypeShape EntityType="DataModel.TSO" Width="1.5" PointX="22" PointY="9" />
         <AssociationConnector Association="DataModel.TSOGroupTSO" />
         <EntityTypeShape EntityType="DataModel.PKP" Width="1.5" PointX="14.625" PointY="10.25" />
-        <EntityTypeShape EntityType="DataModel.Branch" Width="1.5" PointX="17.375" PointY="12.25" />
-        <AssociationConnector Association="DataModel.PKPCards" />
-        <EntityTypeShape EntityType="DataModel.PKPModels" Width="1.5" PointX="12.25" PointY="10.25" />
+        <EntityTypeShape EntityType="DataModel.Branch" Width="1.5" PointX="17.375" PointY="12.5" />
+        <EntityTypeShape EntityType="DataModel.PKPModels" Width="1.5" PointX="12.125" PointY="10.25" />
         <AssociationConnector Association="DataModel.PKPPKPModels" />
         <EntityTypeShape EntityType="DataModel.Modules" Width="1.5" PointX="12.125" PointY="14.125" />
         <EntityTypeShape EntityType="DataModel.PKP_Modules" Width="1.5" PointX="14.625" PointY="14.125" />
@@ -28,6 +26,8 @@
         <AssociationConnector Association="DataModel.TSOEquipment_TSO" />
         <AssociationConnector Association="DataModel.CardsBranch" />
         <AssociationConnector Association="DataModel.CardsCards_TSO" />
+        <AssociationConnector Association="DataModel.CardsObject" />
+        <AssociationConnector Association="DataModel.CardsPKP" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

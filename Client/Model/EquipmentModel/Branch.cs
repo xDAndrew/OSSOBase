@@ -530,6 +530,7 @@ namespace Client.Model.EquipmentModel
             data.Data = mem.GetBuffer();
 
             Model.EF.EntityInstance.DBContext.BranchSet.Add(data);
+            //Model.EF.EntityInstance.DBContext.SaveChanges();
         }
 
         #region ServicesMetods

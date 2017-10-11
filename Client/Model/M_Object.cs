@@ -9,6 +9,8 @@ namespace Client.Model
     class M_Object
     {
         Model.EF.Object data;
+
+        List<Model.EF.Streets> streetsEntities = new List<Model.EF.Streets>();
         List<string> streets = new List<string>();
         int sIndex;
 
@@ -16,31 +18,25 @@ namespace Client.Model
         {
             if (ID != null)
             {
-                data = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Object_ID == ID.Value);
+                data = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == ID.Value);
             }
             else
             {
                 data = new Model.EF.Object();
+                Owner = "";
+                Name = "";
+                Room = "";
+                Corp = "";
+                Home = "";
+                sIndex = -1;
             }
 
-            var sTemp = Model.EF.EntityInstance.DBContext.StreetsSet.OrderBy(p => p.Name).Where(p => p.Streets_ID > 0);
-            foreach (var item in sTemp)
+            var temp = Model.EF.EntityInstance.DBContext.StreetsSet.OrderBy(p => p.Name).Where(p => p.Streets_ID > 0).ToList();
+            foreach (var item in temp)
             {
+                streetsEntities.Add(item);
                 streets.Add(item.Name + " " + GetStreetType(item.Type));
             }
-
-            //data.Owner = "Owner";
-            //data.Name = "Name";
-            //data.Room = "Room";
-            //data.Corp = "Corp";
-            //data.Home = "Home";
-            //sIndex = -1;
-        }
-
-        public void SaveObject()
-        {
-            data.Streets_ID = sIndex;
-            Model.EF.EntityInstance.DBContext.ObjectSet.Add(data);
         }
 
         private string GetStreetType(int index)
@@ -64,8 +60,15 @@ namespace Client.Model
                 default:
                     return "";
             }
+        }
 
-        } //Служебная функция
+        public void Save(int ID)
+        {
+            data.Streets_ID = streetsEntities[sIndex].Streets_ID;
+            data.Cards_ID = ID;
+            Model.EF.EntityInstance.DBContext.ObjectSet.Add(data);
+            Model.EF.EntityInstance.DBContext.SaveChanges();
+        }
 
         #region Properties
         public string Owner

@@ -18,19 +18,19 @@ namespace Client.Model.EF
         {
             this.Branch = new HashSet<Branch>();
             this.Cards_TSO = new HashSet<Cards_TSO>();
+            this.Object = new HashSet<Object>();
+            this.PKP = new HashSet<PKP>();
         }
     
         public int Cards_ID { get; set; }
         public int Users_ID { get; set; }
-        public int Object_ID { get; set; }
-        public int PKP_ID { get; set; }
         public System.DateTime MakeDate { get; set; }
         public double Amount { get; set; }
     
         public virtual Users Users { get; set; }
-        public virtual Object Object { get; set; }
-        public virtual PKP PKP { get; set; }
         public virtual ICollection<Branch> Branch { get; set; }
         public virtual ICollection<Cards_TSO> Cards_TSO { get; set; }
+        public virtual ICollection<Object> Object { get; set; }
+        public virtual ICollection<PKP> PKP { get; set; }
     }
 }

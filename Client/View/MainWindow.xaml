@@ -9,20 +9,21 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top" Height="24"/>
             <ToolBar DockPanel.Dock="Top" Height="30" Width="Auto" HorizontalAlignment="Left">
-                <Button Width="24" Height="24" />
-                <Button Width="24" Height="24" />
+                <Button Width="24" Height="24" Command="{Binding AddCard}"/>
+                <Button Width="24" Height="24" Command="{Binding EditCard}"/>
                 <Separator/>
                 <Button Width="24" Height="24" />
             </ToolBar>
             <StatusBar DockPanel.Dock="Bottom" Height="24"/>
-            
-            <DataGrid MouseDoubleClick="DataGrid_MouseDoubleClick">
+
+            <DataGrid AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" AlternatingRowBackground="LightGreen" ItemsSource="{Binding Cards}"
+                      SelectedItem="{Binding SelectedItem}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Заказчик" Width="*" CanUserResize="False"/>
-                    <DataGridTextColumn Header="Объект" Width="*" CanUserResize="False"/>
-                    <DataGridTextColumn Header="Адрес" Width="*" CanUserResize="False"/>
-                    <DataGridTextColumn Header="У.У." Width="50" CanUserResize="False"/>
-                    <DataGridTextColumn Header="ПКП" Width="120" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Заказчик" Width="*" CanUserResize="False" Binding="{Binding Owner}"/>
+                    <DataGridTextColumn Header="Объект" Width="*" CanUserResize="False" Binding="{Binding ObjectView}"/>
+                    <DataGridTextColumn Header="Адрес" Width="*" CanUserResize="False" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="У.У." Width="50" CanUserResize="False" Binding="{Binding UU}"/>
+                    <DataGridTextColumn Header="ПКП" Width="120" CanUserResize="False" Binding="{Binding PKP}"/>
                 </DataGrid.Columns>
             </DataGrid> 
             

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/10/2017 21:00:43
--- Generated from EDMX file: C:\Users\Андрей\Source\Repos\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 10/11/2017 14:27:02
+-- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -23,14 +23,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_UsersCards]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_UsersCards];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ObjectCards]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_ObjectCards];
-GO
 IF OBJECT_ID(N'[dbo].[FK_TSOGroupTSO]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TSOSet] DROP CONSTRAINT [FK_TSOGroupTSO];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PKPCards]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_PKPCards];
 GO
 IF OBJECT_ID(N'[dbo].[FK_PKPPKPModels]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PKPSet] DROP CONSTRAINT [FK_PKPPKPModels];
@@ -49,6 +43,12 @@ IF OBJECT_ID(N'[dbo].[FK_CardsBranch]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_CardsCards_TSO]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Cards_TSOSet] DROP CONSTRAINT [FK_CardsCards_TSO];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CardsObject]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ObjectSet] DROP CONSTRAINT [FK_CardsObject];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CardsPKP]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PKPSet] DROP CONSTRAINT [FK_CardsPKP];
 GO
 
 -- --------------------------------------------------
@@ -100,8 +100,6 @@ GO
 CREATE TABLE [dbo].[CardsSet] (
     [Cards_ID] int IDENTITY(1,1) NOT NULL,
     [Users_ID] int  NOT NULL,
-    [Object_ID] int  NOT NULL,
-    [PKP_ID] int  NOT NULL,
     [MakeDate] datetime  NOT NULL,
     [Amount] float  NOT NULL
 );
@@ -115,7 +113,8 @@ CREATE TABLE [dbo].[ObjectSet] (
     [Home] nvarchar(max)  NOT NULL,
     [Corp] nvarchar(max)  NOT NULL,
     [Room] nvarchar(max)  NOT NULL,
-    [Streets_ID] int  NOT NULL
+    [Streets_ID] int  NOT NULL,
+    [Cards_ID] int  NOT NULL
 );
 GO
 
@@ -162,7 +161,8 @@ CREATE TABLE [dbo].[PKPSet] (
     [Password] nvarchar(max)  NOT NULL,
     [Date] datetime  NOT NULL,
     [UUAmount] float  NOT NULL,
-    [PKPModels_ID] int  NOT NULL
+    [PKPModels_ID] int  NOT NULL,
+    [Cards_ID] int  NOT NULL
 );
 GO
 
@@ -319,20 +319,6 @@ ON [dbo].[CardsSet]
     ([Users_ID]);
 GO
 
--- Creating foreign key on [Object_ID] in table 'CardsSet'
-ALTER TABLE [dbo].[CardsSet]
-ADD CONSTRAINT [FK_ObjectCards]
-    FOREIGN KEY ([Object_ID])
-    REFERENCES [dbo].[ObjectSet]
-        ([Object_ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ObjectCards'
-CREATE INDEX [IX_FK_ObjectCards]
-ON [dbo].[CardsSet]
-    ([Object_ID]);
-GO
-
 -- Creating foreign key on [Group_ID] in table 'TSOSet'
 ALTER TABLE [dbo].[TSOSet]
 ADD CONSTRAINT [FK_TSOGroupTSO]
@@ -345,20 +331,6 @@ ADD CONSTRAINT [FK_TSOGroupTSO]
 CREATE INDEX [IX_FK_TSOGroupTSO]
 ON [dbo].[TSOSet]
     ([Group_ID]);
-GO
-
--- Creating foreign key on [PKP_ID] in table 'CardsSet'
-ALTER TABLE [dbo].[CardsSet]
-ADD CONSTRAINT [FK_PKPCards]
-    FOREIGN KEY ([PKP_ID])
-    REFERENCES [dbo].[PKPSet]
-        ([PKP_ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PKPCards'
-CREATE INDEX [IX_FK_PKPCards]
-ON [dbo].[CardsSet]
-    ([PKP_ID]);
 GO
 
 -- Creating foreign key on [PKPModels_ID] in table 'PKPSet'
@@ -442,6 +414,34 @@ ADD CONSTRAINT [FK_CardsCards_TSO]
 -- Creating non-clustered index for FOREIGN KEY 'FK_CardsCards_TSO'
 CREATE INDEX [IX_FK_CardsCards_TSO]
 ON [dbo].[Cards_TSOSet]
+    ([Cards_ID]);
+GO
+
+-- Creating foreign key on [Cards_ID] in table 'ObjectSet'
+ALTER TABLE [dbo].[ObjectSet]
+ADD CONSTRAINT [FK_CardsObject]
+    FOREIGN KEY ([Cards_ID])
+    REFERENCES [dbo].[CardsSet]
+        ([Cards_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CardsObject'
+CREATE INDEX [IX_FK_CardsObject]
+ON [dbo].[ObjectSet]
+    ([Cards_ID]);
+GO
+
+-- Creating foreign key on [Cards_ID] in table 'PKPSet'
+ALTER TABLE [dbo].[PKPSet]
+ADD CONSTRAINT [FK_CardsPKP]
+    FOREIGN KEY ([Cards_ID])
+    REFERENCES [dbo].[CardsSet]
+        ([Cards_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CardsPKP'
+CREATE INDEX [IX_FK_CardsPKP]
+ON [dbo].[PKPSet]
     ([Cards_ID]);
 GO
 

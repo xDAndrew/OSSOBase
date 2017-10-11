@@ -65,15 +65,21 @@ namespace Client.ViewModel
 
             if (CurrentCardId == null)
             {
-                currentCard = new Model.M_Card(new Model.EF.Cards());
+                currentCard = new Model.M_Card();
 
                 currentObject = new Model.M_Object();
-                currentPKP = new Model.M_PKP(WinLink);
+                currentPKP = new Model.M_PKP();
                 currentEquipment = new Model.EquipmentModel.Equipment();
             }
             else
             {
-
+                currentCard = new Model.M_Card(Model.EF.EntityInstance.DBContext.CardsSet.First(p => p.Cards_ID == CurrentCardId.Value));
+                currentObject = new Model.M_Object(currentCard.Id);
+                currentPKP = new Model.M_PKP(currentCard.Id);
+                currentEquipment = new Model.EquipmentModel.Equipment();
+                OnPropertyChanged("CurrentObject");
+                OnPropertyChanged("CurrentPKP");
+                OnPropertyChanged("CurrentEquipment");
             }
         }
 
@@ -127,6 +133,25 @@ namespace Client.ViewModel
         }
 
         #region Commands
+        private Command saveChange;
+        public Command SaveChange
+        {
+            get
+            {
+                return saveChange ?? (saveChange = new Command(obj =>
+                {
+                    if (CurrentObject.StreetIndex != -1 && CurrentPKP.PKPIndex != -1)
+                    {
+                        currentCard.Save();
+                        currentObject.Save(currentCard.Id);
+                        currentPKP.Save(currentCard.Id);
+                        currentEquipment.Save(currentCard.Id);
+                        System.Windows.MessageBox.Show("Сохранние!");
+                    }
+                }));
+            }
+        }
+
         private Command openTSOEdit;
         public Command OpenTSOEdit
         {
@@ -141,6 +166,22 @@ namespace Client.ViewModel
                     wTemp.ShowDialog();
                     CountUU();
                     currentEquipment.Clear();
+                }));
+            }
+        }
+
+        private ViewModel.Command openTSOList;
+        public ViewModel.Command OpenTSOList
+        {
+            get
+            {
+                return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
+                {
+                    var wTemp = new View.TSOWindow();
+                    var cTemp = new ViewModel.VM_TSOWindow(currentPKP.Moduls, wTemp);
+                    wTemp.Owner = WinLink;
+                    wTemp.DataContext = cTemp;
+                    wTemp.ShowDialog();
                 }));
             }
         }

@@ -9,5 +9,6 @@ namespace Client.Model.EF
     class EntityInstance
     {
         public static DataModelContainer DBContext = new DataModelContainer();
+        public static int UserID = 1;
     }
 }

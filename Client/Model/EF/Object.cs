@@ -14,11 +14,6 @@ namespace Client.Model.EF
     
     public partial class Object
     {
-        public Object()
-        {
-            this.Cards = new HashSet<Cards>();
-        }
-    
         public int Object_ID { get; set; }
         public string Owner { get; set; }
         public string Name { get; set; }
@@ -26,8 +21,9 @@ namespace Client.Model.EF
         public string Corp { get; set; }
         public string Room { get; set; }
         public int Streets_ID { get; set; }
+        public int Cards_ID { get; set; }
     
         public virtual Streets Streets { get; set; }
-        public virtual ICollection<Cards> Cards { get; set; }
+        public virtual Cards Cards { get; set; }
     }
 }

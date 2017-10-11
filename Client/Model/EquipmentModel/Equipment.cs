@@ -37,6 +37,21 @@ namespace Client.Model.EquipmentModel
             }
         }
 
+        public void Save(int ID)
+        {
+            foreach (var item in branches)
+            {
+                item.Save(ID);
+            }
+
+            for (int i = 0; i < 15; i++ )
+            {
+                if (i < Models.Items.Count)
+                    Models.Items[i].Save(ID, (byte)(i + 1));
+            }
+            Model.EF.EntityInstance.DBContext.SaveChanges();
+        }
+
         public int LimbsCount
         {
             get { return Branches.Count; }

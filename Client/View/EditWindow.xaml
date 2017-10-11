@@ -12,7 +12,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top" Height="24">
                 <MenuItem Header="Меню">
-                    <MenuItem Header="Сохранить"/>
+                    <MenuItem Header="Сохранить" Command="{Binding SaveChange}"/>
                     <MenuItem Header="Печать"/>
                     <Separator/>
                     <MenuItem Header="Закрыть"/>
@@ -52,7 +52,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Content="Заказчик"/>
-                        <TextBox Height="22" VerticalAlignment="Bottom" Margin="4, 2" DataContext="{Binding Path=CurrentObject}" Text="{Binding Owner}"/>
+                        <TextBox Height="22" VerticalAlignment="Bottom" Margin="4, 2" DataContext="{Binding Path=CurrentObject}" Text="{Binding Owner, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="1" Content="Наименование объекта"/>
                         <TextBox Grid.Row="1" Height="22" VerticalAlignment="Bottom" Margin="4, 2" DataContext="{Binding Path=CurrentObject}" Text="{Binding Name}" />
@@ -68,6 +68,8 @@
                             <Label Content="Улица"/>
                             <ComboBox IsEnabled="True" Height="22" VerticalAlignment="Bottom" Margin="4, 0" IsEditable="True" ItemsSource="{Binding Path=CurrentObject.Streets}"
                                       SelectedIndex="{Binding CurrentObject.StreetIndex}"/>
+
+
 
 
                             <Label Content="Дом" Grid.Column="1"/>
@@ -96,7 +98,7 @@
                         </Grid.RowDefinitions>
 
                         <ComboBox Height="22" Margin="8, 0" ItemsSource="{Binding Path=CurrentPKP.PKPList}" SelectedIndex="{Binding CurrentPKP.PKPIndex}"/>
-                        <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей" Command="{Binding CurrentPKP.OpenTSOList}"/>
+                        <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей" Command="{Binding OpenTSOList}"/>
 
                         <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
                         <TextBox Grid.Column="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Serial}"/>

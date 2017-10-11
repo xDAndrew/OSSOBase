@@ -22,14 +22,5 @@ namespace Client
             InitializeComponent();
             this.DataContext = new ViewModel.VM_MainWindow(this);
         }
-
-        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var eForm = new View.EditWindow();
-            var eFormVM = new ViewModel.VM_EditWindow(eForm);
-            eForm.Owner = this;
-            eForm.DataContext = eFormVM;
-            eForm.ShowDialog();
-        }
     }
 }

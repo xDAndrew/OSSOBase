@@ -41,6 +41,7 @@ namespace Client.Model.PKPModel
             {
                 item.Save(ID);
             }
+            Model.EF.EntityInstance.DBContext.SaveChanges();
         }
 
         public void Load(int ID)

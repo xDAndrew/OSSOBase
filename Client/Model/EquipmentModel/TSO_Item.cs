@@ -36,9 +36,13 @@ namespace Client.Model.EquipmentModel
             get { return UUAmount; }
         }
 
-        public void Save()
+        public void Save(int Id, byte Number)
         {
-            //Сохраняется в базу данных
+            var item = new Model.EF.Cards_TSO();
+            item.TSO_ID = data.TSO_ID;
+            item.Cards_ID = Id;
+            item.Number = Number;
+            Model.EF.EntityInstance.DBContext.Cards_TSOSet.Add(item);
         }
     }
 }

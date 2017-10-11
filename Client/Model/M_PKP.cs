@@ -13,34 +13,41 @@ namespace Client.Model
         PKPModel.Modul_Collection moduls = new PKPModel.Modul_Collection();
 
         List<string> PKP = new List<string>();
+        List<EF.PKPModels> PKPModelsList = new List<EF.PKPModels>();
         int sIndex = -1;
 
-        View.EditWindow OwnerLink;
-
-        public M_PKP(View.EditWindow HWND, int? ID = null)
+        public M_PKP(int? ID = null)
         {
-            OwnerLink = HWND;
-
             if (ID != null)
             {
-                data = EF.EntityInstance.DBContext.PKPSet.First(p => p.PKP_ID == ID.Value);
+                data = EF.EntityInstance.DBContext.PKPSet.First(p => p.Cards_ID == ID.Value);
+                sIndex = data.PKPModels_ID;
                 moduls.Load(ID.Value);
             }
             else
             {
                 data = new EF.PKP();
+                Serial = "";
+                Phone = "";
+                Password = "";
+                data.Date = DateTime.Now;
             }
 
             var lTemp = Model.EF.EntityInstance.DBContext.PKPModelsSet.Where(p => p.Visible == true).ToList();
             foreach (var item in lTemp)
             {
+                PKPModelsList.Add(item);
                 PKP.Add(item.Name);
             }
+        }
 
-            //data.Serial = "Serial";
-            //data.Password = "Password";
-            //data.Phone = "Phone";
-            data.Date = DateTime.Now;
+        public void Save(int ID)
+        {
+            data.PKPModels_ID = PKPModelsList[PKPIndex].PKPModels_ID;
+            data.Cards_ID = ID;
+            Model.EF.EntityInstance.DBContext.PKPSet.Add(data);
+            Model.EF.EntityInstance.DBContext.SaveChanges();
+            moduls.Save(data.PKP_ID);
         }
 
         #region Properties
@@ -82,26 +89,6 @@ namespace Client.Model
         public PKPModel.Modul_Collection Moduls
         {
             get { return moduls; }
-        }
-        #endregion
-
-        #region Commands
-        private ViewModel.Command openTSOList;
-        public ViewModel.Command OpenTSOList
-        {
-            get
-            {
-                return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
-                {
-                    var wTemp = new View.TSOWindow();
-                    var cTemp = new ViewModel.VM_TSOWindow(moduls, wTemp);
-                    wTemp.Owner = OwnerLink;
-                    wTemp.DataContext = cTemp;
-                    wTemp.ShowDialog();
-                    moduls.Save(data.PKP_ID);
-                    //Model.EF.EntityInstance.DBContext.SaveChanges();
-                }));
-            }
         }
         #endregion
     }
