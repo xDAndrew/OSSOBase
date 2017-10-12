@@ -9,16 +9,31 @@ namespace Client.Model
     class M_Object
     {
         Model.EF.Object data;
-
-        List<Model.EF.Streets> streetsEntities = new List<Model.EF.Streets>();
-        List<string> streets = new List<string>();
-        int sIndex;
+        List<Model.EF.Streets> streets = new List<EF.Streets>();
+        Model.EF.Streets selectedStreet = null;
 
         public M_Object(int? ID = null)
         {
+            //Тут загружаем список улиц
+            streets = Model.EF.EntityInstance.DBContext.StreetsSet.Where(p => true).ToList();
+            for (int i = 0; i < streets.Count; i++)
+            {
+                var temp = new Model.EF.Streets();
+                temp.Streets_ID = streets[i].Streets_ID;
+                temp.Object = streets[i].Object;
+                temp.Name = streets[i].Name + " " + GetStreetType(streets[i].Type);
+                temp.Type = streets[i].Type;
+                streets[i] = temp;
+            }
+
+            //Тут загружаем объект из БД или пустой объект
             if (ID != null)
             {
                 data = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == ID.Value);
+                foreach (var item in streets)
+                {
+                    if (item.Streets_ID == data.Streets_ID) selectedStreet = item;
+                }
             }
             else
             {
@@ -28,15 +43,19 @@ namespace Client.Model
                 Room = "";
                 Corp = "";
                 Home = "";
-                sIndex = -1;
             }
+        }
 
-            var temp = Model.EF.EntityInstance.DBContext.StreetsSet.OrderBy(p => p.Name).Where(p => p.Streets_ID > 0).ToList();
-            foreach (var item in temp)
+        public void Save(int ID)
+        {
+            data.Streets_ID = selectedStreet.Streets_ID;
+            //Сохраняем в БД
+            if (data.Object_ID == 0)
             {
-                streetsEntities.Add(item);
-                streets.Add(item.Name + " " + GetStreetType(item.Type));
+                data.Cards_ID = ID;
+                Model.EF.EntityInstance.DBContext.ObjectSet.Add(data);
             }
+            Model.EF.EntityInstance.DBContext.SaveChanges();
         }
 
         private string GetStreetType(int index)
@@ -60,14 +79,6 @@ namespace Client.Model
                 default:
                     return "";
             }
-        }
-
-        public void Save(int ID)
-        {
-            data.Streets_ID = streetsEntities[sIndex].Streets_ID;
-            data.Cards_ID = ID;
-            Model.EF.EntityInstance.DBContext.ObjectSet.Add(data);
-            Model.EF.EntityInstance.DBContext.SaveChanges();
         }
 
         #region Properties
@@ -95,7 +106,7 @@ namespace Client.Model
             }
         }
 
-        public List<string> Streets
+        public List<Model.EF.Streets> Streets
         {
             get
             {
@@ -103,15 +114,15 @@ namespace Client.Model
             }
         }
 
-        public int StreetIndex
+        public Model.EF.Streets StreetIndex
         {
             get
             {
-                return sIndex;
+                return selectedStreet;
             }
             set
             {
-                sIndex = value;
+                selectedStreet = value;
             }
         }
 

@@ -13,7 +13,7 @@
             <Menu DockPanel.Dock="Top" Height="24">
                 <MenuItem Header="Меню">
                     <MenuItem Header="Сохранить" Command="{Binding SaveChange}"/>
-                    <MenuItem Header="Печать"/>
+                    <MenuItem Header="Печать" Command="{Binding Print}"/>
                     <Separator/>
                     <MenuItem Header="Закрыть"/>
                 </MenuItem>
@@ -66,8 +66,16 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Content="Улица"/>
-                            <ComboBox IsEnabled="True" Height="22" VerticalAlignment="Bottom" Margin="4, 0" IsEditable="True" ItemsSource="{Binding Path=CurrentObject.Streets}"
-                                      SelectedIndex="{Binding CurrentObject.StreetIndex}"/>
+                            <ComboBox IsEnabled="True" Height="22" VerticalAlignment="Bottom" Margin="4, 0" IsEditable="False" ItemsSource="{Binding Path=CurrentObject.Streets}"
+                                      SelectedItem="{Binding CurrentObject.StreetIndex}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Path=Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
 
 
@@ -97,7 +105,15 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <ComboBox Height="22" Margin="8, 0" ItemsSource="{Binding Path=CurrentPKP.PKPList}" SelectedIndex="{Binding CurrentPKP.PKPIndex}"/>
+                        <ComboBox Height="22" Margin="8, 0" ItemsSource="{Binding Path=CurrentPKP.PKPList}" SelectedItem="{Binding CurrentPKP.PKPIndex}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=Name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей" Command="{Binding OpenTSOList}"/>
 
                         <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
@@ -109,7 +125,7 @@
                         <Label Grid.Column="1" Grid.Row="2" Content="Пароль" VerticalAlignment="Center"/>
                         <TextBox Grid.Column="1" Grid.Row="2" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Password}"/>
 
-                        <DatePicker Grid.Row="2" Height="24" Margin="8, 0" ToolTip="Дата ввода в эксплуатацию" SelectedDateFormat="Long" DataContext="{Binding CurrentPKP}" Text="{Binding Date}"/>
+                        <DatePicker Grid.Row="2" Height="24" Margin="8, 0" ToolTip="Дата ввода в эксплуатацию" SelectedDateFormat="Long" DataContext="{Binding CurrentPKP}" SelectedDate="{Binding SelectedDate}"/>
 
                         <Label Grid.Column="0" Grid.Row="3" Content="Кол-во шлейфов" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox Grid.Column="0" Grid.Row="3" Width="40" Margin="8, 0" Height="22" DockPanel.Dock="Right" HorizontalAlignment="Right"

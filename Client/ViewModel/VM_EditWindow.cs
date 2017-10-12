@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Excel = Microsoft.Office.Interop.Excel;
+
 namespace Client.ViewModel
 {
     class VM_EditWindow : INotifyPropertyChanged
@@ -76,10 +78,15 @@ namespace Client.ViewModel
                 currentCard = new Model.M_Card(Model.EF.EntityInstance.DBContext.CardsSet.First(p => p.Cards_ID == CurrentCardId.Value));
                 currentObject = new Model.M_Object(currentCard.Id);
                 currentPKP = new Model.M_PKP(currentCard.Id);
-                currentEquipment = new Model.EquipmentModel.Equipment();
+                currentEquipment = new Model.EquipmentModel.Equipment(currentCard.Id);
+
+                currentEquipment.setUpdateMethod(CountUU);
+
+                OnPropertyChanged("LimbsCount");
                 OnPropertyChanged("CurrentObject");
                 OnPropertyChanged("CurrentPKP");
                 OnPropertyChanged("CurrentEquipment");
+                CountUU();
             }
         }
 
@@ -130,9 +137,38 @@ namespace Client.ViewModel
 
             currentEquipment.Results.Summ += currentPKP.Moduls.FullSumm;
             OnPropertyChanged("CurrentEquipment");
+            currentCard.UU = currentEquipment.Results.Summ;
         }
 
         #region Commands
+        private Command print;
+        public Command Print
+        {
+            get
+            {
+                return print ?? (print = new Command(obj =>
+                {
+                    Excel.Application excelApp = new Excel.Application();
+                    excelApp.Visible = false;
+                    excelApp.DisplayAlerts = false;
+
+                    // Создаём экземпляр рабочий книги Excel
+                    Excel.Workbook workBook;
+                    // Создаём экземпляр листа Excel
+                    Excel.Worksheet workSheet;
+
+                    string str = Environment.CurrentDirectory;
+                    workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
+                    workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
+
+                    workSheet.PrintOut();
+                    excelApp.Quit();
+
+                    System.Windows.MessageBox.Show("Принтер!");
+                }));
+            }
+        }
+
         private Command saveChange;
         public Command SaveChange
         {
@@ -140,7 +176,7 @@ namespace Client.ViewModel
             {
                 return saveChange ?? (saveChange = new Command(obj =>
                 {
-                    if (CurrentObject.StreetIndex != -1 && CurrentPKP.PKPIndex != -1)
+                    if (CurrentObject.StreetIndex != null)
                     {
                         currentCard.Save();
                         currentObject.Save(currentCard.Id);
@@ -182,6 +218,7 @@ namespace Client.ViewModel
                     wTemp.Owner = WinLink;
                     wTemp.DataContext = cTemp;
                     wTemp.ShowDialog();
+                    CountUU();
                 }));
             }
         }

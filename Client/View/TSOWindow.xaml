@@ -44,7 +44,7 @@
                   ItemsSource="{Binding Moduls}" SelectedItem="{Binding SelectedItemDG}" SelectedIndex="{Binding Index}" VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="3*" Header="Наименование" IsReadOnly="True" Binding="{Binding Name}"/>
-                <DataGridTextColumn Width="*" Header="Кол-во" Binding="{Binding Count}"/>
+                <DataGridTextColumn Width="*" Header="Кол-во" Binding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
         

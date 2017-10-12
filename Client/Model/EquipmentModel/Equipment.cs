@@ -39,15 +39,19 @@ namespace Client.Model.EquipmentModel
 
         public void Save(int ID)
         {
+            Models.Save(ID);
+
+            var temp = Model.EF.EntityInstance.DBContext.BranchSet.Where(p => p.Cards_ID == ID).ToList();
+            while (temp.Count > 0)
+            {
+                Model.EF.EntityInstance.DBContext.BranchSet.Remove(temp[0]);
+                temp.RemoveAt(0);
+            }
+            Model.EF.EntityInstance.DBContext.SaveChanges();
+
             foreach (var item in branches)
             {
                 item.Save(ID);
-            }
-
-            for (int i = 0; i < 15; i++ )
-            {
-                if (i < Models.Items.Count)
-                    Models.Items[i].Save(ID, (byte)(i + 1));
             }
             Model.EF.EntityInstance.DBContext.SaveChanges();
         }
@@ -66,16 +70,28 @@ namespace Client.Model.EquipmentModel
             }
         }
 
-        public Equipment()
+        public Equipment(int? ID = null)
         {
+            if (ID != null)
+            {
+                var bTemp = Model.EF.EntityInstance.DBContext.BranchSet.OrderBy(p => p.Number).Where(p => p.Cards_ID == ID.Value).ToList();
+                foreach (var item in bTemp)
+                {
+                    Branches.Add(new Model.EquipmentModel.Branch(item));
+                }
+
+                var temp = Model.EF.EntityInstance.DBContext.Cards_TSOSet.OrderBy(p => p.Number).Where(p => p.Cards_ID == ID.Value).ToList();
+                foreach (var item in temp)
+                {
+                    TSOModels.Items.Add(new Model.EquipmentModel.TSO_Item(Model.EF.EntityInstance.DBContext.TSOSet.First(p => p.TSO_ID == item.TSO_ID)));                    
+                }
+            }
+
             results = new Branch(0);
             results.SetVisibleSetting(true);
 
-            var b = Model.EF.EntityInstance.DBContext.BranchSet.Where(p => p.Cards_ID == 1).ToList();
-            foreach (var item in b)
-            {
-                Branches.Add(new Model.EquipmentModel.Branch(item));
-            }
+            OnPropertyChanged("LimbsCount");
+            OnPropertyChanged("Branches");
         }
 
         #region ServicesMetods

@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Client.Model.EquipmentModel
 {
     class TSO_Collection
     {
-        public TSO_Collection()
+        public void Save(int ID)
         {
-            //var temp = Model.EF.EntityInstance.DBContext.TSOSet.Where(p => p.TSO_ID % 2 == 0).ToList();
-            //foreach (var item in temp)
-            //{
-            //    data.Add(new TSO_Item(item));
-            //}
+            //Удалить уже сохраненные
+            var temp = Model.EF.EntityInstance.DBContext.Cards_TSOSet.Where(p => p.Cards_ID == ID).ToList();
+            foreach (var item in temp)
+            {
+                Model.EF.EntityInstance.DBContext.Cards_TSOSet.Remove(item);
+            }
+
+            //Пересохраниться
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].Save(ID, (byte)i);
+            }
         }
 
         ObservableCollection<TSO_Item> data = new ObservableCollection<TSO_Item>();
