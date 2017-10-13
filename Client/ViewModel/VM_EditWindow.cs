@@ -47,18 +47,17 @@ namespace Client.ViewModel
         {
             get { return currentCard; }
         }
-        //private Model.EF.Users currentUser;
 
         #region StatusBar_Properties
-        //public string Date
-        //{
-        //    get { return currentCard.MakeDate.ToString("dd.MM.yyyy"); }
-        //}
+        public string Date
+        {
+            get { return currentCard.MakeDate.ToString("dd MMMMMMMMMM yyyy"); }
+        }
 
-        //public string Maker
-        //{
-        //    get { return currentUser.Place + " " + currentUser.Name; }
-        //}
+        public string Maker
+        {
+            get { return currentCard.UserName; }
+        }
         #endregion
 
         public VM_EditWindow(View.EditWindow HNDL, int? CurrentCardId = null)
@@ -176,12 +175,28 @@ namespace Client.ViewModel
             {
                 return saveChange ?? (saveChange = new Command(obj =>
                 {
-                    if (CurrentObject.StreetIndex != null)
+                    if (CurrentObject.StreetIndex != null && CurrentPKP.PKPIndex != null)
                     {
+                        currentCard.Owner = currentObject.Owner;
+                        currentCard.ObjectView = currentObject.Name;
+
+                        var str = "";
+                        str += Model.EF.EntityInstance.GetStreetType(currentObject.StreetIndex.Type) + " ";
+                        str += Model.EF.EntityInstance.DBContext.StreetsSet.First(p => p.Streets_ID == currentObject.StreetIndex.Streets_ID).Name + ", ";
+                        str += currentObject.Home;
+                        if (currentObject.Corp != "") str += "\\" + currentObject.Corp;
+                        if (currentObject.Room != "") str += "-" + currentObject.Room;
+                        currentCard.Address = str;
+                        currentCard.PKP = currentPKP.PKPIndex.Name;
+
+                        currentCard.MakeDate = DateTime.Now;
+                        currentCard.User = Model.EF.EntityInstance.UserID;
+
                         currentCard.Save();
                         currentObject.Save(currentCard.Id);
                         currentPKP.Save(currentCard.Id);
                         currentEquipment.Save(currentCard.Id);
+
                         System.Windows.MessageBox.Show("Сохранние!");
                     }
                 }));

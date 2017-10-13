@@ -27,7 +27,12 @@ namespace Client.ViewModel
         public VM_MainWindow(MainWindow MW)
         {
             WinHANDLE = MW;
+            LoadCards();
+        }
 
+        private void LoadCards()
+        {
+            Cards.Clear();
             var temp = Model.EF.EntityInstance.DBContext.CardsSet.Where(p => true).ToList();
             foreach (var item in temp)
             {
@@ -43,11 +48,18 @@ namespace Client.ViewModel
             {
                 return addCard ?? (addCard = new Command(obj =>
                 {
+                    var wTemp = new View.LoginWindow();
+                    var cTemp = new ViewModel.VM_LoginWindow(wTemp);
+                    wTemp.Owner = WinHANDLE;
+                    wTemp.DataContext = cTemp;
+                    wTemp.ShowDialog();
+
                     var eForm = new View.EditWindow();
                     var eFormVM = new ViewModel.VM_EditWindow(eForm);
                     eForm.Owner = WinHANDLE;
                     eForm.DataContext = eFormVM;
                     eForm.ShowDialog();
+                    LoadCards();
                 }));
             }
         }
@@ -59,12 +71,16 @@ namespace Client.ViewModel
             {
                 return editCard ?? (editCard = new Command(obj =>
                 {
-                    var eForm = new View.EditWindow();
-                    var eFormVM = new ViewModel.VM_EditWindow(eForm, SelectedItem.Id);
-                    eForm.Owner = WinHANDLE;
-                    eForm.DataContext = eFormVM;
-                    eForm.ShowDialog();
-                }));
+                    if (selectedItem != null)
+                    {
+                        var eForm = new View.EditWindow();
+                        var eFormVM = new ViewModel.VM_EditWindow(eForm, SelectedItem.Id);
+                        eForm.Owner = WinHANDLE;
+                        eForm.DataContext = eFormVM;
+                        eForm.ShowDialog();
+                        LoadCards();
+                    }
+                })); 
             }
         }
         #endregion

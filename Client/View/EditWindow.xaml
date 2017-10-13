@@ -7,7 +7,7 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         ShowInTaskbar="False">
-
+    
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top" Height="24">

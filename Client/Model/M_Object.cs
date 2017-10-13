@@ -21,7 +21,7 @@ namespace Client.Model
                 var temp = new Model.EF.Streets();
                 temp.Streets_ID = streets[i].Streets_ID;
                 temp.Object = streets[i].Object;
-                temp.Name = streets[i].Name + " " + GetStreetType(streets[i].Type);
+                temp.Name = streets[i].Name + " " + Model.EF.EntityInstance.GetStreetType(streets[i].Type);
                 temp.Type = streets[i].Type;
                 streets[i] = temp;
             }
@@ -56,29 +56,6 @@ namespace Client.Model
                 Model.EF.EntityInstance.DBContext.ObjectSet.Add(data);
             }
             Model.EF.EntityInstance.DBContext.SaveChanges();
-        }
-
-        private string GetStreetType(int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    return "тр.";
-                case 1:
-                    return "пр.";
-                case 2:
-                    return "ул.";
-                case 3:
-                    return "пер.";
-                case 4:
-                    return "пр-д";
-                case 5:
-                    return "т.";
-                case 6:
-                    return "пл.";
-                default:
-                    return "";
-            }
         }
 
         #region Properties

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/12/2017 09:11:16
+-- Date Created: 10/13/2017 09:08:59
 -- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
@@ -101,7 +101,11 @@ CREATE TABLE [dbo].[CardsSet] (
     [Cards_ID] int IDENTITY(1,1) NOT NULL,
     [Users_ID] int  NOT NULL,
     [MakeDate] datetime  NOT NULL,
-    [Amount] float  NOT NULL
+    [Amount] float  NOT NULL,
+    [OwnerView] nvarchar(max)  NOT NULL,
+    [ObjectView] nvarchar(max)  NOT NULL,
+    [AddressView] nvarchar(max)  NOT NULL,
+    [PKPView] nvarchar(max)  NOT NULL
 );
 GO
 

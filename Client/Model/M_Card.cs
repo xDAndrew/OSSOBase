@@ -11,9 +11,7 @@ namespace Client.Model
     class M_Card
     {
         private Model.EF.Cards data;
-        private Model.EF.Object obj;
-        private Model.EF.PKPModels pkp;
-        private Model.EF.Streets street;
+        private string userName;
 
         public M_Card(Model.EF.Cards data = null)
         {
@@ -27,12 +25,9 @@ namespace Client.Model
             else
             {
                 this.data = data;
-                obj = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == this.data.Cards_ID);
-                var temp = Model.EF.EntityInstance.DBContext.PKPSet.First(p => p.Cards_ID == this.data.Cards_ID);
-                pkp = Model.EF.EntityInstance.DBContext.PKPModelsSet.First(p => p.PKPModels_ID == temp.PKPModels_ID);
-                street = Model.EF.EntityInstance.DBContext.StreetsSet.First(p => p.Streets_ID == obj.Streets_ID);
+                var temp = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                UserName = temp.Place + " " + temp.Name;
             }
-
         }
 
         public void Save()
@@ -44,29 +39,6 @@ namespace Client.Model
             Model.EF.EntityInstance.DBContext.SaveChanges();
         }
 
-        private string GetStreetType(int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    return "тр.";
-                case 1:
-                    return "пр.";
-                case 2:
-                    return "ул.";
-                case 3:
-                    return "пер.";
-                case 4:
-                    return "пр-д";
-                case 5:
-                    return "т.";
-                case 6:
-                    return "пл.";
-                default:
-                    return "";
-            }
-        }
-
         public int Id
         {
             get { return data.Cards_ID; }
@@ -74,24 +46,20 @@ namespace Client.Model
 
         public string Owner
         {
-            get { return obj.Owner; }
+            get { return data.OwnerView; }
+            set { data.OwnerView = value; }
         }
 
         public string ObjectView
         {
-            get { return obj.Name; }
+            get { return data.ObjectView; }
+            set { data.ObjectView = value; }
         }
 
         public string Address
         {
-            get 
-            {
-                string str = GetStreetType(street.Type) +  " " + street.Name + ", ";
-                if (obj.Home != "") str += obj.Home;
-                if (obj.Corp != "") str += "\\" + obj.Corp + " ";
-                if (obj.Room != "") str += "- " + obj.Room;
-                return str; 
-            }
+            get { return data.AddressView; }
+            set { data.AddressView = value; }
         }
 
         public double UU
@@ -102,7 +70,30 @@ namespace Client.Model
 
         public string PKP
         {
-            get { return pkp.Name; }
+            get { return data.PKPView; }
+            set { data.PKPView = value; }
+        }
+
+        public DateTime MakeDate
+        {
+            get { return data.MakeDate; }
+            set { data.MakeDate = value; }
+        }
+
+        public int User
+        {
+            get { return data.Users_ID; }
+            set { data.Users_ID = value; }
+        }
+
+        public string UserName
+        {
+            get { return userName; }
+            set 
+            { 
+                this.userName = value;
+                OnPropertyChanged("UserName");
+            }
         }
 
         #region ServicesMetods

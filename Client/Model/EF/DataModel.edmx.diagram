@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="DataModel.TSO" Width="1.5" PointX="10.625" PointY="3.75" />
         <AssociationConnector Association="DataModel.TSOGroupTSO" />
         <EntityTypeShape EntityType="DataModel.PKP" Width="1.5" PointX="3.25" PointY="5" />
-        <EntityTypeShape EntityType="DataModel.Branch" Width="1.5" PointX="6" PointY="7.25" />
+        <EntityTypeShape EntityType="DataModel.Branch" Width="1.5" PointX="6" PointY="8.875" />
         <EntityTypeShape EntityType="DataModel.PKPModels" Width="1.5" PointX="0.75" PointY="5" />
         <AssociationConnector Association="DataModel.PKPPKPModels" />
         <EntityTypeShape EntityType="DataModel.Modules" Width="1.5" PointX="0.75" PointY="8.875" />

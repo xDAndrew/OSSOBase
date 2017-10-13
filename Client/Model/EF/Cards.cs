@@ -26,6 +26,10 @@ namespace Client.Model.EF
         public int Users_ID { get; set; }
         public System.DateTime MakeDate { get; set; }
         public double Amount { get; set; }
+        public string OwnerView { get; set; }
+        public string ObjectView { get; set; }
+        public string AddressView { get; set; }
+        public string PKPView { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual ICollection<Branch> Branch { get; set; }

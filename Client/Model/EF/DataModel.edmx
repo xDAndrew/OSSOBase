@@ -71,6 +71,10 @@
     <Property Name="Users_ID" Type="int" Nullable="false" />
     <Property Name="MakeDate" Type="datetime" Nullable="false" />
     <Property Name="Amount" Type="float" Nullable="false" />
+    <Property Name="OwnerView" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ObjectView" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AddressView" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PKPView" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="ObjectSet">
     <Key>
@@ -385,6 +389,10 @@
           <NavigationProperty Name="Cards_TSO" Relationship="DataModel.CardsCards_TSO" FromRole="Cards" ToRole="Cards_TSO" />
           <NavigationProperty Name="Object" Relationship="DataModel.CardsObject" FromRole="Cards" ToRole="Object" />
           <NavigationProperty Name="PKP" Relationship="DataModel.CardsPKP" FromRole="Cards" ToRole="PKP" />
+          <Property Name="OwnerView" Type="String" Nullable="false" />
+          <Property Name="ObjectView" Type="String" Nullable="false" />
+          <Property Name="AddressView" Type="String" Nullable="false" />
+          <Property Name="PKPView" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -654,6 +662,10 @@
           <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
           <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="OwnerView" ColumnName="OwnerView" />
+          <ScalarProperty Name="ObjectView" ColumnName="ObjectView" />
+          <ScalarProperty Name="AddressView" ColumnName="AddressView" />
+          <ScalarProperty Name="PKPView" ColumnName="PKPView" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
