@@ -48,6 +48,12 @@ namespace Client.ViewModel
             get { return currentCard; }
         }
 
+        private Model.EF.Users currentUser;
+        public Model.EF.Users CurrentUser
+        {
+            get { return currentUser; }
+        }
+
         #region StatusBar_Properties
         public string Date
         {
@@ -71,6 +77,7 @@ namespace Client.ViewModel
                 currentObject = new Model.M_Object();
                 currentPKP = new Model.M_PKP();
                 currentEquipment = new Model.EquipmentModel.Equipment();
+                currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
             }
             else
             {
@@ -151,9 +158,7 @@ namespace Client.ViewModel
                     excelApp.Visible = false;
                     excelApp.DisplayAlerts = false;
 
-                    // Создаём экземпляр рабочий книги Excel
                     Excel.Workbook workBook;
-                    // Создаём экземпляр листа Excel
                     Excel.Worksheet workSheet;
 
                     string str = Environment.CurrentDirectory;
@@ -177,6 +182,7 @@ namespace Client.ViewModel
                 {
                     if (CurrentObject.StreetIndex != null && CurrentPKP.PKPIndex != null)
                     {
+                        //var t = DateTime.Now;
                         currentCard.Owner = currentObject.Owner;
                         currentCard.ObjectView = currentObject.Name;
 
@@ -197,7 +203,7 @@ namespace Client.ViewModel
                         currentPKP.Save(currentCard.Id);
                         currentEquipment.Save(currentCard.Id);
 
-                        System.Windows.MessageBox.Show("Сохранние!");
+                        //System.Windows.MessageBox.Show((DateTime.Now - t).TotalSeconds.ToString());
                     }
                 }));
             }

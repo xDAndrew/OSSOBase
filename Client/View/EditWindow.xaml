@@ -6,7 +6,8 @@
         Width="700" Height="540"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        Closing="Window_Closing">
     
     <Grid>
         <DockPanel>
@@ -55,7 +56,7 @@
                         <TextBox Height="22" VerticalAlignment="Bottom" Margin="4, 2" DataContext="{Binding Path=CurrentObject}" Text="{Binding Owner, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="1" Content="Наименование объекта"/>
-                        <TextBox Grid.Row="1" Height="22" VerticalAlignment="Bottom" Margin="4, 2" DataContext="{Binding Path=CurrentObject}" Text="{Binding Name}" />
+                        <TextBox Grid.Row="1" Height="22" VerticalAlignment="Bottom" Margin="4, 2" DataContext="{Binding Path=CurrentObject}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -81,13 +82,13 @@
 
 
                             <Label Content="Дом" Grid.Column="1"/>
-                            <TextBox Grid.Column="1" Height="22" Margin="4, 0" VerticalAlignment="Bottom" DataContext="{Binding Path=CurrentObject}" Text="{Binding Home}" />
+                            <TextBox Grid.Column="1" Height="22" Margin="4, 0" VerticalAlignment="Bottom" DataContext="{Binding Path=CurrentObject}" Text="{Binding Home, UpdateSourceTrigger=PropertyChanged}" />
 
                             <Label Content="Корпус" Grid.Column="2"/>
-                            <TextBox Grid.Column="2" Height="22" Margin="4, 0" VerticalAlignment="Bottom" DataContext="{Binding Path=CurrentObject}" Text="{Binding Corp}" />
+                            <TextBox Grid.Column="2" Height="22" Margin="4, 0" VerticalAlignment="Bottom" DataContext="{Binding Path=CurrentObject}" Text="{Binding Corp, UpdateSourceTrigger=PropertyChanged}" />
 
                             <Label Content="Пом." Grid.Column="3"/>
-                            <TextBox Grid.Column="3" Height="22" Margin="4, 0" VerticalAlignment="Bottom" DataContext="{Binding Path=CurrentObject}" Text="{Binding Room}" />
+                            <TextBox Grid.Column="3" Height="22" Margin="4, 0" VerticalAlignment="Bottom" DataContext="{Binding Path=CurrentObject}" Text="{Binding Room, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -117,15 +118,15 @@
                         <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей" Command="{Binding OpenTSOList}"/>
 
                         <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Serial}"/>
+                        <TextBox Grid.Column="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Serial, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="1" Grid.Row="1" Content="Тел. №" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Phone}"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="1" Grid.Row="2" Content="Пароль" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Grid.Row="2" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Password}"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <DatePicker Grid.Row="2" Height="24" Margin="8, 0" ToolTip="Дата ввода в эксплуатацию" SelectedDateFormat="Long" DataContext="{Binding CurrentPKP}" SelectedDate="{Binding SelectedDate}"/>
+                        <DatePicker Grid.Row="2" Height="24" Margin="8, 0" ToolTip="Дата ввода в эксплуатацию" SelectedDateFormat="Long" DataContext="{Binding CurrentPKP}" SelectedDate="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="0" Grid.Row="3" Content="Кол-во шлейфов" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox Grid.Column="0" Grid.Row="3" Width="40" Margin="8, 0" Height="22" DockPanel.Dock="Right" HorizontalAlignment="Right"

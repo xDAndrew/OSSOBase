@@ -15,15 +15,10 @@ namespace Client.Model
         public M_Object(int? ID = null)
         {
             //Тут загружаем список улиц
-            streets = Model.EF.EntityInstance.DBContext.StreetsSet.Where(p => true).ToList();
+            streets = Model.EF.EntityInstance.DBContext.StreetsSet.AsNoTracking().Where(p => true).ToList();
             for (int i = 0; i < streets.Count; i++)
             {
-                var temp = new Model.EF.Streets();
-                temp.Streets_ID = streets[i].Streets_ID;
-                temp.Object = streets[i].Object;
-                temp.Name = streets[i].Name + " " + Model.EF.EntityInstance.GetStreetType(streets[i].Type);
-                temp.Type = streets[i].Type;
-                streets[i] = temp;
+                streets[i].Name += " " + Model.EF.EntityInstance.GetStreetType(streets[i].Type);
             }
 
             //Тут загружаем объект из БД или пустой объект
@@ -48,8 +43,8 @@ namespace Client.Model
 
         public void Save(int ID)
         {
-            data.Streets_ID = selectedStreet.Streets_ID;
             //Сохраняем в БД
+            data.Streets_ID = selectedStreet.Streets_ID;
             if (data.Object_ID == 0)
             {
                 data.Cards_ID = ID;
@@ -58,86 +53,45 @@ namespace Client.Model
             Model.EF.EntityInstance.DBContext.SaveChanges();
         }
 
-        #region Properties
         public string Owner
         {
-            get
-            {
-                return data.Owner;
-            }
-            set
-            {
-                data.Owner = value;
-            }
+            get { return data.Owner; }
+            set { data.Owner = value; }
         }
 
         public string Name
         {
-            get
-            {
-                return data.Name;
-            }
-            set
-            {
-                data.Name = value;
-            }
+            get { return data.Name; }
+            set { data.Name = value; }
         }
 
         public List<Model.EF.Streets> Streets
         {
-            get
-            {
-                return streets;
-            }
+            get { return streets; }
         }
 
         public Model.EF.Streets StreetIndex
         {
-            get
-            {
-                return selectedStreet;
-            }
-            set
-            {
-                selectedStreet = value;
-            }
+            get { return selectedStreet; }
+            set { selectedStreet = value; }
         }
 
         public string Home
         {
-            get
-            {
-                return data.Home;
-            }
-            set
-            {
-                data.Home = value;
-            }
+            get { return data.Home; }
+            set { data.Home = value; }
         }
 
         public string Corp
         {
-            get
-            {
-                return data.Corp;
-            }
-            set
-            {
-                data.Corp = value;
-            }
+            get { return data.Corp; }
+            set { data.Corp = value; }
         }
 
         public string Room
         {
-            get
-            {
-                return data.Room;
-            }
-            set
-            {
-                data.Room = value;
-            }
+            get { return data.Room; }
+            set { data.Room = value; }
         }
-        #endregion
     }
 }

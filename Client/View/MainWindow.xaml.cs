@@ -22,5 +22,10 @@ namespace Client
             InitializeComponent();
             this.DataContext = new ViewModel.VM_MainWindow(this);
         }
+
+        private void MG_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            MG.Focus();
+        }
     }
 }

@@ -3,13 +3,30 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Windows.Forms;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Client.ViewModel
 {
-    class VM_MainWindow
+    class VM_MainWindow : INotifyPropertyChanged
     {
         MainWindow WinHANDLE = null;
+        System.Windows.Forms.Timer UpdateTimer = new System.Windows.Forms.Timer();
+
+        private int itemIndex;
+        public int ItemIndex
+        {
+            get { return itemIndex; }
+            set 
+            { 
+                itemIndex = value;
+                OnPropertyChanged("ItemIndex");   
+            }
+        }
 
         ObservableCollection<Model.M_Card> cardsCollection = new ObservableCollection<Model.M_Card>();
         public ObservableCollection<Model.M_Card> Cards
@@ -27,20 +44,24 @@ namespace Client.ViewModel
         public VM_MainWindow(MainWindow MW)
         {
             WinHANDLE = MW;
-            LoadCards();
+            UpdateTimer.Interval = 3000;
+            UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
+            UpdateTimer.Start();
+            UpdateGrid();
         }
 
-        private void LoadCards()
+        public void UpdateGrid()
         {
+            int index = itemIndex;
             Cards.Clear();
-            var temp = Model.EF.EntityInstance.DBContext.CardsSet.Where(p => true).ToList();
+            var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
             foreach (var item in temp)
             {
                 Cards.Add(new Model.M_Card(item));
             }
+            ItemIndex = index;
         }
 
-        #region Command
         private Command addCard;
         public Command AddCard
         {
@@ -48,18 +69,14 @@ namespace Client.ViewModel
             {
                 return addCard ?? (addCard = new Command(obj =>
                 {
-                    var wTemp = new View.LoginWindow();
-                    var cTemp = new ViewModel.VM_LoginWindow(wTemp);
-                    wTemp.Owner = WinHANDLE;
-                    wTemp.DataContext = cTemp;
-                    wTemp.ShowDialog();
-
+                    UpdateTimer.Stop();
                     var eForm = new View.EditWindow();
                     var eFormVM = new ViewModel.VM_EditWindow(eForm);
                     eForm.Owner = WinHANDLE;
                     eForm.DataContext = eFormVM;
                     eForm.ShowDialog();
-                    LoadCards();
+                    UpdateTimer.Start();
+                    UpdateGrid();
                 }));
             }
         }
@@ -73,16 +90,36 @@ namespace Client.ViewModel
                 {
                     if (selectedItem != null)
                     {
+                        UpdateTimer.Stop();
                         var eForm = new View.EditWindow();
                         var eFormVM = new ViewModel.VM_EditWindow(eForm, SelectedItem.Id);
                         eForm.Owner = WinHANDLE;
                         eForm.DataContext = eFormVM;
                         eForm.ShowDialog();
-                        LoadCards();
+                        UpdateTimer.Start();
+                        UpdateGrid();
                     }
                 })); 
             }
         }
-        #endregion
+
+        private Command update;
+        public Command Update
+        {
+            get
+            {
+                return update ?? (update = new Command(obj =>
+                {
+                    UpdateGrid();
+                }));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

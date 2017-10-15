@@ -18,6 +18,10 @@ namespace Client.Model
             if (data == null)
             {
                 this.data = new Model.EF.Cards();
+
+                var temp = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                UserName = temp.Place + " " + temp.Name;
+
                 this.data.Users_ID = Model.EF.EntityInstance.UserID;
                 this.data.MakeDate = DateTime.Now;
                 this.data.Amount = 0.0;
@@ -25,7 +29,7 @@ namespace Client.Model
             else
             {
                 this.data = data;
-                var temp = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                var temp = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == data.Users_ID);
                 UserName = temp.Place + " " + temp.Name;
             }
         }
@@ -47,7 +51,11 @@ namespace Client.Model
         public string Owner
         {
             get { return data.OwnerView; }
-            set { data.OwnerView = value; }
+            set 
+            { 
+                data.OwnerView = value;
+                OnPropertyChanged("Owner");
+            }
         }
 
         public string ObjectView
@@ -96,14 +104,11 @@ namespace Client.Model
             }
         }
 
-        #region ServicesMetods
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-        #endregion
-
     }
 }

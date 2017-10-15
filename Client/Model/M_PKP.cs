@@ -17,7 +17,7 @@ namespace Client.Model
 
         public M_PKP(int? ID = null)
         {
-            PKP = Model.EF.EntityInstance.DBContext.PKPModelsSet.Where(p => true).ToList();
+            PKP = Model.EF.EntityInstance.DBContext.PKPModelsSet.AsNoTracking().Where(p => true).ToList();
 
             if (ID != null)
             {
@@ -51,10 +51,8 @@ namespace Client.Model
             }
             moduls.Save(data.PKP_ID);
             Model.EF.EntityInstance.DBContext.SaveChanges();
-            
         }
 
-        #region Properties
         public List<EF.PKPModels> PKPList
         {
             get { return PKP; }
@@ -84,12 +82,6 @@ namespace Client.Model
             set { data.Password = value; }
         }
 
-        public string Date
-        {
-            get { return data.Date.ToString("dd MM yyyy"); }
-            set { }
-        }
-
         public DateTime SelectedDate
         {
             get { return data.Date; }
@@ -100,6 +92,5 @@ namespace Client.Model
         {
             get { return moduls; }
         }
-        #endregion
     }
 }
