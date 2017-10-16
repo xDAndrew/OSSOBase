@@ -14,32 +14,44 @@ namespace Client.ViewModel
     class VM_EditWindow : INotifyPropertyChanged
     {
         private View.EditWindow WinLink;
-        
+
+        private bool changed = false;
+        public bool Changed
+        {
+            get 
+            {
+                if (CurrentObject.Changed || CurrentPKP.Changed || changed)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         private Model.M_Object currentObject;
         public Model.M_Object CurrentObject
-        { 
-            get 
-            { 
-                return currentObject; 
-            } 
+        {
+            get
+            {
+                return currentObject;
+            }
         }
 
         private Model.M_PKP currentPKP;
         public Model.M_PKP CurrentPKP
-        { 
-            get 
-            { 
-                return currentPKP; 
-            } 
+        {
+            get
+            {
+                return currentPKP;
+            }
         }
 
         private Model.EquipmentModel.Equipment currentEquipment;
-        public Model.EquipmentModel.Equipment CurrentEquipment 
-        { 
-            get 
-            { 
+        public Model.EquipmentModel.Equipment CurrentEquipment
+        {
+            get
+            {
                 return currentEquipment;
-            } 
+            }
         }
 
         private Model.M_Card currentCard;
@@ -163,13 +175,42 @@ namespace Client.ViewModel
                     Excel.Worksheet workSheet;
 
                     string str = Environment.CurrentDirectory;
-                    workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
+                    if (CurrentEquipment.LimbsCount <= 8)
+                    {
+                        workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
+                    }
+                    else
+                    {
+                        if (CurrentEquipment.LimbsCount <= 16)
+                        {
+                            workBook = excelApp.Workbooks.Open(str + @"\Data\16.xls");
+                        }
+                        else
+                        {
+                            if (CurrentEquipment.LimbsCount <= 32)
+                            {
+                                workBook = excelApp.Workbooks.Open(str + @"\Data\32.xls");
+                            }
+                            else
+                            {
+                                if (CurrentEquipment.LimbsCount <= 64)
+                                {
+                                    workBook = excelApp.Workbooks.Open(str + @"\Data\64.xls");
+                                }
+                                else
+                                {
+                                    System.Windows.MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
+                                    excelApp.Quit();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    
                     workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
 
                     workSheet.PrintOut();
                     excelApp.Quit();
-
-                    System.Windows.MessageBox.Show("Принтер!");
                 }));
             }
         }
@@ -181,9 +222,8 @@ namespace Client.ViewModel
             {
                 return saveChange ?? (saveChange = new Command(obj =>
                 {
-                    if (CurrentObject.StreetIndex != null && CurrentPKP.PKPIndex != null)
+                    if (CurrentObject.StreetIndex != null && CurrentPKP.PKPIndex != null && Changed)
                     {
-                        //var t = DateTime.Now;
                         currentCard.Owner = currentObject.Owner;
                         currentCard.ObjectView = currentObject.Name;
 
@@ -203,8 +243,38 @@ namespace Client.ViewModel
                         currentObject.Save(currentCard.Id);
                         currentPKP.Save(currentCard.Id);
                         currentEquipment.Save(currentCard.Id);
-                        //System.Windows.MessageBox.Show((DateTime.Now - t).TotalSeconds.ToString());
                     }
+                }));
+            }
+        }
+
+        private Command menuItemSaveChange;
+        public Command MenuSaveChange
+        {
+            get
+            {
+                return menuItemSaveChange ?? (menuItemSaveChange = new Command(obj =>
+                {
+                    if (CurrentObject.StreetIndex != null && CurrentPKP.PKPIndex != null && Changed && SaveChange != null)
+                    {
+                        SaveChange.Execute(new object());
+                        System.Windows.MessageBox.Show(WinLink, "Данные сохранены!", "Сохранить");
+                        CurrentObject.Changed = false;
+                        CurrentPKP.Changed = false;
+                        changed = false;
+                    }
+                }));
+            }
+        }
+
+        private Command menuCloseWindow;
+        public Command MenuCloseWindow
+        {
+            get
+            {
+                return menuCloseWindow ?? (menuCloseWindow = new Command(obj =>
+                {
+                    WinLink.Close();
                 }));
             }
         }
@@ -216,6 +286,7 @@ namespace Client.ViewModel
             {
                 return openTSOEdit ?? (openTSOEdit = new Command(obj =>
                 {
+                    changed = true;
                     var wTemp = new View.TSOEditWindow();
                     var cTemp = new ViewModel.VM_TSOEditWindow(wTemp, currentEquipment.Models);
                     wTemp.Owner = WinLink;
@@ -234,6 +305,7 @@ namespace Client.ViewModel
             {
                 return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
                 {
+                    changed = true;
                     var wTemp = new View.TSOWindow();
                     var cTemp = new ViewModel.VM_TSOWindow(currentPKP.Moduls, wTemp);
                     wTemp.Owner = WinLink;
@@ -251,6 +323,7 @@ namespace Client.ViewModel
             {
                 return addLimb ?? (addLimb = new Command(obj =>
                 {
+                    changed = true;
                     byte t = (byte)currentEquipment.LimbsCount;
                     t++;
                     currentEquipment.Branches.Add(new Model.EquipmentModel.Branch(t));
@@ -268,6 +341,7 @@ namespace Client.ViewModel
             {
                 return delLimb ?? (delLimb = new Command(obj =>
                 {
+                    changed = true;
                     if (currentEquipment.Branches.Count > 0)
                     {
                         currentEquipment.Branches.RemoveAt(currentEquipment.Branches.Count - 1);
@@ -279,13 +353,10 @@ namespace Client.ViewModel
         }
         #endregion
 
-        #region ServicesMetods
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-        #endregion
     }
 }

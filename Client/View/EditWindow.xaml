@@ -14,10 +14,10 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top" Height="24">
                 <MenuItem Header="Меню">
-                    <MenuItem Header="Сохранить" Command="{Binding SaveChange}"/>
+                    <MenuItem Header="Сохранить" Command="{Binding MenuSaveChange}"/>
                     <MenuItem Header="Печать" Command="{Binding Print}"/>
                     <Separator/>
-                    <MenuItem Header="Закрыть"/>
+                    <MenuItem Header="Закрыть" Command="{Binding MenuCloseWindow}"/>
                 </MenuItem>
             </Menu>
 

@@ -12,6 +12,13 @@ namespace Client.Model
         List<Model.EF.Streets> streets = new List<EF.Streets>();
         Model.EF.Streets selectedStreet = null;
 
+        private bool changed = false;
+        public bool Changed
+        {
+            get { return changed; }
+            set { changed = value; }
+        }
+
         public M_Object(int? ID = null)
         {
             //Тут загружаем список улиц
@@ -56,13 +63,21 @@ namespace Client.Model
         public string Owner
         {
             get { return data.Owner; }
-            set { data.Owner = value; }
+            set 
+            { 
+                data.Owner = value;
+                changed = true;
+            }
         }
 
         public string Name
         {
             get { return data.Name; }
-            set { data.Name = value; }
+            set 
+            { 
+                data.Name = value; 
+                changed = true; 
+            }
         }
 
         public List<Model.EF.Streets> Streets
@@ -73,25 +88,41 @@ namespace Client.Model
         public Model.EF.Streets StreetIndex
         {
             get { return selectedStreet; }
-            set { selectedStreet = value; }
+            set 
+            { 
+                selectedStreet = value; 
+                changed = true; 
+            }
         }
 
         public string Home
         {
             get { return data.Home; }
-            set { data.Home = value; }
+            set 
+            { 
+                data.Home = value; 
+                changed = true; 
+            }
         }
 
         public string Corp
         {
             get { return data.Corp; }
-            set { data.Corp = value; }
+            set 
+            { 
+                data.Corp = value;
+                changed = true;
+            }
         }
 
         public string Room
         {
             get { return data.Room; }
-            set { data.Room = value; }
+            set 
+            { 
+                data.Room = value;
+                changed = true;
+            }
         }
     }
 }

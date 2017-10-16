@@ -486,14 +486,8 @@ namespace Client.Model.EquipmentModel
 
         public int this[int index]
         {
-            get
-            {
-                return arr[index];
-            }
-            set
-            {
-                arr[index] = value;
-            }
+            get { return arr[index]; }
+            set { arr[index] = value; }
         }
 
         public double Summ
@@ -532,13 +526,11 @@ namespace Client.Model.EquipmentModel
             Model.EF.EntityInstance.DBContext.BranchSet.Add(data);
         }
 
-        #region ServicesMetods
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-        #endregion
     }
 }

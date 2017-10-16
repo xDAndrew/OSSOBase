@@ -15,6 +15,13 @@ namespace Client.Model
         List<EF.PKPModels> PKP = new List<EF.PKPModels>();
         EF.PKPModels sIndex = null;
 
+        private bool changed = false;
+        public bool Changed
+        {
+            get { return changed; }
+            set { changed = value; }
+        }
+
         public M_PKP(int? ID = null)
         {
             PKP = Model.EF.EntityInstance.DBContext.PKPModelsSet.AsNoTracking().Where(p => true).ToList();
@@ -61,31 +68,51 @@ namespace Client.Model
         public EF.PKPModels PKPIndex
         {
             get { return sIndex; }
-            set { sIndex = value; }
+            set 
+            { 
+                sIndex = value;
+                changed = true;
+            }
         }
 
         public string Serial
         {
             get { return data.Serial; }
-            set { data.Serial = value; }
+            set 
+            { 
+                data.Serial = value;
+                changed = true;
+            }
         }
 
         public string Phone
         {
             get { return data.Phone; }
-            set { data.Phone = value; }
+            set 
+            { 
+                data.Phone = value;
+                changed = true;
+            }
         }
 
         public string Password
         {
             get { return data.Password; }
-            set { data.Password = value; }
+            set 
+            { 
+                data.Password = value;
+                changed = true;
+            }
         }
 
         public DateTime SelectedDate
         {
             get { return data.Date; }
-            set { data.Date = value; }
+            set 
+            { 
+                data.Date = value;
+                changed = true;
+            }
         }
 
         public PKPModel.Modul_Collection Moduls
