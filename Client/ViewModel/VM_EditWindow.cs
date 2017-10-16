@@ -78,6 +78,7 @@ namespace Client.ViewModel
                 currentPKP = new Model.M_PKP();
                 currentEquipment = new Model.EquipmentModel.Equipment();
                 currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                CountUU();
             }
             else
             {
@@ -202,7 +203,6 @@ namespace Client.ViewModel
                         currentObject.Save(currentCard.Id);
                         currentPKP.Save(currentCard.Id);
                         currentEquipment.Save(currentCard.Id);
-
                         //System.Windows.MessageBox.Show((DateTime.Now - t).TotalSeconds.ToString());
                     }
                 }));

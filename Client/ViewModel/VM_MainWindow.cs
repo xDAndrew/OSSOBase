@@ -17,6 +17,17 @@ namespace Client.ViewModel
         MainWindow WinHANDLE = null;
         System.Windows.Forms.Timer UpdateTimer = new System.Windows.Forms.Timer();
 
+        private string userName;
+        public string CurrentUser
+        {
+            get { return userName; }
+        }
+
+        public int CardsCount
+        {
+            get { return Cards.Count; }
+        }
+
         private int itemIndex;
         public int ItemIndex
         {
@@ -44,6 +55,11 @@ namespace Client.ViewModel
         public VM_MainWindow(MainWindow MW)
         {
             WinHANDLE = MW;
+
+            var tempUser = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+            userName = tempUser.Place + " " + tempUser.Name;
+            OnPropertyChanged("CurrentUser");
+
             UpdateTimer.Interval = 3000;
             UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
             UpdateTimer.Start();
@@ -60,6 +76,7 @@ namespace Client.ViewModel
                 Cards.Add(new Model.M_Card(item));
             }
             ItemIndex = index;
+            OnPropertyChanged("CardsCount");
         }
 
         private Command addCard;
@@ -103,14 +120,14 @@ namespace Client.ViewModel
             }
         }
 
-        private Command update;
-        public Command Update
+        private Command closeApp;
+        public Command CloseApp
         {
             get
             {
-                return update ?? (update = new Command(obj =>
+                return closeApp ?? (closeApp = new Command(obj =>
                 {
-                    UpdateGrid();
+                    WinHANDLE.Close();
                 }));
             }
         }

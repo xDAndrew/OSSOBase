@@ -6,7 +6,8 @@
         Height="380"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        Icon="..\.\Source\security.ico">
 
     <Grid>
         <Grid.ColumnDefinitions>
