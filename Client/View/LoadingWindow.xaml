@@ -1,0 +1,12 @@
+﻿<Window x:Class="Client.View.LoadingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LoadingWindow" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Height="100" 
+        Width="300">
+    <Grid>
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center" Content="Идёт загрузка данных..."/>
+    </Grid>
+</Window>

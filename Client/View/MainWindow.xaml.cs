@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,8 +22,7 @@ namespace Client
         public MainWindow()
         {
             InitializeComponent();
-            Model.EF.EntityInstance.UserID = int.Parse(ConfigurationManager.AppSettings["userId"]);
-            this.DataContext = new ViewModel.VM_MainWindow(this);
+            Model.EF.EntityInstance.UserID = int.Parse((string)ConfigurationManager.AppSettings["userId"]);
         }
 
         private void MG_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)

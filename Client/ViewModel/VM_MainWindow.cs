@@ -56,18 +56,21 @@ namespace Client.ViewModel
         {
             WinHANDLE = MW;
 
-            var tempUser = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
-            userName = tempUser.Place + " " + tempUser.Name;
-            OnPropertyChanged("CurrentUser");
-
             UpdateTimer.Interval = 3000;
             UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
             UpdateTimer.Start();
-            UpdateGrid();
+            //UpdateGrid();
         }
 
         public void UpdateGrid()
         {
+            if (userName == "")
+            {
+                var tempUser = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                userName = tempUser.Place + " " + tempUser.Name;
+                OnPropertyChanged("CurrentUser");
+            }
+
             int index = itemIndex;
             Cards.Clear();
             var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();

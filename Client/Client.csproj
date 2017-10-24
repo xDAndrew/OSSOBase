@@ -13,11 +13,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -36,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>security.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -89,6 +91,9 @@
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
     <Compile Include="ViewModel\VM_TSOEditWindow.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
+    <Compile Include="View\LoadingWindow.xaml.cs">
+      <DependentUpon>LoadingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TSOEditWindow.xaml.cs">
       <DependentUpon>TSOEditWindow.xaml</DependentUpon>
     </Compile>
@@ -96,6 +101,10 @@
       <DependentUpon>TSOWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\EditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,10 +230,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="security.ico" />
     <Resource Include="Source\Edit.png" />
     <Resource Include="Source\Add.png" />
     <Resource Include="Source\security.ico" />
     <Resource Include="Documents\Note1.txt" />
+    <Resource Include="Documents\ChangesLog.txt" />
     <Content Include="Model\EF\DataModel.edmx.sql" />
   </ItemGroup>
   <ItemGroup>
