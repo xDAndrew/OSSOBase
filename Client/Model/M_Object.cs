@@ -45,6 +45,7 @@ namespace Client.Model
                 Room = "";
                 Corp = "";
                 Home = "";
+                this.changed = false;
             }
         }
 

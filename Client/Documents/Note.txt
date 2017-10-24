@@ -1,0 +1,11 @@
+﻿Типы улиц:
+	0 - Тракт
+	1 - Проспект
+	2 - Улица
+	3 - Переулок
+	4 - Проезд
+	5 - Тупик
+	6 - Площадь
+
+Стандартный connectionString:
+    //<add name="DataModelContainer" connectionString="metadata=res://*/Model.EF.DataModel.csdl|res://*/Model.EF.DataModel.ssdl|res://*/Model.EF.DataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(localdb)\Projects;initial catalog=OSSOBase;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />

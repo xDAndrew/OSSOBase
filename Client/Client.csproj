@@ -82,7 +82,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EquipmentModel\Branch.cs" />
-    <Compile Include="Model\EquipmentModel\CallerMemberName.cs" />
+    <Compile Include="Additional\CallerMemberName.cs" />
     <Compile Include="Model\EquipmentModel\Equipment.cs" />
     <Compile Include="Model\EquipmentModel\TSO_Item.cs" />
     <Compile Include="Model\EquipmentModel\TSO_Collection.cs" />
@@ -91,9 +91,6 @@
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
     <Compile Include="ViewModel\VM_TSOEditWindow.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
-    <Compile Include="View\LoadingWindow.xaml.cs">
-      <DependentUpon>LoadingWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\TSOEditWindow.xaml.cs">
       <DependentUpon>TSOEditWindow.xaml</DependentUpon>
     </Compile>
@@ -101,10 +98,6 @@
       <DependentUpon>TSOWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\EditWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,7 +157,7 @@
     </Compile>
     <Compile Include="Model\M_Object.cs" />
     <Compile Include="Model\M_PKP.cs" />
-    <Compile Include="ViewModel\Command.cs" />
+    <Compile Include="Additional\Command.cs" />
     <Compile Include="ViewModel\VM_EditWindow.cs" />
     <Compile Include="ViewModel\VM_MainWindow.cs" />
     <Compile Include="View\EditWindow.xaml.cs">
@@ -234,8 +227,8 @@
     <Resource Include="Source\Edit.png" />
     <Resource Include="Source\Add.png" />
     <Resource Include="Source\security.ico" />
-    <Resource Include="Documents\Note1.txt" />
-    <Resource Include="Documents\ChangesLog.txt" />
+    <Resource Include="Documents\Note.txt" />
+    <Resource Include="Documents\Changes.txt" />
     <Content Include="Model\EF\DataModel.edmx.sql" />
   </ItemGroup>
   <ItemGroup>

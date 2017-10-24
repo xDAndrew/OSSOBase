@@ -18,13 +18,7 @@ namespace Client.ViewModel
         private bool changed = false;
         public bool Changed
         {
-            get 
-            {
-                if (CurrentObject.Changed || CurrentPKP.Changed || changed)
-                    return true;
-                else
-                    return false;
-            }
+            get { return CurrentObject.Changed || CurrentPKP.Changed || changed; }
         }
 
         private Model.M_Object currentObject;
@@ -85,10 +79,10 @@ namespace Client.ViewModel
             if (CurrentCardId == null)
             {
                 currentCard = new Model.M_Card();
-
                 currentObject = new Model.M_Object();
                 currentPKP = new Model.M_PKP();
                 currentEquipment = new Model.EquipmentModel.Equipment();
+
                 currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
                 CountUU();
             }

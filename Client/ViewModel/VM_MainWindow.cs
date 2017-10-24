@@ -64,7 +64,7 @@ namespace Client.ViewModel
 
         public void UpdateGrid()
         {
-            if (userName == "")
+            if (userName == null)
             {
                 var tempUser = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
                 userName = tempUser.Place + " " + tempUser.Name;
@@ -126,20 +126,13 @@ namespace Client.ViewModel
         private Command closeApp;
         public Command CloseApp
         {
-            get
-            {
-                return closeApp ?? (closeApp = new Command(obj =>
-                {
-                    WinHANDLE.Close();
-                }));
-            }
+            get { return closeApp ?? (closeApp = new Command(obj => { WinHANDLE.Close();})); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

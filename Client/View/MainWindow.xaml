@@ -9,11 +9,13 @@
     
     <Grid>
         <DockPanel>
+            
             <Menu DockPanel.Dock="Top" Height="24">
                 <MenuItem Header="Меню">
                     <MenuItem Header="Выход" Command="{Binding CloseApp}"/>
                 </MenuItem>
             </Menu>
+            
             <ToolBar DockPanel.Dock="Top" Height="30" Width="Auto" HorizontalAlignment="Left">
                 <Button Width="24" Height="24" Command="{Binding AddCard}">
                     <Image Source="..\.\Source\Add.png"/>
@@ -22,6 +24,7 @@
                     <Image Source="..\.\Source\Edit.png"/>
                 </Button>
             </ToolBar>
+            
             <StatusBar DockPanel.Dock="Bottom" Height="24">
                 <TextBlock Text="Пользователь:" />
                 <TextBlock Text="{Binding CurrentUser}"/>
@@ -30,15 +33,26 @@
                 <TextBlock Text="{Binding CardsCount}"/>
             </StatusBar>
 
-            <DataGrid x:Name="MG" AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" AlternatingRowBackground="#FFE473" ItemsSource="{Binding Cards}"
-                      SelectedItem="{Binding SelectedItem}" SelectedIndex="{Binding ItemIndex}" SelectionMode="Single" SelectedCellsChanged="MG_SelectedCellsChanged" CanUserSortColumns="False">
+            <DataGrid x:Name="MG" 
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      CanUserResizeColumns="False" 
+                      CanUserReorderColumns="False" 
+                      CanUserResizeRows="False" 
+                      AlternatingRowBackground="#FFE473" 
+                      ItemsSource="{Binding Cards}"
+                      SelectedItem="{Binding SelectedItem}" 
+                      SelectedIndex="{Binding ItemIndex}" 
+                      SelectionMode="Single" 
+                      CanUserSortColumns="False"
+                      SelectedCellsChanged="MG_SelectedCellsChanged"> 
                 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Заказчик" Width="3*" Binding="{Binding Owner}"/>
                     <DataGridTextColumn Header="Объект" Width="3*" Binding="{Binding ObjectView}"/>
-                    <DataGridTextColumn Header="Адрес" Width="3*" Binding="{Binding Address}"/>
-                    <DataGridTextColumn Header="У.У." Width="*" Binding="{Binding UU}"/>
-                    <DataGridTextColumn Header="ПКП" Width="2*" Binding="{Binding PKP}"/>
+                    <DataGridTextColumn Header="Адрес" Width="2.5*" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="У.У." Width="0.5*" Binding="{Binding UU}"/>
+                    <DataGridTextColumn Header="ПКП" Width="1.2*" Binding="{Binding PKP}"/>
                 </DataGrid.Columns>
             </DataGrid> 
             

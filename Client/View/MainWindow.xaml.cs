@@ -23,6 +23,8 @@ namespace Client
         {
             InitializeComponent();
             Model.EF.EntityInstance.UserID = int.Parse((string)ConfigurationManager.AppSettings["userId"]);
+            this.Show();
+            this.DataContext = new ViewModel.VM_MainWindow(this);
         }
 
         private void MG_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)

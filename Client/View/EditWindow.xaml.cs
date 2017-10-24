@@ -23,12 +23,11 @@ namespace Client.View
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var DC = this.DataContext as ViewModel.VM_EditWindow;
-            if (DC.Changed)
+            if ((this.DataContext as ViewModel.VM_EditWindow).Changed)
             {
                 if (System.Windows.MessageBox.Show("Сохранить внесенные изменения?", "Сохранить", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    DC.SaveChange.Execute(new object());
+                    (this.DataContext as ViewModel.VM_EditWindow).SaveChange.Execute(new object());
                 }
             }
         }

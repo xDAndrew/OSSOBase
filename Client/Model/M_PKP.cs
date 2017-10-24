@@ -45,6 +45,7 @@ namespace Client.Model
                 Phone = "";
                 Password = "";
                 data.Date = DateTime.Now;
+                this.changed = false;
             }
         }
 
