@@ -8,4 +8,5 @@
 	6 - Площадь
 
 Стандартный connectionString:
-    //<add name="DataModelContainer" connectionString="metadata=res://*/Model.EF.DataModel.csdl|res://*/Model.EF.DataModel.ssdl|res://*/Model.EF.DataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(localdb)\Projects;initial catalog=OSSOBase;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="DataModelContainer" connectionString="metadata=res://*/Model.EF.DataModel.csdl|res://*/Model.EF.DataModel.ssdl|res://*/Model.EF.DataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(localdb)\Projects;initial catalog=OSSOBase;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>
+	<add name="DataModelContainer" connectionString="metadata=res://*/Model.EF.DataModel.csdl|res://*/Model.EF.DataModel.ssdl|res://*/Model.EF.DataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=181.11.235.3\SQLEXPRESS;initial catalog=OSSOBase;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>
