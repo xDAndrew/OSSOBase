@@ -9,12 +9,13 @@ using System.Windows.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 
 namespace Client.ViewModel
 {
     class VM_MainWindow : INotifyPropertyChanged
     {
-        MainWindow WinHANDLE = null;
+        MainWindow WinLink = null;
         System.Windows.Forms.Timer UpdateTimer = new System.Windows.Forms.Timer();
 
         private string userName;
@@ -54,7 +55,7 @@ namespace Client.ViewModel
 
         public VM_MainWindow(MainWindow MW)
         {
-            WinHANDLE = MW;
+            WinLink = MW;
 
             UpdateTimer.Interval = 3000;
             UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
@@ -79,6 +80,8 @@ namespace Client.ViewModel
                 Cards.Add(new Model.M_Card(item));
             }
             ItemIndex = index;
+            WinLink.MG.Focus();
+
             OnPropertyChanged("CardsCount");
         }
 
@@ -92,7 +95,7 @@ namespace Client.ViewModel
                     UpdateTimer.Stop();
                     var eForm = new View.EditWindow();
                     var eFormVM = new ViewModel.VM_EditWindow(eForm);
-                    eForm.Owner = WinHANDLE;
+                    eForm.Owner = WinLink;
                     eForm.DataContext = eFormVM;
                     eForm.ShowDialog();
                     UpdateTimer.Start();
@@ -113,7 +116,7 @@ namespace Client.ViewModel
                         UpdateTimer.Stop();
                         var eForm = new View.EditWindow();
                         var eFormVM = new ViewModel.VM_EditWindow(eForm, SelectedItem.Id);
-                        eForm.Owner = WinHANDLE;
+                        eForm.Owner = WinLink;
                         eForm.DataContext = eFormVM;
                         eForm.ShowDialog();
                         UpdateTimer.Start();
@@ -126,7 +129,7 @@ namespace Client.ViewModel
         private Command closeApp;
         public Command CloseApp
         {
-            get { return closeApp ?? (closeApp = new Command(obj => { WinHANDLE.Close();})); }
+            get { return closeApp ?? (closeApp = new Command(obj => { WinLink.Close();})); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

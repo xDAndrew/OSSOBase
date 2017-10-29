@@ -20,16 +20,5 @@ namespace Client.View
         {
             InitializeComponent();
         }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if ((this.DataContext as ViewModel.VM_EditWindow).Changed)
-            {
-                if (System.Windows.MessageBox.Show("Сохранить внесенные изменения?", "Сохранить", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    (this.DataContext as ViewModel.VM_EditWindow).SaveChange.Execute(new object());
-                }
-            }
-        }
     }
 }

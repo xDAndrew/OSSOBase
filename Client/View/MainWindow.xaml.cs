@@ -27,9 +27,14 @@ namespace Client
             this.DataContext = new ViewModel.VM_MainWindow(this);
         }
 
-        private void MG_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void RowDoubleClick(object sender, RoutedEventArgs e)
         {
-            MG.Focus();
+            (this.DataContext as ViewModel.VM_MainWindow).EditCard.Execute(new object());
+
+            //Для заметки
+            //var row = (DataGridRow)sender;
+            //MessageBox.Show(row.GetIndex().ToString());
+            //row.DetailsVisibility = row.DetailsVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

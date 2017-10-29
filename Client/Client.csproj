@@ -37,7 +37,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>security.ico</ApplicationIcon>
+    <ApplicationIcon>.\Source\security.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -223,7 +223,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="security.ico" />
     <Resource Include="Source\Edit.png" />
     <Resource Include="Source\Add.png" />
     <Resource Include="Source\security.ico" />

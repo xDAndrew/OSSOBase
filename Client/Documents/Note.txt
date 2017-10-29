@@ -10,3 +10,11 @@
 Стандартный connectionString:
     <add name="DataModelContainer" connectionString="metadata=res://*/Model.EF.DataModel.csdl|res://*/Model.EF.DataModel.ssdl|res://*/Model.EF.DataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(localdb)\Projects;initial catalog=OSSOBase;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>
 	<add name="DataModelContainer" connectionString="metadata=res://*/Model.EF.DataModel.csdl|res://*/Model.EF.DataModel.ssdl|res://*/Model.EF.DataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=181.11.235.3\SQLEXPRESS;initial catalog=OSSOBase;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>
+
+Нужно реализовать:
+	1. Печать
+	2. Служба синхронизации данных
+	3. Сортировка +
+	4. Поиск по объектам
+	5. Двойной щелчок по строкам таблицы +
+	6. Подсказка "Список модулей" +

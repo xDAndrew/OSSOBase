@@ -35,18 +35,24 @@
 
             <DataGrid x:Name="MG" 
                       AutoGenerateColumns="False" 
-                      IsReadOnly="True" 
+                      IsReadOnly="True"
                       CanUserResizeColumns="False" 
                       CanUserReorderColumns="False" 
-                      CanUserResizeRows="False" 
+                      CanUserResizeRows="False"
+                      CanUserSortColumns="True"
                       AlternatingRowBackground="#FFE473" 
                       ItemsSource="{Binding Cards}"
                       SelectedItem="{Binding SelectedItem}" 
                       SelectedIndex="{Binding ItemIndex}" 
-                      SelectionMode="Single" 
-                      CanUserSortColumns="False"
-                      SelectedCellsChanged="MG_SelectedCellsChanged"> 
-                
+                      SelectionMode="Single"
+                      RowDetailsVisibilityMode="Collapsed">
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <EventSetter Event="MouseDoubleClick" Handler="RowDoubleClick"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Заказчик" Width="3*" Binding="{Binding Owner}"/>
                     <DataGridTextColumn Header="Объект" Width="3*" Binding="{Binding ObjectView}"/>

@@ -6,8 +6,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
-using Excel = Microsoft.Office.Interop.Excel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Client.ViewModel
 {
@@ -60,6 +61,21 @@ namespace Client.ViewModel
             get { return currentUser; }
         }
 
+        public string ToolTipView
+        {
+            get 
+            {
+                StringBuilder str = new StringBuilder("ПКП - 0,3 у.у. \n");
+                for (int i = 0; i < currentPKP.Moduls.Items.Count; i++)
+                {
+                    var item = currentPKP.Moduls.Items[i];
+                    str.Append(string.Format("{0}(x{1}) - {2} у.у.", item.Name, item.Count, item.UUSumm) + "\n");
+                }
+                str.Append(string.Format("Итого: {0} у.у.", currentPKP.Moduls.FullSumm));
+                return str.ToString();
+            }
+        }
+
         #region StatusBar_Properties
         public string Date
         {
@@ -101,6 +117,17 @@ namespace Client.ViewModel
                 OnPropertyChanged("CurrentEquipment");
                 CountUU();
             }
+
+            WinLink.Closing += (o, e) => 
+            {
+                if (Changed)
+                {
+                    if (System.Windows.MessageBox.Show("Сохранить внесенные изменения?", "Сохранить", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        SaveChange.Execute(new object());
+                    }
+                }
+            };
         }
 
         public void CountUU()
@@ -161,50 +188,94 @@ namespace Client.ViewModel
             {
                 return print ?? (print = new Command(obj =>
                 {
-                    Excel.Application excelApp = new Excel.Application();
-                    excelApp.Visible = false;
-                    excelApp.DisplayAlerts = false;
+                    //Excel.Application excelApp = new Excel.Application();
+                    //excelApp.Visible = false;
+                    //excelApp.DisplayAlerts = false;
 
-                    Excel.Workbook workBook;
-                    Excel.Worksheet workSheet;
+                    //Excel.Workbook workBook;
+                    //Excel.Worksheet workSheet;
 
-                    string str = Environment.CurrentDirectory;
-                    if (CurrentEquipment.LimbsCount <= 8)
-                    {
-                        workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
-                    }
-                    else
-                    {
-                        if (CurrentEquipment.LimbsCount <= 16)
-                        {
-                            workBook = excelApp.Workbooks.Open(str + @"\Data\16.xls");
-                        }
-                        else
-                        {
-                            if (CurrentEquipment.LimbsCount <= 32)
-                            {
-                                workBook = excelApp.Workbooks.Open(str + @"\Data\32.xls");
-                            }
-                            else
-                            {
-                                if (CurrentEquipment.LimbsCount <= 64)
-                                {
-                                    workBook = excelApp.Workbooks.Open(str + @"\Data\64.xls");
-                                }
-                                else
-                                {
-                                    System.Windows.MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
-                                    excelApp.Quit();
-                                    return;
-                                }
-                            }
-                        }
-                    }
+                    //string str = Environment.CurrentDirectory;
+                    //if (CurrentEquipment.LimbsCount <= 8)
+                    //{
+                    //    workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
+                    //}
+                    //else
+                    //{
+                    //    if (CurrentEquipment.LimbsCount <= 16)
+                    //    {
+                    //        workBook = excelApp.Workbooks.Open(str + @"\Data\16.xls");
+                    //    }
+                    //    else
+                    //    {
+                    //        if (CurrentEquipment.LimbsCount <= 32)
+                    //        {
+                    //            workBook = excelApp.Workbooks.Open(str + @"\Data\32.xls");
+                    //        }
+                    //        else
+                    //        {
+                    //            if (CurrentEquipment.LimbsCount <= 64)
+                    //            {
+                    //                workBook = excelApp.Workbooks.Open(str + @"\Data\64.xls");
+                    //            }
+                    //            else
+                    //            {
+                    //                System.Windows.MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
+                    //                excelApp.Quit();
+                    //                return;
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     
-                    workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
+                    //workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
 
-                    workSheet.PrintOut();
-                    excelApp.Quit();
+                    //workSheet.PrintOut();
+                    //excelApp.Quit();
+
+                    //var PD = new PrintDocument();
+                    //PD.PrinterSettings.PrinterName = PrinterSettings.InstalledPrinters[0];
+                    //PD.DefaultPageSettings.PaperSize = new PaperSize("A4", );
+
+                    //PD.PrintPage += (o, e) =>
+                    //{
+                    //    string PrintText = "            <- отступ для картинки\r\n";
+                    //    PrintText += "            <- отступ для картинки 2\r\n";
+                    //    PrintText += "            <- отступ для картинки 3\r\n";
+                    //    PrintText += "Текст без отступа на 4ой строке";
+
+                    //    Font PrintFont = new Font("Times New Roman", 3, System.Drawing.FontStyle.Regular, GraphicsUnit.Millimeter);
+                    //    e.Graphics.DrawString(PrintText, PrintFont, Brushes.Black, new PointF(0, 0));
+                    //};
+                    //PD.Print();
+
+                    //var printDialog = new PrintDialog();
+                    ////PD.PrintVisual(WinLink.MG, "Привет, медвед!");
+
+                    //var run = "Это простой текст, тестируем функциональность " + "печати в Windows Presentation Foundation.";
+
+                    //// Поместить его в TextBlock
+                    //TextBlock visual = new TextBlock();
+                    //visual.Inlines.Add(run);
+
+                    //// Использовать поля для получения рамки страницы
+                    //visual.Margin = new Thickness(5);
+
+                    //// Разрешить перенос для заполнения всей ширины страницы
+                    //visual.TextWrapping = TextWrapping.Wrap;
+
+                    //// Увеличить TextBlock по обоим измерениям в 5 раз. 
+                    //// (В этом случае увеличение шрифта дало бы тот же эффект, 
+                    //// потому что TextBlock — единственный элемент)
+                    //visual.LayoutTransform = new ScaleTransform(5, 5);
+
+                    //// Установить размер элемента
+                    //Size pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+                    //visual.Measure(pageSize);
+                    //visual.Arrange(new Rect(0, 0, pageSize.Width, pageSize.Height));
+
+                    //// Напечатать элемент
+                    //printDialog.PrintVisual(visual, "Распечатываем текст");
                 }));
             }
         }
@@ -306,6 +377,7 @@ namespace Client.ViewModel
                     wTemp.DataContext = cTemp;
                     wTemp.ShowDialog();
                     CountUU();
+                    OnPropertyChanged("ToolTipView");
                 }));
             }
         }
