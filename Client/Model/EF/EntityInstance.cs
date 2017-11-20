@@ -11,6 +11,10 @@ namespace Client.Model.EF
         public static DataModelContainer DBContext = new DataModelContainer();
         public static int UserID = 1;
 
+        public static bool connected = false;
+        public static DateTime CurrentTime = DateTime.Now;
+        public static DateTime LastTime = DateTime.Now;
+
         public static string GetStreetType(int index)
         {
             switch (index)

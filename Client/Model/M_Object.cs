@@ -22,7 +22,7 @@ namespace Client.Model
         public M_Object(int? ID = null)
         {
             //Тут загружаем список улиц
-            streets = Model.EF.EntityInstance.DBContext.StreetsSet.AsNoTracking().Where(p => true).ToList();
+            streets = Model.EF.EntityInstance.DBContext.StreetsSet.AsNoTracking().Where(p => true).OrderBy(p => p.Name).ToList();
             for (int i = 0; i < streets.Count; i++)
             {
                 streets[i].Name += " " + Model.EF.EntityInstance.GetStreetType(streets[i].Type);
