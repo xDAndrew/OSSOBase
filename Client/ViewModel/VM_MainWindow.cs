@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace Client.ViewModel
 {
