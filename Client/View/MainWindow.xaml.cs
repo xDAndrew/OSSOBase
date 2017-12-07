@@ -29,7 +29,7 @@ namespace Client
 
         private void RowDoubleClick(object sender, RoutedEventArgs e)
         {
-            (this.DataContext as ViewModel.VM_MainWindow).EditCard.Execute(new object());
+            (DataContext as ViewModel.VM_MainWindow).EditCard.Execute(new object());
 
             //Для заметки
             //var row = (DataGridRow)sender;

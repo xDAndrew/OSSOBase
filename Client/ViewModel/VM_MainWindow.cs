@@ -105,6 +105,11 @@ namespace Client.ViewModel
             }
         }
 
+        private double updateUU()
+        {
+            return 0.0;
+        }
+
         private Command editCard;
         public Command EditCard
         {
@@ -117,6 +122,7 @@ namespace Client.ViewModel
                         UpdateTimer.Stop();
                         var eForm = new View.EditWindow();
                         var eFormVM = new ViewModel.VM_EditWindow(eForm, SelectedItem.Id);
+                        //System.Windows.MessageBox.Show(eFormVM.CurrentEquipment.Results.Summ.ToString());
                         eForm.Owner = WinLink;
                         eForm.DataContext = eFormVM;
                         eForm.ShowDialog();
@@ -128,10 +134,19 @@ namespace Client.ViewModel
         }
 
         private Command closeApp;
-        public Command CloseApp
-        {
-            get { return closeApp ?? (closeApp = new Command(obj => { WinLink.Close();})); }
-        }
+        public Command CloseApp { get => closeApp ?? (closeApp = new Command(obj => { WinLink.Close(); })); }
+
+        private Command cardsUpdate;
+        public Command CardsUpdate { get => cardsUpdate ?? (cardsUpdate = new Command(obj => {
+            UpdateTimer.Stop();
+            foreach (var item in cardsCollection)
+            {
+                var VM = new ViewModel.VM_EditWindow(new View.EditWindow(), item.Id);
+                VM.UpdateUU();
+                OnPropertyChanged("CardsCollection");
+            }
+            UpdateTimer.Start();
+        })); }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

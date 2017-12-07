@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Model.PKPModel
 {
@@ -64,7 +60,7 @@ namespace Client.Model.PKPModel
                 {
                     summ += item.UUSumm;
                 }
-                summ += 0.3;
+                summ += 0.35;
                 return summ;
             }
         }

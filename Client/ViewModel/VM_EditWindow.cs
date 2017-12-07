@@ -280,6 +280,11 @@ namespace Client.ViewModel
             }
         }
 
+        public void UpdateUU()
+        {
+            currentCard.Save();
+        }
+
         private Command saveChange;
         public Command SaveChange
         {
@@ -300,6 +305,7 @@ namespace Client.ViewModel
                         if (currentObject.Room != "") str += "-" + currentObject.Room;
                         currentCard.Address = str;
                         currentCard.PKP = currentPKP.PKPIndex.Name;
+                        
 
                         currentCard.MakeDate = DateTime.Now;
                         currentCard.User = Model.EF.EntityInstance.UserID;
