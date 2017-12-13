@@ -6,6 +6,8 @@ namespace Client.Model
     class M_Object
     {
         Model.EF.Object data;
+        Model.EF.Object objReference;
+
         List<Model.EF.Streets> streets = new List<EF.Streets>();
         Model.EF.Streets selectedStreet = null;
 
@@ -25,10 +27,19 @@ namespace Client.Model
                 streets[i].Name += " " + Model.EF.EntityInstance.GetStreetType(streets[i].Type);
             }
 
+            data = new Model.EF.Object();
+
             //Тут загружаем объект из БД или пустой объект
             if (ID != null)
             {
-                data = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == ID.Value);
+                objReference = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == ID.Value);
+                Owner = objReference.Owner;
+                Name = objReference.Name;
+                Room = objReference.Room;
+                Corp = objReference.Corp;
+                Home = objReference.Home;
+                data.Streets_ID = objReference.Streets_ID;
+                changed = false;
                 foreach (var item in streets)
                 {
                     if (item.Streets_ID == data.Streets_ID) selectedStreet = item;
@@ -36,7 +47,6 @@ namespace Client.Model
             }
             else
             {
-                data = new Model.EF.Object();
                 Owner = "";
                 Name = "";
                 Room = "";
@@ -50,6 +60,11 @@ namespace Client.Model
         {
             //Сохраняем в БД
             data.Streets_ID = selectedStreet.Streets_ID;
+            objReference.Owner = Owner;
+            objReference.Name = Name;
+            objReference.Room = Room;
+            objReference.Corp = Corp;
+            objReference.Home = Home;
             if (data.Object_ID == 0)
             {
                 data.Cards_ID = ID;

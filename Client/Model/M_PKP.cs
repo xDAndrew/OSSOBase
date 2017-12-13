@@ -7,6 +7,7 @@ namespace Client.Model
     class M_PKP
     {
         EF.PKP data;
+        EF.PKP objRef;
         PKPModel.Modul_Collection moduls = new PKPModel.Modul_Collection();
 
         List<EF.PKPModels> PKP = new List<EF.PKPModels>();
@@ -23,9 +24,16 @@ namespace Client.Model
         {
             PKP = Model.EF.EntityInstance.DBContext.PKPModelsSet.AsNoTracking().Where(p => true).ToList();
 
+            data = new EF.PKP();
             if (ID != null)
             {
-                data = EF.EntityInstance.DBContext.PKPSet.First(p => p.Cards_ID == ID.Value);
+                objRef = EF.EntityInstance.DBContext.PKPSet.First(p => p.Cards_ID == ID.Value);
+                data.PKPModels_ID = objRef.PKPModels_ID;
+                Serial = objRef.Serial;
+                Phone = objRef.Phone;
+                Password = objRef.Password;
+                data.Date = objRef.Date;
+                this.changed = false;
                 foreach (var item in PKP)
 	            {
                     if (item.PKPModels_ID == data.PKPModels_ID)
@@ -37,7 +45,6 @@ namespace Client.Model
             }
             else
             {
-                data = new EF.PKP();
                 Serial = "";
                 Phone = "";
                 Password = "";
@@ -49,6 +56,10 @@ namespace Client.Model
         public void Save(int ID)
         {
             data.PKPModels_ID = sIndex.PKPModels_ID;
+            objRef.Serial = data.Serial;
+            objRef.Phone = data.Phone;
+            objRef.Password = data.Password;
+            objRef.Date = data.Date;
             if (data.PKP_ID == 0)
             {
                 data.Cards_ID = ID;

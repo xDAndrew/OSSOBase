@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 
 namespace Client.Model.EF
 {
@@ -7,10 +8,12 @@ namespace Client.Model.EF
         public static DataModelContainer DBContext = new DataModelContainer();
         public static int UserID = 1;
 
-        public static bool connected = false;
-        public static DateTime CurrentTime = DateTime.Now;
-        public static DateTime LastTime = DateTime.Now;
-
+        
+        public static Socket socket;
+        public static object lokedKey = new object();
+        public static DateTime ServerUpdate = DateTime.Now;
+        public static DateTime LocalUpdate;
+       
         public static string GetStreetType(int index)
         {
             switch (index)

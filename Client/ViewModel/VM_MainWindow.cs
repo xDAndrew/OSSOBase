@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Client.ViewModel
 {
@@ -28,7 +30,11 @@ namespace Client.ViewModel
         private bool myCardsState;
         public bool MyCardsState
         {
-            set { myCardsState = value; }
+            set 
+            { 
+                myCardsState = value;
+                Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+            }
             get { return myCardsState; }
         }
 
@@ -65,10 +71,83 @@ namespace Client.ViewModel
         {
             WinLink = MW;
 
-            UpdateTimer.Interval = 5000;
+            UpdateTimer.Interval = 10;
             UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
             UpdateTimer.Start();
-            //UpdateGrid();
+
+            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8005);
+            Model.EF.EntityInstance.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                Model.EF.EntityInstance.socket.Connect(ipPoint);
+                Thread SocketReading = new Thread(() =>
+                {
+                    while (true)
+                    {
+                        var data = new byte[256];
+                        StringBuilder builder = new StringBuilder();
+                        int bytes = 0;
+
+                        try
+                        {
+                            byte[] temp = BitConverter.GetBytes(0);
+                            Model.EF.EntityInstance.socket.Send(temp);
+
+                            do
+                            {
+                                bytes = Model.EF.EntityInstance.socket.Receive(data, data.Length, 0);
+                                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                            }
+                            while (Model.EF.EntityInstance.socket.Available > 0);
+
+                            lock (Model.EF.EntityInstance.lokedKey)
+                            {
+                                Model.EF.EntityInstance.ServerUpdate = DateTime.Parse(builder.ToString());
+                            }
+                            Thread.Sleep(100);
+                        }
+                        catch 
+                        {
+                            //System.Windows.MessageBox.Show("Соединение с сервером было потеряно...");
+
+                            Thread SReading = new Thread(() =>
+                            {
+                                while (true)
+                                {
+                                    lock (Model.EF.EntityInstance.lokedKey)
+                                    {
+                                        Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+                                    }
+                                    Thread.Sleep(3000);
+                                }
+                            });
+                            SReading.IsBackground = true;
+                            SReading.Start();
+                            break;
+                        };
+                    }
+                });
+                SocketReading.IsBackground = true;
+                SocketReading.Start();
+            }
+            catch
+            {
+                System.Windows.MessageBox.Show("Подключение к серверу не удалось!\nПрограмма работает в автономном режиме...");
+
+                Thread SocketReading = new Thread(() =>
+                {
+                    while (true)
+                    {
+                        lock (Model.EF.EntityInstance.lokedKey)
+                        {
+                            Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+                        }
+                        Thread.Sleep(3000);
+                    }
+                });
+                SocketReading.IsBackground = true;
+                SocketReading.Start();
+            }
         }
 
         public void UpdateGrid()
@@ -80,26 +159,24 @@ namespace Client.ViewModel
                 OnPropertyChanged("CurrentUser");
             }
 
-            int index = itemIndex;
-            Cards.Clear();
-            var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => (myCardsState ? p.Users_ID == Model.EF.EntityInstance.UserID : true)).ToList();
-
-            foreach (var item in temp)
+            if (Model.EF.EntityInstance.ServerUpdate.CompareTo(Model.EF.EntityInstance.LocalUpdate) > 0)
             {
-                Cards.Add(new Model.M_Card(item));
+                int index = itemIndex;
+                Cards.Clear();
+                var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => (myCardsState ? p.Users_ID == Model.EF.EntityInstance.UserID : true)).ToList();
+                foreach (var item in temp)
+                {
+                    Cards.Add(new Model.M_Card(item));
+                }
+                ItemIndex = index;
+                WinLink.MG.Focus();
+                OnPropertyChanged("CardsCount");
+                lock (Model.EF.EntityInstance.lokedKey)
+                {
+                    Model.EF.EntityInstance.LocalUpdate = DateTime.Now;
+                }
+                //System.Windows.MessageBox.Show("Было обнавлено! " + Model.EF.EntityInstance.ServerUpdate + " " + Model.EF.EntityInstance.LocalUpdate);
             }
-
-            //var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
-
-            //foreach (var item in temp)
-            //{
-            //    Cards.Add(new Model.M_Card(item));
-            //}
-
-            ItemIndex = index;
-            WinLink.MG.Focus();
-
-            OnPropertyChanged("CardsCount");
         }
 
         private Command addCard;
@@ -119,11 +196,6 @@ namespace Client.ViewModel
                     UpdateGrid();
                 }));
             }
-        }
-
-        private double updateUU()
-        {
-            return 0.0;
         }
 
         private Command editCard;
@@ -150,19 +222,32 @@ namespace Client.ViewModel
         }
 
         private Command closeApp;
-        public Command CloseApp { get => closeApp ?? (closeApp = new Command(obj => { WinLink.Close(); })); }
+        public Command CloseApp
+        { 
+            get 
+            { 
+                return closeApp ?? (closeApp = new Command(obj => { WinLink.Close(); })); 
+            }
+        }
 
         private Command cardsUpdate;
-        public Command CardsUpdate { get => cardsUpdate ?? (cardsUpdate = new Command(obj => {
-            UpdateTimer.Stop();
-            foreach (var item in cardsCollection)
+        public Command CardsUpdate 
+        {
+            get
             {
-                var VM = new ViewModel.VM_EditWindow(new View.EditWindow(), item.Id);
-                VM.UpdateUU();
-                OnPropertyChanged("CardsCollection");
+                return cardsUpdate ?? (cardsUpdate = new Command(obj =>
+                {
+                    UpdateTimer.Stop();
+                    foreach (var item in cardsCollection)
+                    {
+                        var VM = new ViewModel.VM_EditWindow(new View.EditWindow(), item.Id);
+                        VM.UpdateUU();
+                        OnPropertyChanged("CardsCollection");
+                    }
+                    UpdateTimer.Start();
+                }));
             }
-            UpdateTimer.Start();
-        })); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

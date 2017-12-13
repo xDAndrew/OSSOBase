@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace Client.View
 {
-    /// <summary>
-    /// Логика взаимодействия для TSOEditWindow.xaml
-    /// </summary>
     public partial class TSOEditWindow : Window
     {
         public TSOEditWindow()

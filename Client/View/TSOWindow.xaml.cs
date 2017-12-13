@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace Client.View
 {
-    /// <summary>
-    /// Логика взаимодействия для PKPModulesWindow.xaml
-    /// </summary>
     public partial class TSOWindow : Window
     {
         public TSOWindow()

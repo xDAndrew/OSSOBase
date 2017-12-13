@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Server")]
+[assembly: AssemblyTitle("Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Win-Torrent Yagd")]
-[assembly: AssemblyProduct("Server")]
+[assembly: AssemblyProduct("Service")]
 [assembly: AssemblyCopyright("Copyright © Win-Torrent Yagd 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("aaba060a-3458-4732-bec3-d5dc479853bc")]
+[assembly: Guid("66805dd3-72a4-4df7-9a59-6d42fd6e435b")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

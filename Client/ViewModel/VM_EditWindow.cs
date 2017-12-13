@@ -19,7 +19,10 @@ namespace Client.ViewModel
         private bool changed = false;
         public bool Changed
         {
-            get { return CurrentObject.Changed || CurrentPKP.Changed || changed; }
+            get 
+            { 
+                return CurrentObject.Changed || CurrentPKP.Changed || changed;
+            }
         }
 
         private Model.M_Object currentObject;
@@ -177,7 +180,9 @@ namespace Client.ViewModel
 
             currentEquipment.Results.Summ += currentPKP.Moduls.FullSumm;
             OnPropertyChanged("CurrentEquipment");
+            if (currentCard.UU != currentEquipment.Results.Summ) changed = true;
             currentCard.UU = currentEquipment.Results.Summ;
+            
         }
 
         #region Commands
@@ -282,8 +287,8 @@ namespace Client.ViewModel
 
         public void UpdateUU()
         {
-            //currentCard.PKP = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == currentCard.User).Name;
             currentCard.Save();
+            this.WinLink.Close();
         }
 
         private Command saveChange;
@@ -314,6 +319,13 @@ namespace Client.ViewModel
                         currentObject.Save(currentCard.Id);
                         currentPKP.Save(currentCard.Id);
                         currentEquipment.Save(currentCard.Id);
+
+                        try
+                        {
+                            byte[] temp = BitConverter.GetBytes(1);
+                            Model.EF.EntityInstance.socket.Send(temp);
+                        }
+                        catch { }
                     }
                 }));
             }
@@ -376,7 +388,7 @@ namespace Client.ViewModel
             {
                 return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
                 {
-                    changed = true;
+                    //changed = true;
                     var wTemp = new View.TSOWindow();
                     var cTemp = new ViewModel.VM_TSOWindow(currentPKP.Moduls, wTemp);
                     wTemp.Owner = WinLink;

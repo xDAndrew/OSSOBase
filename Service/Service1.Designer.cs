@@ -1,4 +1,4 @@
-﻿namespace Server
+﻿namespace Service
 {
     partial class Service1
     {
