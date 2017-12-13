@@ -60,7 +60,7 @@ namespace Client.Model.PKPModel
                 {
                     summ += item.UUSumm;
                 }
-                summ += 0.35;
+                summ += 0.30;
                 return summ;
             }
         }

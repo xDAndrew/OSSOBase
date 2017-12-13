@@ -25,6 +25,13 @@ namespace Client.ViewModel
             get { return userName; }
         }
 
+        private bool myCardsState;
+        public bool MyCardsState
+        {
+            set { myCardsState = value; }
+            get { return myCardsState; }
+        }
+
         public int CardsCount
         {
             get { return Cards.Count; }
@@ -58,7 +65,7 @@ namespace Client.ViewModel
         {
             WinLink = MW;
 
-            UpdateTimer.Interval = 3000;
+            UpdateTimer.Interval = 5000;
             UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
             UpdateTimer.Start();
             //UpdateGrid();
@@ -75,11 +82,20 @@ namespace Client.ViewModel
 
             int index = itemIndex;
             Cards.Clear();
-            var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
+            var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => (myCardsState ? p.Users_ID == Model.EF.EntityInstance.UserID : true)).ToList();
+
             foreach (var item in temp)
             {
                 Cards.Add(new Model.M_Card(item));
             }
+
+            //var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
+
+            //foreach (var item in temp)
+            //{
+            //    Cards.Add(new Model.M_Card(item));
+            //}
+
             ItemIndex = index;
             WinLink.MG.Focus();
 
