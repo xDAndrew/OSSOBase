@@ -27,23 +27,26 @@ namespace Client.Model
                 streets[i].Name += " " + Model.EF.EntityInstance.GetStreetType(streets[i].Type);
             }
 
-            data = new Model.EF.Object();
-
             //Тут загружаем объект из БД или пустой объект
+            data = new Model.EF.Object();
             if (ID != null)
             {
                 objReference = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == ID.Value);
+
                 Owner = objReference.Owner;
                 Name = objReference.Name;
                 Room = objReference.Room;
                 Corp = objReference.Corp;
                 Home = objReference.Home;
+
                 data.Streets_ID = objReference.Streets_ID;
-                changed = false;
+                data.Cards_ID = objReference.Cards_ID;
+                data.Object_ID = objReference.Object_ID;
                 foreach (var item in streets)
                 {
                     if (item.Streets_ID == data.Streets_ID) selectedStreet = item;
                 }
+                changed = false;
             }
             else
             {
@@ -59,16 +62,19 @@ namespace Client.Model
         public void Save(int ID)
         {
             //Сохраняем в БД
-            data.Streets_ID = selectedStreet.Streets_ID;
+            if (objReference == null) objReference = new EF.Object();
+            objReference.Streets_ID = selectedStreet.Streets_ID;
+
             objReference.Owner = Owner;
             objReference.Name = Name;
             objReference.Room = Room;
             objReference.Corp = Corp;
             objReference.Home = Home;
-            if (data.Object_ID == 0)
+
+            if (objReference.Object_ID == 0)
             {
-                data.Cards_ID = ID;
-                Model.EF.EntityInstance.DBContext.ObjectSet.Add(data);
+                objReference.Cards_ID = ID;
+                Model.EF.EntityInstance.DBContext.ObjectSet.Add(objReference);
             }
             Model.EF.EntityInstance.DBContext.SaveChanges();
         }

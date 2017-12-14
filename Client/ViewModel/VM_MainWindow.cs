@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Net;
 using System.Net.Sockets;
+using System.Configuration;
 
 namespace Client.ViewModel
 {
@@ -75,7 +76,7 @@ namespace Client.ViewModel
             UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
             UpdateTimer.Start();
 
-            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8005);
+            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse((string)ConfigurationManager.AppSettings["ServerHost"]), 8005);
             Model.EF.EntityInstance.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
@@ -175,7 +176,6 @@ namespace Client.ViewModel
                 {
                     Model.EF.EntityInstance.LocalUpdate = DateTime.Now;
                 }
-                //System.Windows.MessageBox.Show("Было обнавлено! " + Model.EF.EntityInstance.ServerUpdate + " " + Model.EF.EntityInstance.LocalUpdate);
             }
         }
 
@@ -210,7 +210,6 @@ namespace Client.ViewModel
                         UpdateTimer.Stop();
                         var eForm = new View.EditWindow();
                         var eFormVM = new ViewModel.VM_EditWindow(eForm, SelectedItem.Id);
-                        //System.Windows.MessageBox.Show(eFormVM.CurrentEquipment.Results.Summ.ToString());
                         eForm.Owner = WinLink;
                         eForm.DataContext = eFormVM;
                         eForm.ShowDialog();

@@ -33,6 +33,8 @@ namespace Client.Model
                 Phone = objRef.Phone;
                 Password = objRef.Password;
                 data.Date = objRef.Date;
+                data.PKP_ID = objRef.PKP_ID;
+
                 this.changed = false;
                 foreach (var item in PKP)
 	            {
@@ -55,17 +57,21 @@ namespace Client.Model
 
         public void Save(int ID)
         {
-            data.PKPModels_ID = sIndex.PKPModels_ID;
+            if (objRef == null) objRef = new EF.PKP();
+            objRef.PKPModels_ID = sIndex.PKPModels_ID;
+            objRef.PKP_ID = data.PKP_ID;
+
             objRef.Serial = data.Serial;
             objRef.Phone = data.Phone;
             objRef.Password = data.Password;
             objRef.Date = data.Date;
-            if (data.PKP_ID == 0)
+
+            if (objRef.PKP_ID == 0)
             {
-                data.Cards_ID = ID;
-                Model.EF.EntityInstance.DBContext.PKPSet.Add(data);
+                objRef.Cards_ID = ID;
+                Model.EF.EntityInstance.DBContext.PKPSet.Add(objRef);
             }
-            moduls.Save(data.PKP_ID);
+            moduls.Save(objRef.PKP_ID);
             Model.EF.EntityInstance.DBContext.SaveChanges();
         }
 

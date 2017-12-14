@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Client",
-    "\\Client\\Additional",
-    "\\Client\\View",
-    "\\Client\\ViewModel"
+    ""
   ],
-  "SelectedNode": "\\Client\\Properties",
+  "SelectedNode": "\\Server",
   "PreviewInSolutionExplorer": false
 }

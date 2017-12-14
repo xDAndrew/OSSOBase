@@ -310,10 +310,10 @@ namespace Client.ViewModel
                         if (currentObject.Corp != "") str += "\\" + currentObject.Corp;
                         if (currentObject.Room != "") str += "-" + currentObject.Room;
                         currentCard.Address = str;
-                        currentCard.PKP = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == currentCard.User).Name;
 
                         currentCard.MakeDate = DateTime.Now;
                         currentCard.User = Model.EF.EntityInstance.UserID;
+                        currentCard.PKP = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == currentCard.User).Name;
 
                         currentCard.Save();
                         currentObject.Save(currentCard.Id);
