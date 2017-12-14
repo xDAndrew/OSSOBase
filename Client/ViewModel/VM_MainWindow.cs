@@ -72,7 +72,7 @@ namespace Client.ViewModel
         {
             WinLink = MW;
 
-            UpdateTimer.Interval = 10;
+            UpdateTimer.Interval = 500;
             UpdateTimer.Tick += ((o, e) => { UpdateGrid(); });
             UpdateTimer.Start();
 
@@ -105,7 +105,7 @@ namespace Client.ViewModel
                             {
                                 Model.EF.EntityInstance.ServerUpdate = DateTime.Parse(builder.ToString());
                             }
-                            Thread.Sleep(100);
+                            Thread.Sleep(500);
                         }
                         catch 
                         {
