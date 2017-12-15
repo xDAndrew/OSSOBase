@@ -29,7 +29,10 @@ namespace Client.Model.EquipmentModel
         {
             foreach (var item in branches)
             {
-                item.Clear();
+               for (int i = 0; i < 15; i++)
+               {
+                    item[i] = 0;
+               }
             }
         }
 

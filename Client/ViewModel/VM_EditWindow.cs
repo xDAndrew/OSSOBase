@@ -369,14 +369,57 @@ namespace Client.ViewModel
             {
                 return openTSOEdit ?? (openTSOEdit = new Command(obj =>
                 {
-                    changed = true;
+                    //Перед открытием окна
+                    var tempTSO = new Model.EquipmentModel.TSO_Collection();
+                    var rebuildTSO = new Model.EquipmentModel.TSO_Collection();
+                    foreach (var item in currentEquipment.Models.Items)
+                    {
+                        tempTSO.Items.Add(item);
+                        rebuildTSO.Items.Add(item);
+                    }
+
+                    var branchList = new List<int[]>();
+                    foreach (var item in currentEquipment.Branches)
+                    {
+                        var arr = new int[15];
+                        for (int i = 0; i < 15; i++)
+                        {
+                            arr[i] = item[i];
+                        }
+                        branchList.Add(arr);
+                    }
+
                     var wTemp = new View.TSOEditWindow();
-                    var cTemp = new ViewModel.VM_TSOEditWindow(wTemp, currentEquipment.Models);
+                    var cTemp = new ViewModel.VM_TSOEditWindow(wTemp, tempTSO);
                     wTemp.Owner = WinLink;
                     wTemp.DataContext = cTemp;
                     wTemp.ShowDialog();
-                    CountUU();
+
+                    //После закрытия окна создаем новый список ТСО
                     currentEquipment.Clear();
+                    currentEquipment.Models.Items.Clear();
+                    foreach (var item in tempTSO.Items)
+                    {
+                        currentEquipment.Models.Items.Add(item);
+                    }
+
+                    for (int i = 0; i < currentEquipment.Models.Items.Count; i++)
+                    {
+                        for (int j = 0; j < rebuildTSO.Items.Count; j++)
+                        {
+                            if (currentEquipment.Models.Items[i].Id == rebuildTSO.Items[j].Id)
+                            {
+                                for (int k = 0; k < currentEquipment.Branches.Count; k++)
+                                {
+                                    currentEquipment.Branches[k][i] = branchList[k][j];
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    CountUU();
+                    OnPropertyChanged("Branches");
                 }));
             }
         }
@@ -388,7 +431,6 @@ namespace Client.ViewModel
             {
                 return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
                 {
-                    //changed = true;
                     var wTemp = new View.TSOWindow();
                     var cTemp = new ViewModel.VM_TSOWindow(currentPKP.Moduls, wTemp);
                     wTemp.Owner = WinLink;

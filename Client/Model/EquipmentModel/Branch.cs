@@ -2,6 +2,7 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System;
 
 namespace Client.Model.EquipmentModel
 {
@@ -482,7 +483,26 @@ namespace Client.Model.EquipmentModel
         public int this[int index]
         {
             get { return arr[index]; }
-            set { arr[index] = value; }
+            set
+            {
+                arr[index] = value;
+                OnPropertyChanged("arg0");
+                OnPropertyChanged("arg1");
+                OnPropertyChanged("arg2");
+                OnPropertyChanged("arg3");
+                OnPropertyChanged("arg4");
+                OnPropertyChanged("arg5");
+                OnPropertyChanged("arg6");
+                OnPropertyChanged("arg7");
+                OnPropertyChanged("arg8");
+                OnPropertyChanged("arg9");
+                OnPropertyChanged("arg10");
+                OnPropertyChanged("arg11");
+                OnPropertyChanged("arg12");
+                OnPropertyChanged("arg13");
+                OnPropertyChanged("arg14");
+                OnPropertyChanged("summ");
+            }
         }
 
         public double Summ
