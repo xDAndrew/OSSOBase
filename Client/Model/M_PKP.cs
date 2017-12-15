@@ -59,7 +59,6 @@ namespace Client.Model
         {
             if (objRef == null) objRef = new EF.PKP();
             objRef.PKPModels_ID = sIndex.PKPModels_ID;
-            objRef.PKP_ID = data.PKP_ID;
 
             objRef.Serial = data.Serial;
             objRef.Phone = data.Phone;

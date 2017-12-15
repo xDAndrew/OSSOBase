@@ -28,6 +28,9 @@
                 </Button>
                 <Separator/>
                 <CheckBox IsChecked="{Binding MyCardsState}" Content="Мои объекты"/>
+                <Separator/>
+                <ComboBox Width="120"/>
+                <ComboBox Width="40"/>
             </ToolBar>
             
             <StatusBar DockPanel.Dock="Bottom" Height="24">
