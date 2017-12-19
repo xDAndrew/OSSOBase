@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Client.ViewModel
 {
@@ -193,94 +194,149 @@ namespace Client.ViewModel
             {
                 return print ?? (print = new Command(obj =>
                 {
-                    //Excel.Application excelApp = new Excel.Application();
-                    //excelApp.Visible = false;
-                    //excelApp.DisplayAlerts = false;
+                    Excel.Application excelApp = new Excel.Application();
+                    excelApp.Visible = false;
+                    excelApp.DisplayAlerts = false;
 
-                    //Excel.Workbook workBook;
-                    //Excel.Worksheet workSheet;
+                    Excel.Workbook workBook;
+                    Excel.Worksheet workSheet;
 
-                    //string str = Environment.CurrentDirectory;
-                    //if (CurrentEquipment.LimbsCount <= 8)
-                    //{
-                    //    workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
-                    //}
-                    //else
-                    //{
-                    //    if (CurrentEquipment.LimbsCount <= 16)
-                    //    {
-                    //        workBook = excelApp.Workbooks.Open(str + @"\Data\16.xls");
-                    //    }
-                    //    else
-                    //    {
-                    //        if (CurrentEquipment.LimbsCount <= 32)
-                    //        {
-                    //            workBook = excelApp.Workbooks.Open(str + @"\Data\32.xls");
-                    //        }
-                    //        else
-                    //        {
-                    //            if (CurrentEquipment.LimbsCount <= 64)
-                    //            {
-                    //                workBook = excelApp.Workbooks.Open(str + @"\Data\64.xls");
-                    //            }
-                    //            else
-                    //            {
-                    //                System.Windows.MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
-                    //                excelApp.Quit();
-                    //                return;
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    
-                    //workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
+                    byte type = 0;
 
-                    //workSheet.PrintOut();
-                    //excelApp.Quit();
+                    try
+                    {
+                        string str = Environment.CurrentDirectory;
+                        if (CurrentEquipment.LimbsCount <= 8)
+                        {
+                            workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
+                        }
+                        else
+                        {
+                            if (CurrentEquipment.LimbsCount <= 16)
+                            {
+                                workBook = excelApp.Workbooks.Open(str + @"\Data\16.xls");
+                                type = 1;
+                            }
+                            else
+                            {
+                                if (CurrentEquipment.LimbsCount <= 32)
+                                {
+                                    workBook = excelApp.Workbooks.Open(str + @"\Data\32.xls");
+                                    type = 2;
+                                }
+                                else
+                                {
+                                    if (CurrentEquipment.LimbsCount <= 64)
+                                    {
+                                        workBook = excelApp.Workbooks.Open(str + @"\Data\64.xls");
+                                        type = 3;
+                                    }
+                                    else
+                                    {
+                                        System.Windows.MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
+                                        excelApp.Quit();
+                                        return;
+                                    }
+                                }
+                            }
+                        }
 
-                    //var PD = new PrintDocument();
-                    //PD.PrinterSettings.PrinterName = PrinterSettings.InstalledPrinters[0];
-                    //PD.DefaultPageSettings.PaperSize = new PaperSize("A4", );
+                        workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
+                        Excel.Range rng = workSheet.Range["A3"];
+                        rng.Value = currentCard.Owner + " " + currentCard.ObjectView + ", " + currentCard.Address;
 
-                    //PD.PrintPage += (o, e) =>
-                    //{
-                    //    string PrintText = "            <- отступ для картинки\r\n";
-                    //    PrintText += "            <- отступ для картинки 2\r\n";
-                    //    PrintText += "            <- отступ для картинки 3\r\n";
-                    //    PrintText += "Текст без отступа на 4ой строке";
+                        rng = workSheet.Range["B9"];
+                        rng.Value = currentPKP.PKPIndex.Name;
 
-                    //    Font PrintFont = new Font("Times New Roman", 3, System.Drawing.FontStyle.Regular, GraphicsUnit.Millimeter);
-                    //    e.Graphics.DrawString(PrintText, PrintFont, Brushes.Black, new PointF(0, 0));
-                    //};
-                    //PD.Print();
+                        rng = workSheet.Range["D9"];
+                        rng.Value = currentPKP.Serial;
 
-                    //var printDialog = new PrintDialog();
-                    ////PD.PrintVisual(WinLink.MG, "Привет, медвед!");
+                        rng = workSheet.Range["G9"];
+                        rng.Value = currentPKP.Password;
 
-                    //var run = "Это простой текст, тестируем функциональность " + "печати в Windows Presentation Foundation.";
+                        rng = workSheet.Range["J9"];
+                        rng.Value = currentPKP.Phone;
 
-                    //// Поместить его в TextBlock
-                    //TextBlock visual = new TextBlock();
-                    //visual.Inlines.Add(run);
+                        rng = workSheet.Range["X9"];
+                        rng.Value = currentPKP.SelectedDate.ToLongDateString();
 
-                    //// Использовать поля для получения рамки страницы
-                    //visual.Margin = new Thickness(5);
+                        var sumbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        for (int i = 0; i < currentPKP.Moduls.Items.Count; i++)
+                        {
+                            rng = workSheet.Range[sumbols[i + 1].ToString() + "12"];
+                            rng.Value = currentPKP.Moduls.Items[i].Name;
+                            rng = workSheet.Range[sumbols[i + 1].ToString() + "15"];
+                            rng.Value = currentPKP.Moduls.Items[i].Count;
+                        }
+                        rng = workSheet.Range["AC15"];
+                        rng.Value = currentPKP.Moduls.FullSumm;
 
-                    //// Разрешить перенос для заполнения всей ширины страницы
-                    //visual.TextWrapping = TextWrapping.Wrap;
+                        for (int i = 0; i < currentEquipment.Models.Items.Count; i++)
+                        {
+                            rng = workSheet.Range[sumbols[i + 12].ToString() + "12"];
+                            rng.Value = currentEquipment.Models.Items[i].Name;
+                        }
 
-                    //// Увеличить TextBlock по обоим измерениям в 5 раз. 
-                    //// (В этом случае увеличение шрифта дало бы тот же эффект, 
-                    //// потому что TextBlock — единственный элемент)
-                    //visual.LayoutTransform = new ScaleTransform(5, 5);
+                        for (int i = 0; i < currentEquipment.Branches.Count; i++)
+                        {
+                            rng = workSheet.Range["A" + (i + 16).ToString()];
+                            rng.Value = currentEquipment.Branches[i].Number;
 
-                    //// Установить размер элемента
-                    //Size pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
-                    //visual.Measure(pageSize);
-                    //visual.Arrange(new Rect(0, 0, pageSize.Width, pageSize.Height));
+                            rng = workSheet.Range["B" + (i + 16).ToString()];
+                            rng.Value = currentEquipment.Branches[i].Name;
 
-                    //// Напечатать элемент
-                    //printDialog.PrintVisual(visual, "Распечатываем текст");
+                            for (int j = 0; j < currentEquipment.Models.Items.Count; j++)
+                            {
+                                if (j + 16 < 26)
+                                {
+                                    rng = workSheet.Range[sumbols[j + 12].ToString() + (i + 16).ToString()];
+                                }
+                                else
+                                {
+                                    rng = workSheet.Range["AA" + (i + 16).ToString()];
+                                }
+
+                                rng.Value = currentEquipment.Branches[i][j];
+                            }
+
+                            rng = workSheet.Range["AC" + (i + 16).ToString()];
+                            rng.Value = currentEquipment.Branches[i].Summ;
+                        }
+
+                        switch (type)
+                        {
+                            case 0:
+                                rng = workSheet.Range["B28"];
+                                rng.Value = currentCard.UserName;
+                                rng = workSheet.Range["B30"];
+                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                break;
+                            case 1:
+                                rng = workSheet.Range["B36"];
+                                rng.Value = currentCard.UserName;
+                                rng = workSheet.Range["B38"];
+                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                break;
+                            case 2:
+                                rng = workSheet.Range["B52"];
+                                rng.Value = currentCard.UserName;
+                                rng = workSheet.Range["B54"];
+                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                break;
+                            case 3:
+                                rng = workSheet.Range["B84"];
+                                rng.Value = currentCard.UserName;
+                                rng = workSheet.Range["B86"];
+                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                break;
+                        }
+
+                        workSheet.PrintOut();
+                    }
+                    finally
+                    {
+                        excelApp.Quit();
+                    }
                 }));
             }
         }
