@@ -22,6 +22,20 @@ namespace Client.ViewModel
         MainWindow WinLink = null;
         System.Windows.Forms.Timer UpdateTimer = new System.Windows.Forms.Timer();
 
+        private string searchContent = "";
+        public string SearchContent
+        {
+            get
+            {
+                return searchContent;
+            }
+            set
+            {
+                searchContent = value;
+                Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+            }
+        }
+
         private string userName;
         public string CurrentUser
         {
@@ -109,8 +123,6 @@ namespace Client.ViewModel
                         }
                         catch 
                         {
-                            //System.Windows.MessageBox.Show("Соединение с сервером было потеряно...");
-
                             Thread SReading = new Thread(() =>
                             {
                                 while (true)
@@ -162,20 +174,27 @@ namespace Client.ViewModel
 
             if (Model.EF.EntityInstance.ServerUpdate.CompareTo(Model.EF.EntityInstance.LocalUpdate) > 0)
             {
+                bool focus = WinLink.MG.IsFocused;
                 int index = itemIndex;
                 Cards.Clear();
-                var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => (myCardsState ? p.Users_ID == Model.EF.EntityInstance.UserID : true)).ToList();
+                List<Model.EF.Cards> temp;
+                if (searchContent == "")
+                {
+                    temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => (myCardsState ? p.Users_ID == Model.EF.EntityInstance.UserID : true)).ToList();
+                }
+                else
+                {
+                    temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => p.AddressView.Contains(searchContent)).ToList();
+                }
                 foreach (var item in temp)
                 {
                     Cards.Add(new Model.M_Card(item));
                 }
                 ItemIndex = index;
-                WinLink.MG.Focus();
+                if (focus)
+                    WinLink.MG.Focus();
                 OnPropertyChanged("CardsCount");
-                lock (Model.EF.EntityInstance.lokedKey)
-                {
-                    Model.EF.EntityInstance.LocalUpdate = DateTime.Now;
-                }
+                Model.EF.EntityInstance.LocalUpdate = DateTime.Now;
             }
         }
 
@@ -220,15 +239,6 @@ namespace Client.ViewModel
             }
         }
 
-        private Command closeApp;
-        public Command CloseApp
-        { 
-            get 
-            { 
-                return closeApp ?? (closeApp = new Command(obj => { WinLink.Close(); })); 
-            }
-        }
-
         private Command cardsUpdate;
         public Command CardsUpdate 
         {
@@ -246,6 +256,12 @@ namespace Client.ViewModel
                     UpdateTimer.Start();
                 }));
             }
+        }
+
+        private Command closeApp;
+        public Command CloseApp
+        {
+            get { return closeApp ?? (closeApp = new Command(obj => { WinLink.Close(); })); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

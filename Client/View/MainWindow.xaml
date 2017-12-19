@@ -19,7 +19,7 @@
                 </MenuItem>
             </Menu>
 
-            <ToolBar DockPanel.Dock="Top" Height="30" Width="Auto" HorizontalAlignment="Left">
+            <ToolBar DockPanel.Dock="Top" Height="30" HorizontalAlignment="Stretch" Background="AliceBlue">
                 <Button Width="24" Height="24" Command="{Binding AddCard}">
                     <Image Source="..\.\Source\Add.png"/>
                 </Button>
@@ -29,8 +29,7 @@
                 <Separator/>
                 <CheckBox IsChecked="{Binding MyCardsState}" Content="Мои объекты"/>
                 <Separator/>
-                <ComboBox Width="120"/>
-                <ComboBox Width="40"/>
+                <TextBox Width="160" Text="{Binding SearchContent, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </ToolBar>
             
             <StatusBar DockPanel.Dock="Bottom" Height="24">
