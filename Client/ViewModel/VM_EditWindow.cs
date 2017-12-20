@@ -273,7 +273,16 @@ namespace Client.ViewModel
 
                         for (int i = 0; i < currentEquipment.Models.Items.Count; i++)
                         {
-                            rng = workSheet.Range[sumbols[i + 12].ToString() + "12"];
+                            if (i + 12 < 26)
+                            {
+                                rng = workSheet.Range[sumbols[i + 12].ToString() + "12"];
+                            }
+                            else
+                            {
+                                rng = workSheet.Range["AA12"];
+                            }
+
+                            //rng = workSheet.Range[sumbols[i + 12].ToString() + "12"];
                             rng.Value = currentEquipment.Models.Items[i].Name;
                         }
 
@@ -287,7 +296,7 @@ namespace Client.ViewModel
 
                             for (int j = 0; j < currentEquipment.Models.Items.Count; j++)
                             {
-                                if (j + 16 < 26)
+                                if (j + 12 < 26)
                                 {
                                     rng = workSheet.Range[sumbols[j + 12].ToString() + (i + 16).ToString()];
                                 }
@@ -344,7 +353,6 @@ namespace Client.ViewModel
         public void UpdateUU()
         {
             currentCard.Save();
-            this.WinLink.Close();
         }
 
         private Command saveChange;

@@ -32,7 +32,18 @@ namespace Client.ViewModel
             set
             {
                 searchContent = value;
-                Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+                UpdateGrid();
+            }
+        }
+
+        private int progress;
+        public int Progress
+        {
+            get { return progress; }
+            set
+            {
+                progress = value;
+                OnPropertyChanged("Progress");
             }
         }
 
@@ -48,7 +59,7 @@ namespace Client.ViewModel
             set 
             { 
                 myCardsState = value;
-                Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+                UpdateGrid();
             }
             get { return myCardsState; }
         }
@@ -246,14 +257,21 @@ namespace Client.ViewModel
             {
                 return cardsUpdate ?? (cardsUpdate = new Command(obj =>
                 {
-                    UpdateTimer.Stop();
-                    foreach (var item in cardsCollection)
+                    View.EditWindow WM = new View.EditWindow();
+
+                    var thread = new Thread((o) => 
                     {
-                        var VM = new ViewModel.VM_EditWindow(new View.EditWindow(), item.Id);
-                        VM.UpdateUU();
-                        OnPropertyChanged("CardsCollection");
-                    }
-                    UpdateTimer.Start();
+                        var win = (View.EditWindow)o;
+                        for (int i = 0; i < cardsCollection.Count; i++)
+                        {
+                            var VM = new VM_EditWindow(win, cardsCollection[i].Id);
+                            VM.UpdateUU();
+                            OnPropertyChanged("CardsCollection");
+                        }
+                        System.Windows.MessageBox.Show("Пересчёт выполнен", "Сообщение");
+                    });
+                    thread.IsBackground = true;
+                    thread.Start((object)WM);
                 }));
             }
         }
