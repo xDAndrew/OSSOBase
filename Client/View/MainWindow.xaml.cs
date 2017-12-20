@@ -30,11 +30,6 @@ namespace Client
         private void RowDoubleClick(object sender, RoutedEventArgs e)
         {
             (DataContext as ViewModel.VM_MainWindow).EditCard.Execute(new object());
-
-            //Для заметки
-            //var row = (DataGridRow)sender;
-            //MessageBox.Show(row.GetIndex().ToString());
-            //row.DetailsVisibility = row.DetailsVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

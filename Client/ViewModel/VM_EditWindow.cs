@@ -92,7 +92,7 @@ namespace Client.ViewModel
         }
         #endregion
 
-        public VM_EditWindow(View.EditWindow HNDL, int? CurrentCardId = null)
+        public VM_EditWindow(View.EditWindow HNDL = null, int? CurrentCardId = null)
         {
             WinLink = HNDL;
 
@@ -122,16 +122,19 @@ namespace Client.ViewModel
                 CountUU();
             }
 
-            WinLink.Closing += (o, e) => 
+            if (WinLink != null)
             {
-                if (Changed)
+                WinLink.Closing += (o, e) =>
                 {
-                    if (System.Windows.MessageBox.Show("Сохранить внесенные изменения?", "Сохранить", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (Changed)
                     {
-                        SaveChange.Execute(new object());
+                        if (System.Windows.MessageBox.Show("Сохранить внесенные изменения?", "Сохранить", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            SaveChange.Execute(new object());
+                        }
                     }
-                }
-            };
+                };
+            }
         }
 
         public void CountUU()
@@ -421,7 +424,7 @@ namespace Client.ViewModel
             {
                 return menuCloseWindow ?? (menuCloseWindow = new Command(obj =>
                 {
-                    WinLink.Close();
+                    if (WinLink != null) WinLink.Close();
                 }));
             }
         }

@@ -17,10 +17,7 @@ namespace Client.Model.PKPModel
 
         public ObservableCollection<Modul_Item> Items
         {
-            get
-            {
-                return items;
-            }
+            get { return items; }
         }
 
         public void Save(int ID)
@@ -60,7 +57,7 @@ namespace Client.Model.PKPModel
                 {
                     summ += item.UUSumm;
                 }
-                summ += 0.30;
+                summ += 0.3;
                 return summ;
             }
         }

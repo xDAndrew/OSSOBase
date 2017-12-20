@@ -15,3 +15,8 @@
 	1. Печать
 	2. Служба синхронизации данных
 	3. Поиск по объектам
+
+	//Для заметки
+    //var row = (DataGridRow)sender;
+    //MessageBox.Show(row.GetIndex().ToString());
+    //row.DetailsVisibility = row.DetailsVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;

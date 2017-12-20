@@ -8,7 +8,6 @@ namespace Client.Model.EF
         public static DataModelContainer DBContext = new DataModelContainer();
         public static int UserID = 1;
 
-        
         public static Socket socket;
         public static object lokedKey = new object();
         public static DateTime ServerUpdate = DateTime.Now;

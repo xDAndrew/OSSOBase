@@ -145,14 +145,6 @@ namespace Client.ViewModel
                 {
                     if (TSO_index > -1 && tempActiveTSOList.Items.Count < 15)
                     {
-                        //if (activeTSOIndex == -1)
-                        //{
-                            //tempActiveTSOList.Items.Add(new Model.EquipmentModel.TSO_Item(TSOList[TSO_index]));
-                        //}
-                        //else
-                        //{
-                        //    tempActiveTSOList.Items.Insert(activeTSOIndex + 1, new Model.EquipmentModel.TSO_Item(TSOList[TSO_index]));
-                        //}
                         tempActiveTSOList.Items.Add(new Model.EquipmentModel.TSO_Item(TSOList[TSO_index]));
 
                         TSO.Remove(TSOList[TSO_index]);
@@ -224,8 +216,7 @@ namespace Client.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
         #endregion
     }
