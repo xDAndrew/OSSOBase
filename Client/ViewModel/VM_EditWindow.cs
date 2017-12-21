@@ -284,8 +284,6 @@ namespace Client.ViewModel
                             {
                                 rng = workSheet.Range["AA12"];
                             }
-
-                            //rng = workSheet.Range[sumbols[i + 12].ToString() + "12"];
                             rng.Value = currentEquipment.Models.Items[i].Name;
                         }
 

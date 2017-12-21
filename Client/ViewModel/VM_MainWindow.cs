@@ -236,9 +236,17 @@ namespace Client.ViewModel
                         MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
                         updateTimer.Stop();
-                        for (int i = 0; i < cardsCollection.Count; i++)
+
+                        var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
+                        var cards = new List<Model.M_Card>();
+                        foreach (var item in temp)
                         {
-                            var VM = new VM_EditWindow(null, cardsCollection[i].Id);
+                            cards.Add(new Model.M_Card(item));
+                        }
+
+                        for (int i = 0; i < cards.Count; i++)
+                        {
+                            var VM = new VM_EditWindow(null, cards[i].Id);
                             VM.UpdateUU();
                             OnPropertyChanged("CardsCollection");
                         }
