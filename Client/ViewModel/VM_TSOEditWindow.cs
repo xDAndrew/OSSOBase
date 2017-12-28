@@ -106,7 +106,6 @@ namespace Client.ViewModel
             }
         }
 
-        #region Service
         private void LoadTSOList(int ID)
         {
             TSO.Clear();
@@ -129,9 +128,7 @@ namespace Client.ViewModel
                 }
             }
         }
-        #endregion
 
-        #region Commands
         private Command setModul;
         public Command SetModul
         {
@@ -206,14 +203,11 @@ namespace Client.ViewModel
                 }));
             }
         }
-        #endregion
 
-        #region ServicesMetods
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-        #endregion
     }
 }

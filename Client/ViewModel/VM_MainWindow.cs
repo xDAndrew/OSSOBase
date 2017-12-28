@@ -18,6 +18,7 @@ namespace Client.ViewModel
         MainWindow WinLink = null;
         System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
 
+        //Свойство SearchContent хранит данные введеные в строку "Поиск"
         private string searchContent = "";
         public string SearchContent
         {
@@ -33,17 +34,12 @@ namespace Client.ViewModel
             }
         }
 
-        private string userName;
-        public string CurrentUser
-        {
-            get { return userName; }
-        }
-
+        //Свойство MyCardsState состояние кнопки "Мои объекты"
         private bool myCardsState;
         public bool MyCardsState
         {
-            set 
-            { 
+            set
+            {
                 myCardsState = value;
                 UpdateGrid(true);
                 OnPropertyChanged("Cards");
@@ -51,11 +47,20 @@ namespace Client.ViewModel
             get { return myCardsState; }
         }
 
+        //Свойство CurrentUser обспечивает данные для отображения информации о текущем пользователе в StatusBar
+        private string userName;
+        public string CurrentUser
+        {
+            get { return userName; }
+        }
+
+        //Свойство CardsCount обеспечивает данные для отображения информации о кол-ве найденых объектов в StatusBar
         public int CardsCount
         {
             get { return Cards.Count; }
         }
 
+        //Свойство ItemIndex хранит № выделенной строки в таблице
         private int itemIndex;
         public int ItemIndex
         {
@@ -67,12 +72,14 @@ namespace Client.ViewModel
             }
         }
 
+        //Свойство Cards сдержит отображаемые в главной таблице элементы
         ObservableCollection<Model.M_Card> cardsCollection = new ObservableCollection<Model.M_Card>();
         public ObservableCollection<Model.M_Card> Cards
         {
             get { return cardsCollection; }
         }
 
+        //Свойство SelectedItem хранить ссылку на выделенный элемент
         private Model.M_Card selectedItem = null;
         public Model.M_Card  SelectedItem
         {
@@ -80,6 +87,7 @@ namespace Client.ViewModel
             set { selectedItem = value; }
         }
 
+        //Конструктор класса VM_MainWindow
         public VM_MainWindow(MainWindow MW)
         {
             WinLink = MW;
@@ -155,6 +163,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Обновляет содержимое главной таблицы
         public void UpdateGrid(bool bStart = false)
         {
             if (Model.EF.EntityInstance.ServerUpdate.CompareTo(Model.EF.EntityInstance.LocalUpdate) > 0 || bStart)
@@ -179,6 +188,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Комманда для добавления нового объекта (Открывает соответствующее окно)
         private Command addCard;
         public Command AddCard
         {
@@ -198,6 +208,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для редактирования объекта (Открывает соотвествуещее окно)
         private Command editCard;
         public Command EditCard
         {
@@ -220,6 +231,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для пункта меню Дополнительно -> пересчёт УУ
         private Command cardsUpdate;
         public Command CardsUpdate 
         {
@@ -253,12 +265,14 @@ namespace Client.ViewModel
             }
         }
 
+        //Комманда для кнопки Меню -> Выход
         private Command closeApp;
         public Command CloseApp
         {
             get { return closeApp ?? (closeApp = new Command(obj => { WinLink.Close(); })); }
         }
 
+        //Свойство для обновления UI при изменении данных
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

@@ -56,12 +56,14 @@ namespace Client.ViewModel
             get { return currentCard; }
         }
 
+        //Хз что за метод, но пусть будет
         private Model.EF.Users currentUser;
         public Model.EF.Users CurrentUser
         {
             get { return currentUser; }
         }
 
+        //Свойство для отображения модулей в подсказке
         public string ToolTipView
         {
             get 
@@ -77,18 +79,19 @@ namespace Client.ViewModel
             }
         }
 
-        #region StatusBar_Properties
+        //Свойство отображает дату создания карточки в StatusBar
         public string Date
         {
             get { return currentCard.MakeDate.ToString("dd MMMMMMMMMM yyyy"); }
         }
 
+        //Свойство отображает имя пользователя, который создал объекта в StatusBar
         public string Maker
         {
             get { return currentCard.UserName; }
         }
-        #endregion
 
+        //Конструктор VM_EditWindow
         public VM_EditWindow(View.EditWindow HNDL = null, int? CurrentCardId = null)
         {
             WinLink = HNDL;
@@ -134,6 +137,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Функция, которая пересчитывает УУ
         public void CountUU()
         {
             for (int i = 0; i < 15; i++)
@@ -186,7 +190,7 @@ namespace Client.ViewModel
             
         }
 
-        #region Commands
+        //Команда для кнопки "Печать"
         private Command print;
         public Command Print
         {
@@ -348,11 +352,13 @@ namespace Client.ViewModel
             }
         }
 
+        //Функция для пересчёт всех объектов
         public void UpdateUU()
         {
             currentCard.Save();
         }
 
+        //Команда для сохранения данных при закрытии карточки
         private Command saveChange;
         public Command SaveChange
         {
@@ -393,6 +399,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для кнопки "Сохранить"
         private Command menuItemSaveChange;
         public Command MenuSaveChange
         {
@@ -412,6 +419,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для кнопки "Выход"
         private Command menuCloseWindow;
         public Command MenuCloseWindow
         {
@@ -424,6 +432,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для кнопки "Оборудование" в конткстном меню таблицы с датчиками
         private Command openTSOEdit;
         public Command OpenTSOEdit
         {
@@ -486,6 +495,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для кнопки "Список модулей"
         private ViewModel.Command openTSOList;
         public ViewModel.Command OpenTSOList
         {
@@ -504,6 +514,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для добавления шлейфа "+"
         private Command addLimb;
         public Command AddLimb
         {
@@ -522,6 +533,7 @@ namespace Client.ViewModel
             }
         }
 
+        //Команда для удаления шлейфа "-"
         private Command delLimb;
         public Command DelLimb
         {
@@ -539,8 +551,8 @@ namespace Client.ViewModel
                 }));
             }
         }
-        #endregion
 
+        //Свойство для обновления UI при изменении данных
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

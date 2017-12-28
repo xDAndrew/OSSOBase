@@ -115,7 +115,6 @@ namespace Client.ViewModel
             get { return moduls.Items.Count + "/11"; }
         }
 
-        #region Commands
         private Command setModul;
         public Command SetModul
         {
@@ -179,9 +178,7 @@ namespace Client.ViewModel
                 }));
             }
         }
-        #endregion
 
-        #region Service
         private void LoadModulsList()
         {
             //Заполняет список доступных модулей
@@ -212,6 +209,5 @@ namespace Client.ViewModel
         {
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-        #endregion
     }
 }
