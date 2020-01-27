@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{F449ACF0-EAFD-4B66-9B5C-E654797EBEF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{A26D3F31-FC8B-4B00-A527-1AF73F829C05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebClient", "WebClient", "{16145DC1-E94A-433F-A3A0-6F65A53EEC3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSSOBase.WebClient", "src\WebClient\OSSOBase.WebClient\OSSOBase.WebClient.csproj", "{884F0967-77D4-49E8-AA18-280296C57B93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +25,18 @@ Global
 		{A26D3F31-FC8B-4B00-A527-1AF73F829C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A26D3F31-FC8B-4B00-A527-1AF73F829C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A26D3F31-FC8B-4B00-A527-1AF73F829C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{884F0967-77D4-49E8-AA18-280296C57B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{884F0967-77D4-49E8-AA18-280296C57B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{884F0967-77D4-49E8-AA18-280296C57B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{884F0967-77D4-49E8-AA18-280296C57B93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{884F0967-77D4-49E8-AA18-280296C57B93} = {16145DC1-E94A-433F-A3A0-6F65A53EEC3B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BEC95FEF-278A-4F4E-8DEC-723D5EF82636}
 	EndGlobalSection
 EndGlobal
