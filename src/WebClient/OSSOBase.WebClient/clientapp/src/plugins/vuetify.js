@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import 'vuetify/dist/vuetify.min.css';
-
 Vue.use(Vuetify, {
     theme: {
         primary: "#f44336",
@@ -13,6 +12,5 @@ Vue.use(Vuetify, {
         success: "#4caf50"
     }
 });
-
-export default new Vuetify({
-});
+export default new Vuetify({});
+//# sourceMappingURL=vuetify.js.map
