@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Client.Additional;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Client.ViewModel
@@ -496,12 +495,12 @@ namespace Client.ViewModel
         }
 
         //Команда для кнопки "Список модулей"
-        private ViewModel.Command openTSOList;
-        public ViewModel.Command OpenTSOList
+        private Command openTSOList;
+        public Command OpenTSOList
         {
             get
             {
-                return openTSOList ?? (openTSOList = new ViewModel.Command(obj =>
+                return openTSOList ?? (openTSOList = new Command(obj =>
                 {
                     var wTemp = new View.TSOWindow();
                     var cTemp = new ViewModel.VM_TSOWindow(currentPKP.Moduls, wTemp);

@@ -1,8 +1,7 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using Client.Additional;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Client.Model.EquipmentModel
 {
