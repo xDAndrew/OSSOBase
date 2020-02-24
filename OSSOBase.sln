@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{A26D3F31-FC8B-4B00-A527-1AF73F829C05}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebClient", "WebClient", "{F8BD2BA4-07F6-41A4-BC37-CE747E7FE6F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSSOBase.WebApi", "src\OSSOBase.WebApi\OSSOBase.WebApi.csproj", "{6F98C8D4-D266-4FE2-A1AB-D1FB58A0307A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{A26D3F31-FC8B-4B00-A527-1AF73F829C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A26D3F31-FC8B-4B00-A527-1AF73F829C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A26D3F31-FC8B-4B00-A527-1AF73F829C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F98C8D4-D266-4FE2-A1AB-D1FB58A0307A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F98C8D4-D266-4FE2-A1AB-D1FB58A0307A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F98C8D4-D266-4FE2-A1AB-D1FB58A0307A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F98C8D4-D266-4FE2-A1AB-D1FB58A0307A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6F98C8D4-D266-4FE2-A1AB-D1FB58A0307A} = {F8BD2BA4-07F6-41A4-BC37-CE747E7FE6F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEC95FEF-278A-4F4E-8DEC-723D5EF82636}
