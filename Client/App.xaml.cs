@@ -1,14 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Ninject;
 
 namespace Client
 {
-    public partial class App : Application
+    public partial class App
     {
+        private IKernel _container;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            ConfigureContainer();
+            ComposeObjects();
+            Current.MainWindow?.Show();
+        }
+
+        private void ConfigureContainer()
+        {
+            _container = new StandardKernel();
+            //_container.Bind<IWeapon>().To<Sword>().InTransientScope();
+        }
+
+        private void ComposeObjects()
+        {
+            Current.MainWindow = _container.Get<MainWindow>();
+        }
     }
 }

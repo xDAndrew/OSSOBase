@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebClient", "WebClient", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSSOBase.WebApi", "src\OSSOBase.WebApi\OSSOBase.WebApi.csproj", "{6F98C8D4-D266-4FE2-A1AB-D1FB58A0307A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSSOBase.Infra", "src\OSSOBase.Infra\OSSOBase.Infra.csproj", "{675617A1-80FF-45A1-932F-9AC2EFDB1C0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSSOBase.Infra", "src\OSSOBase.Infra\OSSOBase.Infra.csproj", "{675617A1-80FF-45A1-932F-9AC2EFDB1C0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSSOBase.Application", "src\OSSOBase.Application\OSSOBase.Application.csproj", "{1EB33FF3-94D3-4E43-B7E0-4A3990BDF06B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSSOBase.Application", "src\OSSOBase.Application\OSSOBase.Application.csproj", "{1EB33FF3-94D3-4E43-B7E0-4A3990BDF06B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Application", "Client.Application\Client.Application.csproj", "{DD7EB27B-8CBA-4D20-B38B-83ED78FF4647}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{1EB33FF3-94D3-4E43-B7E0-4A3990BDF06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EB33FF3-94D3-4E43-B7E0-4A3990BDF06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EB33FF3-94D3-4E43-B7E0-4A3990BDF06B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD7EB27B-8CBA-4D20-B38B-83ED78FF4647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD7EB27B-8CBA-4D20-B38B-83ED78FF4647}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD7EB27B-8CBA-4D20-B38B-83ED78FF4647}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD7EB27B-8CBA-4D20-B38B-83ED78FF4647}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
