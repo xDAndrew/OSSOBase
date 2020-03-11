@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.ObjectModel;
+using Client.Application.EF;
 
 namespace Client.Model.EquipmentModel
 {
@@ -8,10 +9,10 @@ namespace Client.Model.EquipmentModel
         public void Save(int ID)
         {
             //Удалить уже сохраненные
-            var temp = Model.EF.EntityInstance.DBContext.Cards_TSOSet.Where(p => p.Cards_ID == ID).ToList();
+            var temp = EntityInstance.DBContext.Cards_TSOSet.Where(p => p.Cards_ID == ID).ToList();
             foreach (var item in temp)
             {
-                Model.EF.EntityInstance.DBContext.Cards_TSOSet.Remove(item);
+                EntityInstance.DBContext.Cards_TSOSet.Remove(item);
             }
 
             //Пересохраниться

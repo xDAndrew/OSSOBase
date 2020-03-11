@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using Client.Application.EF;
 
 namespace Client.Model
 {
@@ -16,17 +17,17 @@ namespace Client.Model
             {
                 this.data = new Model.EF.Cards();
 
-                var temp = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                var temp = EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == EntityInstance.UserID);
                 UserName = temp.Place + " " + temp.Name;
 
-                this.data.Users_ID = Model.EF.EntityInstance.UserID;
+                this.data.Users_ID = EntityInstance.UserID;
                 this.data.MakeDate = DateTime.Now;
                 this.data.Amount = 0.0;
             }
             else
             {
                 this.data = data;
-                var temp = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == data.Users_ID);
+                var temp = EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == data.Users_ID);
                 UserName = temp.Place + " " + temp.Name;
             }
         }
@@ -35,9 +36,9 @@ namespace Client.Model
         {
             if (data.Cards_ID == 0)
             {
-                Model.EF.EntityInstance.DBContext.CardsSet.Add(data);
+                EntityInstance.DBContext.CardsSet.Add(data);
             }
-            Model.EF.EntityInstance.DBContext.SaveChanges();
+            EntityInstance.DBContext.SaveChanges();
         }
 
         public int Id

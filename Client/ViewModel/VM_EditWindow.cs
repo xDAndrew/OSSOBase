@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Client.Application.EF;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Client.ViewModel
@@ -102,12 +103,12 @@ namespace Client.ViewModel
                 currentPKP = new Model.M_PKP();
                 currentEquipment = new Model.EquipmentModel.Equipment();
 
-                currentUser = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                currentUser = EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == EntityInstance.UserID);
                 CountUU();
             }
             else
             {
-                currentCard = new Model.M_Card(Model.EF.EntityInstance.DBContext.CardsSet.First(p => p.Cards_ID == CurrentCardId.Value));
+                currentCard = new Model.M_Card(EntityInstance.DBContext.CardsSet.First(p => p.Cards_ID == CurrentCardId.Value));
                 currentObject = new Model.M_Object(currentCard.Id);
                 currentPKP = new Model.M_PKP(currentCard.Id);
                 currentEquipment = new Model.EquipmentModel.Equipment(currentCard.Id);
@@ -371,16 +372,16 @@ namespace Client.ViewModel
                         currentCard.ObjectView = currentObject.Name;
 
                         var str = "";
-                        str += Model.EF.EntityInstance.GetStreetType(currentObject.StreetIndex.Type) + " ";
-                        str += Model.EF.EntityInstance.DBContext.StreetsSet.First(p => p.Streets_ID == currentObject.StreetIndex.Streets_ID).Name + ", ";
+                        str += EntityInstance.GetStreetType(currentObject.StreetIndex.Type) + " ";
+                        str += EntityInstance.DBContext.StreetsSet.First(p => p.Streets_ID == currentObject.StreetIndex.Streets_ID).Name + ", ";
                         str += currentObject.Home;
                         if (currentObject.Corp != "") str += "\\" + currentObject.Corp;
                         if (currentObject.Room != "") str += "-" + currentObject.Room;
                         currentCard.Address = str;
 
                         currentCard.MakeDate = DateTime.Now;
-                        currentCard.User = Model.EF.EntityInstance.UserID;
-                        currentCard.PKP = Model.EF.EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == currentCard.User).Name;
+                        currentCard.User = EntityInstance.UserID;
+                        currentCard.PKP = EntityInstance.DBContext.UsersSet.First(p => p.Users_ID == currentCard.User).Name;
 
                         currentCard.Save();
                         currentObject.Save(currentCard.Id);
@@ -390,7 +391,7 @@ namespace Client.ViewModel
                         try
                         {
                             byte[] temp = BitConverter.GetBytes(1);
-                            Model.EF.EntityInstance.socket.Send(temp);
+                            EntityInstance.socket.Send(temp);
                         }
                         catch { }
                     }

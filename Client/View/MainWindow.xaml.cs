@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Windows;
+using Client.Application.EF;
 
 namespace Client
 {
@@ -8,7 +9,7 @@ namespace Client
         public MainWindow()
         {
             InitializeComponent();
-            Model.EF.EntityInstance.UserID = int.Parse(ConfigurationManager.AppSettings["userId"]);
+            EntityInstance.UserID = int.Parse(ConfigurationManager.AppSettings["userId"]);
             Show();
             DataContext = new ViewModel.VM_MainWindow(this);
         }

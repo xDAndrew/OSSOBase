@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Client.Application.EF;
 
 namespace Client.ViewModel
 {
@@ -182,7 +183,7 @@ namespace Client.ViewModel
         {
             //Заполняет список доступных модулей
             modulsList.Clear();
-            var temp = Model.EF.EntityInstance.DBContext.ModulesSet.Where(p => p.Visible).ToList();
+            var temp = EntityInstance.DBContext.ModulesSet.Where(p => p.Visible).ToList();
             foreach (var item in temp)
             {
                 bool del = false;

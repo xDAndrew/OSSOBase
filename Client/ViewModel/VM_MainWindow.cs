@@ -10,6 +10,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using Client.Application.EF;
 
 namespace Client.ViewModel
 {
@@ -92,7 +93,7 @@ namespace Client.ViewModel
         {
             WinLink = MW;
 
-            var tempUser = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+            var tempUser = EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == EntityInstance.UserID);
             userName = tempUser.Place + " " + tempUser.Name;
             OnPropertyChanged("CurrentUser");
 
@@ -101,10 +102,10 @@ namespace Client.ViewModel
             updateTimer.Start();
 
             IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse((string)ConfigurationManager.AppSettings["ServerHost"]), 8005);
-            Model.EF.EntityInstance.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            EntityInstance.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
-                Model.EF.EntityInstance.socket.Connect(ipPoint);
+                EntityInstance.socket.Connect(ipPoint);
                 Thread SocketReading = new Thread(() =>
                 {
                     while (true)
@@ -116,16 +117,16 @@ namespace Client.ViewModel
                         try
                         {
                             byte[] temp = BitConverter.GetBytes(0);
-                            Model.EF.EntityInstance.socket.Send(temp);
+                            EntityInstance.socket.Send(temp);
 
                             do
                             {
-                                bytes = Model.EF.EntityInstance.socket.Receive(data, data.Length, 0);
+                                bytes = EntityInstance.socket.Receive(data, data.Length, 0);
                                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                             }
-                            while (Model.EF.EntityInstance.socket.Available > 0);
+                            while (EntityInstance.socket.Available > 0);
 
-                            Model.EF.EntityInstance.ServerUpdate = DateTime.Parse(builder.ToString());
+                            EntityInstance.ServerUpdate = DateTime.Parse(builder.ToString());
                             Thread.Sleep(100);
                         }
                         catch 
@@ -134,7 +135,7 @@ namespace Client.ViewModel
                             {
                                 while (true)
                                 {
-                                    Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+                                    EntityInstance.ServerUpdate = DateTime.Now;
                                     Thread.Sleep(4000);
                                 }
                             });
@@ -154,7 +155,7 @@ namespace Client.ViewModel
                 {
                     while (true)
                     {
-                        Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
+                        EntityInstance.ServerUpdate = DateTime.Now;
                         Thread.Sleep(4000);
                     }
                 });
@@ -166,14 +167,14 @@ namespace Client.ViewModel
         //Обновляет содержимое главной таблицы
         public void UpdateGrid(bool bStart = false)
         {
-            if (Model.EF.EntityInstance.ServerUpdate.CompareTo(Model.EF.EntityInstance.LocalUpdate) > 0 || bStart)
+            if (EntityInstance.ServerUpdate.CompareTo(EntityInstance.LocalUpdate) > 0 || bStart)
             {
                 bool focus = WinLink.MG.IsKeyboardFocusWithin;
                 int index = itemIndex;
 
                 Cards.Clear();
-                var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => SearchContent == "" ? true : p.AddressView.Contains(searchContent)).
-                    Where(p => (myCardsState ? p.Users_ID == Model.EF.EntityInstance.UserID : true)).ToList();
+                var temp = EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => SearchContent == "" ? true : p.AddressView.Contains(searchContent)).
+                    Where(p => (myCardsState ? p.Users_ID == EntityInstance.UserID : true)).ToList();
                 foreach (var item in temp)
                 {
                     Cards.Add(new Model.M_Card(item));
@@ -184,7 +185,7 @@ namespace Client.ViewModel
 
                 OnPropertyChanged("CardsCount");
                 OnPropertyChanged("Cards");
-                Model.EF.EntityInstance.LocalUpdate = DateTime.Now;
+                EntityInstance.LocalUpdate = DateTime.Now;
             }
         }
 
@@ -245,7 +246,7 @@ namespace Client.ViewModel
                     {
                         updateTimer.Stop();
 
-                        var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
+                        var temp = EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
                         var cards = new List<Model.M_Card>();
                         foreach (var item in temp)
                         {

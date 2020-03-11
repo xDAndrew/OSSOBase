@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Net.Sockets;
+using Client.Model.EF;
 
-namespace Client.Model.EF
+namespace Client.Application.EF
 {
-    class EntityInstance
+    public class EntityInstance
     {
         public static DataModelContainer DBContext = new DataModelContainer();
         public static int UserID = 1;

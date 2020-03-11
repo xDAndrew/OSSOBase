@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Client.Application.EF;
 
 namespace Client.Model.EquipmentModel
 {
@@ -40,19 +41,19 @@ namespace Client.Model.EquipmentModel
         {
             Models.Save(ID);
 
-            var temp = Model.EF.EntityInstance.DBContext.BranchSet.Where(p => p.Cards_ID == ID).ToList();
+            var temp = EntityInstance.DBContext.BranchSet.Where(p => p.Cards_ID == ID).ToList();
             while (temp.Count > 0)
             {
-                Model.EF.EntityInstance.DBContext.BranchSet.Remove(temp[0]);
+                EntityInstance.DBContext.BranchSet.Remove(temp[0]);
                 temp.RemoveAt(0);
             }
-            Model.EF.EntityInstance.DBContext.SaveChanges();
+            EntityInstance.DBContext.SaveChanges();
 
             foreach (var item in branches)
             {
                 item.Save(ID);
             }
-            Model.EF.EntityInstance.DBContext.SaveChanges();
+            EntityInstance.DBContext.SaveChanges();
         }
 
         public int LimbsCount
@@ -73,16 +74,16 @@ namespace Client.Model.EquipmentModel
         {
             if (ID != null)
             {
-                var bTemp = Model.EF.EntityInstance.DBContext.BranchSet.OrderBy(p => p.Number).Where(p => p.Cards_ID == ID.Value).ToList();
+                var bTemp = EntityInstance.DBContext.BranchSet.OrderBy(p => p.Number).Where(p => p.Cards_ID == ID.Value).ToList();
                 foreach (var item in bTemp)
                 {
                     Branches.Add(new Model.EquipmentModel.Branch(item));
                 }
 
-                var temp = Model.EF.EntityInstance.DBContext.Cards_TSOSet.OrderBy(p => p.Number).Where(p => p.Cards_ID == ID.Value).ToList();
+                var temp = EntityInstance.DBContext.Cards_TSOSet.OrderBy(p => p.Number).Where(p => p.Cards_ID == ID.Value).ToList();
                 foreach (var item in temp)
                 {
-                    TSOModels.Items.Add(new Model.EquipmentModel.TSO_Item(Model.EF.EntityInstance.DBContext.TSOSet.First(p => p.TSO_ID == item.TSO_ID)));                    
+                    TSOModels.Items.Add(new Model.EquipmentModel.TSO_Item(EntityInstance.DBContext.TSOSet.First(p => p.TSO_ID == item.TSO_ID)));                    
                 }
             }
 

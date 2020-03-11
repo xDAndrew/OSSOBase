@@ -1,4 +1,6 @@
-﻿namespace Client.Model.PKPModel
+﻿using Client.Application.EF;
+
+namespace Client.Model.PKPModel
 {
     class Modul_Item
     {
@@ -19,7 +21,7 @@
             temp.PKP_ID = ID;
             temp.Modules_ID = data.Modules_ID;
             temp.Count = count;
-            Model.EF.EntityInstance.DBContext.PKP_ModulesSet.Add(temp);
+            EntityInstance.DBContext.PKP_ModulesSet.Add(temp);
         }
 
         public int Id

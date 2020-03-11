@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Client.Application.EF;
 
 namespace Client.Model
 {
@@ -22,12 +23,12 @@ namespace Client.Model
 
         public M_PKP(int? ID = null)
         {
-            PKP = Model.EF.EntityInstance.DBContext.PKPModelsSet.AsNoTracking().Where(p => true).ToList();
+            PKP = EntityInstance.DBContext.PKPModelsSet.AsNoTracking().Where(p => true).ToList();
 
             data = new EF.PKP();
             if (ID != null)
             {
-                objRef = EF.EntityInstance.DBContext.PKPSet.First(p => p.Cards_ID == ID.Value);
+                objRef = EntityInstance.DBContext.PKPSet.First(p => p.Cards_ID == ID.Value);
                 data.PKPModels_ID = objRef.PKPModels_ID;
                 Serial = objRef.Serial;
                 Phone = objRef.Phone;
@@ -68,10 +69,10 @@ namespace Client.Model
             if (objRef.PKP_ID == 0)
             {
                 objRef.Cards_ID = ID;
-                Model.EF.EntityInstance.DBContext.PKPSet.Add(objRef);
+                EntityInstance.DBContext.PKPSet.Add(objRef);
             }
             moduls.Save(objRef.PKP_ID);
-            Model.EF.EntityInstance.DBContext.SaveChanges();
+            EntityInstance.DBContext.SaveChanges();
         }
 
         public List<EF.PKPModels> PKPList

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Client.Application.EF;
 
 namespace Client.Model
 {
@@ -21,17 +22,17 @@ namespace Client.Model
         public M_Object(int? ID = null)
         {
             //Тут загружаем список улиц
-            streets = Model.EF.EntityInstance.DBContext.StreetsSet.AsNoTracking().Where(p => true).OrderBy(p => p.Name).ToList();
+            streets = EntityInstance.DBContext.StreetsSet.AsNoTracking().Where(p => true).OrderBy(p => p.Name).ToList();
             for (int i = 0; i < streets.Count; i++)
             {
-                streets[i].Name += " " + Model.EF.EntityInstance.GetStreetType(streets[i].Type);
+                streets[i].Name += " " + EntityInstance.GetStreetType(streets[i].Type);
             }
 
             //Тут загружаем объект из БД или пустой объект
             data = new Model.EF.Object();
             if (ID != null)
             {
-                objReference = Model.EF.EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == ID.Value);
+                objReference = EntityInstance.DBContext.ObjectSet.First(p => p.Cards_ID == ID.Value);
 
                 Owner = objReference.Owner;
                 Name = objReference.Name;
@@ -74,9 +75,9 @@ namespace Client.Model
             if (objReference.Object_ID == 0)
             {
                 objReference.Cards_ID = ID;
-                Model.EF.EntityInstance.DBContext.ObjectSet.Add(objReference);
+                EntityInstance.DBContext.ObjectSet.Add(objReference);
             }
-            Model.EF.EntityInstance.DBContext.SaveChanges();
+            EntityInstance.DBContext.SaveChanges();
         }
 
         public string Owner

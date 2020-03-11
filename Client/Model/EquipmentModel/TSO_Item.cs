@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Client.Application.EF;
 
 namespace Client.Model.EquipmentModel
 {
@@ -12,7 +13,7 @@ namespace Client.Model.EquipmentModel
             this.data = data;
             try
             {
-                this.UUAmount = Model.EF.EntityInstance.DBContext.TSOGroupSet.First(p => p.TSOGroup_ID == data.Group_ID).Amount;
+                this.UUAmount = EntityInstance.DBContext.TSOGroupSet.First(p => p.TSOGroup_ID == data.Group_ID).Amount;
             }
             catch { }
         }
@@ -38,7 +39,7 @@ namespace Client.Model.EquipmentModel
             item.TSO_ID = data.TSO_ID;
             item.Cards_ID = Id;
             item.Number = Number;
-            Model.EF.EntityInstance.DBContext.Cards_TSOSet.Add(item);
+            EntityInstance.DBContext.Cards_TSOSet.Add(item);
         }
     }
 }

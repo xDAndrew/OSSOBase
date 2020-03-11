@@ -80,12 +80,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\EF\Branch.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\Cards_TSO.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\EquipmentModel\Branch.cs" />
     <Compile Include="Additional\CallerMemberName.cs" />
     <Compile Include="Model\EquipmentModel\Equipment.cs" />
@@ -113,52 +107,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Model\EF\Cards.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\DataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\DataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\DataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\EntityInstance.cs" />
-    <Compile Include="Model\EF\Modules.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\Object.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\PKP.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\PKPModels.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\PKP_Modules.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\Streets.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\TSO.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\TSOGroup.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EF\Users.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\M_Object.cs" />
     <Compile Include="Model\M_PKP.cs" />
@@ -199,23 +147,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\EF\DataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model\EF\DataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataModel.Context.cs</LastGenOutput>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </None>
-    <None Include="Model\EF\DataModel.edmx.diagram">
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </None>
-    <None Include="Model\EF\DataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataModel.cs</LastGenOutput>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -238,11 +169,11 @@
     <Resource Include="Source\security.ico" />
     <Resource Include="Documents\Note.txt" />
     <Resource Include="Documents\Changes.txt" />
-    <Content Include="Model\EF\DataModel.edmx.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

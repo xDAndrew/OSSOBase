@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using Client.Application.EF;
 
 namespace Client.Model.PKPModel
 {
@@ -22,11 +23,11 @@ namespace Client.Model.PKPModel
 
         public void Save(int ID)
         {
-            var temp = Model.EF.EntityInstance.DBContext.PKP_ModulesSet.Where(p => p.PKP_ID == ID).ToList();
+            var temp = EntityInstance.DBContext.PKP_ModulesSet.Where(p => p.PKP_ID == ID).ToList();
 
             while (temp.Count > 0)
             {
-                Model.EF.EntityInstance.DBContext.PKP_ModulesSet.Remove(temp[0]);
+                EntityInstance.DBContext.PKP_ModulesSet.Remove(temp[0]);
                 temp.RemoveAt(0);
             }
 
@@ -34,15 +35,15 @@ namespace Client.Model.PKPModel
             {
                 item.Save(ID);
             }
-            Model.EF.EntityInstance.DBContext.SaveChanges();
+            EntityInstance.DBContext.SaveChanges();
         }
 
         public void Load(int ID)
         {
-            var temp = EF.EntityInstance.DBContext.PKP_ModulesSet.Where(p => p.PKP_ID == ID).ToList();
+            var temp = EntityInstance.DBContext.PKP_ModulesSet.Where(p => p.PKP_ID == ID).ToList();
             foreach (var item in temp)
             {
-                var tempItem = new Modul_Item(EF.EntityInstance.DBContext.ModulesSet.First(p => p.Modules_ID == item.Modules_ID));
+                var tempItem = new Modul_Item(EntityInstance.DBContext.ModulesSet.First(p => p.Modules_ID == item.Modules_ID));
                 tempItem.Count = item.Count.ToString();
                 items.Add(tempItem);
             }

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Client.Application.EF;
 
 namespace Client.ViewModel
 {
@@ -94,7 +95,7 @@ namespace Client.ViewModel
                 tempActiveTSOList.Items.Add(item);
             }
 
-            var temp = Model.EF.EntityInstance.DBContext.TSOGroupSet.Where(p => p.TSOGroup_ID > 0).ToList();
+            var temp = EntityInstance.DBContext.TSOGroupSet.Where(p => p.TSOGroup_ID > 0).ToList();
             foreach (var item in temp)
             {
                 groups.Add(item);
@@ -110,7 +111,7 @@ namespace Client.ViewModel
         {
             TSO.Clear();
             int index = groups[ID].TSOGroup_ID;
-            var temp = Model.EF.EntityInstance.DBContext.TSOSet.Where(p => p.Group_ID == index).ToList();
+            var temp = EntityInstance.DBContext.TSOSet.Where(p => p.Group_ID == index).ToList();
             foreach (var item in temp)
             {
                 bool del = false;

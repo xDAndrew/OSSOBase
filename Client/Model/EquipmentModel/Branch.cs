@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Client.Application.EF;
 
 namespace Client.Model.EquipmentModel
 {
@@ -537,7 +538,7 @@ namespace Client.Model.EquipmentModel
             formatter.Serialize(mem, arr);
             data.Data = mem.GetBuffer();
 
-            Model.EF.EntityInstance.DBContext.BranchSet.Add(data);
+            EntityInstance.DBContext.BranchSet.Add(data);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
