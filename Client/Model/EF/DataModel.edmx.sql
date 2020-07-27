@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/27/2020 19:58:58
+-- Date Created: 07/27/2020 22:03:56
 -- Generated from EDMX file: D:\Git\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
@@ -106,7 +106,7 @@ CREATE TABLE [dbo].[CardsSet] (
     [ObjectView] nvarchar(max)  NOT NULL,
     [AddressView] nvarchar(max)  NOT NULL,
     [PKPView] nvarchar(max)  NOT NULL,
-    [Contract] nchar(20)  NULL
+    [Contract] nvarchar(max)  NULL
 );
 GO
 

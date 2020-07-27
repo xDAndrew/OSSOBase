@@ -15,22 +15,53 @@ namespace Client.ViewModel
 {
     class VM_MainWindow : INotifyPropertyChanged
     {
-        MainWindow WinLink = null;
-        System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
+        MainWindow WinLink;
+        private readonly System.Windows.Forms.Timer _updateTimer = new System.Windows.Forms.Timer();
 
         //Свойство SearchContent хранит данные введеные в строку "Поиск"
-        private string searchContent = "";
-        public string SearchContent
+
+        private string _contractSearchContent = "";
+        private string _ownerSearchContent = "";
+        private string _objectSearchContent = "";
+        private string _addressSearchContent = "";
+
+        public string ContractSearchContent
         {
-            get
-            {
-                return searchContent;
-            }
+            get => _contractSearchContent;
             set
             {
-                searchContent = value;
+                _contractSearchContent = value;
                 UpdateGrid(true);
-                OnPropertyChanged("Cards");
+            }
+        }
+
+        public string OwnerSearchContent
+        {
+            get => _ownerSearchContent;
+            set
+            {
+                _ownerSearchContent = value;
+                UpdateGrid(true);
+            }
+        }
+
+        public string ObjectSearchContent
+        {
+            get => _objectSearchContent;
+            set
+            {
+                _objectSearchContent = value;
+                UpdateGrid(true);
+            }
+        }
+
+        public string AddressSearchContent
+        {
+            get => _addressSearchContent;
+            set
+            {
+                _addressSearchContent = value;
+                UpdateGrid(true);
             }
         }
 
@@ -48,23 +79,16 @@ namespace Client.ViewModel
         }
 
         //Свойство CurrentUser обспечивает данные для отображения информации о текущем пользователе в StatusBar
-        private string userName;
-        public string CurrentUser
-        {
-            get { return userName; }
-        }
+        public string CurrentUser { get; }
 
         //Свойство CardsCount обеспечивает данные для отображения информации о кол-ве найденых объектов в StatusBar
-        public int CardsCount
-        {
-            get { return Cards.Count; }
-        }
+        public int CardsCount => Cards.Count;
 
         //Свойство ItemIndex хранит № выделенной строки в таблице
         private int itemIndex;
         public int ItemIndex
         {
-            get { return itemIndex; }
+            get => itemIndex;
             set 
             { 
                 itemIndex = value;
@@ -74,10 +98,7 @@ namespace Client.ViewModel
 
         //Свойство Cards сдержит отображаемые в главной таблице элементы
         ObservableCollection<Model.M_Card> cardsCollection = new ObservableCollection<Model.M_Card>();
-        public ObservableCollection<Model.M_Card> Cards
-        {
-            get { return cardsCollection; }
-        }
+        public ObservableCollection<Model.M_Card> Cards => cardsCollection;
 
         //Свойство SelectedItem хранить ссылку на выделенный элемент
         private Model.M_Card selectedItem = null;
@@ -93,12 +114,12 @@ namespace Client.ViewModel
             WinLink = MW;
 
             var tempUser = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
-            userName = tempUser.Place + " " + tempUser.Name;
-            OnPropertyChanged("CurrentUser");
+            CurrentUser = tempUser.Place + " " + tempUser.Name;
+            OnPropertyChanged($"CurrentUser");
 
-            updateTimer.Interval = 10;
-            updateTimer.Tick += ((o, e) => { UpdateGrid(); });
-            updateTimer.Start();
+            _updateTimer.Interval = 10;
+            _updateTimer.Tick += ((o, e) => { UpdateGrid(); });
+            _updateTimer.Start();
 
             IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse((string)ConfigurationManager.AppSettings["ServerHost"]), 8005);
             Model.EF.EntityInstance.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -130,7 +151,7 @@ namespace Client.ViewModel
                         }
                         catch 
                         {
-                            Thread SReading = new Thread(() =>
+                            var SReading = new Thread(() =>
                             {
                                 while (true)
                                 {
@@ -168,19 +189,24 @@ namespace Client.ViewModel
         {
             if (Model.EF.EntityInstance.ServerUpdate.CompareTo(Model.EF.EntityInstance.LocalUpdate) > 0 || bStart)
             {
-                bool focus = WinLink.MG.IsKeyboardFocusWithin;
-                int index = itemIndex;
+                var focus = WinLink.MG.IsKeyboardFocusWithin;
+                var index = itemIndex;
 
                 Cards.Clear();
-                var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => SearchContent == "" ? true : p.AddressView.Contains(searchContent)).
-                    Where(p => (myCardsState ? p.Users_ID == Model.EF.EntityInstance.UserID : true)).ToList();
+                var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking()
+                    .Where(p => ContractSearchContent == "" || p.Contract.Contains(_contractSearchContent))
+                    .Where(p => OwnerSearchContent == "" || p.OwnerView.Contains(_ownerSearchContent))
+                    .Where(p => ObjectSearchContent == "" || p.ObjectView.Contains(_objectSearchContent))
+                    .Where(p => AddressSearchContent == "" || p.AddressView.Contains(_addressSearchContent))
+                    .Where(p => !myCardsState || p.Users_ID == Model.EF.EntityInstance.UserID).ToList();
+
                 foreach (var item in temp)
                 {
                     Cards.Add(new Model.M_Card(item));
                 }
 
                 ItemIndex = index;
-                if (focus == true) WinLink.MG.Focus();
+                if (focus) WinLink.MG.Focus();
 
                 OnPropertyChanged("CardsCount");
                 OnPropertyChanged("Cards");
@@ -196,14 +222,14 @@ namespace Client.ViewModel
             {
                 return addCard ?? (addCard = new Command(obj =>
                 {
-                    updateTimer.Stop();
+                    _updateTimer.Stop();
                     var eForm = new View.EditWindow();
-                    var eFormVM = new ViewModel.VM_EditWindow(eForm);
+                    var eFormVM = new VM_EditWindow(eForm);
                     eForm.Owner = WinLink;
                     eForm.DataContext = eFormVM;
                     eForm.ShowDialog();
                     UpdateGrid();
-                    updateTimer.Start();
+                    _updateTimer.Start();
                 }));
             }
         }
@@ -218,14 +244,14 @@ namespace Client.ViewModel
                 {
                     if (selectedItem != null)
                     {
-                        updateTimer.Stop();
+                        _updateTimer.Stop();
                         var eForm = new View.EditWindow();
-                        var eFormVM = new ViewModel.VM_EditWindow(eForm, SelectedItem.Id);
+                        var eFormVM = new VM_EditWindow(eForm, SelectedItem.Id);
                         eForm.Owner = WinLink;
                         eForm.DataContext = eFormVM;
                         eForm.ShowDialog();
                         UpdateGrid();
-                        updateTimer.Start();
+                        _updateTimer.Start();
                     }
                 })); 
             }
@@ -239,11 +265,11 @@ namespace Client.ViewModel
             {
                 return cardsUpdate ?? (cardsUpdate = new Command(obj =>
                 {
-                    if (System.Windows.MessageBox.Show("Убедитесь, что другие пользователи не вносят изменения\nПриложение может ненадолго зависнуть",
+                    if (MessageBox.Show("Убедитесь, что другие пользователи не вносят изменения\nПриложение может ненадолго зависнуть",
                         "Сообщение",
                         MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
-                        updateTimer.Stop();
+                        _updateTimer.Stop();
 
                         var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking().Where(p => true).ToList();
                         var cards = new List<Model.M_Card>();
@@ -258,8 +284,8 @@ namespace Client.ViewModel
                             VM.UpdateUU();
                             OnPropertyChanged("CardsCollection");
                         }
-                        System.Windows.MessageBox.Show("Пересчёт выполнен", "Сообщение");
-                        updateTimer.Start();
+                        MessageBox.Show("Пересчёт выполнен", "Сообщение");
+                        _updateTimer.Start();
                     }
                 }));
             }

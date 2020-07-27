@@ -75,7 +75,7 @@
     <Property Name="ObjectView" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AddressView" Type="nvarchar(max)" Nullable="false" />
     <Property Name="PKPView" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Contract" Type="nchar" Nullable="true" MaxLength="20" />
+    <Property Name="Contract" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="ObjectSet">
     <Key>
@@ -394,7 +394,7 @@
           <Property Name="ObjectView" Type="String" Nullable="false" />
           <Property Name="AddressView" Type="String" Nullable="false" />
           <Property Name="PKPView" Type="String" Nullable="false" />
-          <Property Name="Contract" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="true" />
+          <Property Name="Contract" Type="String" Nullable="true" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
