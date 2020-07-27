@@ -15,53 +15,23 @@ namespace Client.ViewModel
         private View.EditWindow WinLink;
 
         private bool changed = false;
-        public bool Changed
-        {
-            get 
-            { 
-                return CurrentObject.Changed || CurrentPKP.Changed || changed;
-            }
-        }
+        public bool Changed => CurrentObject.Changed || CurrentPKP.Changed || changed || CurrentCard.Changed;
 
         private Model.M_Object currentObject;
-        public Model.M_Object CurrentObject
-        {
-            get
-            {
-                return currentObject;
-            }
-        }
+        public Model.M_Object CurrentObject => currentObject;
 
         private Model.M_PKP currentPKP;
-        public Model.M_PKP CurrentPKP
-        {
-            get
-            {
-                return currentPKP;
-            }
-        }
+        public Model.M_PKP CurrentPKP => currentPKP;
 
         private Model.EquipmentModel.Equipment currentEquipment;
-        public Model.EquipmentModel.Equipment CurrentEquipment
-        {
-            get
-            {
-                return currentEquipment;
-            }
-        }
+        public Model.EquipmentModel.Equipment CurrentEquipment => currentEquipment;
 
         private Model.M_Card currentCard;
-        public Model.M_Card CurrentCard
-        {
-            get { return currentCard; }
-        }
+        public Model.M_Card CurrentCard => currentCard;
 
         //Хз что за метод, но пусть будет
         private Model.EF.Users currentUser;
-        public Model.EF.Users CurrentUser
-        {
-            get { return currentUser; }
-        }
+        public Model.EF.Users CurrentUser => currentUser;
 
         //Свойство для отображения модулей в подсказке
         public string ToolTipView
@@ -128,7 +98,7 @@ namespace Client.ViewModel
                 {
                     if (Changed)
                     {
-                        if (System.Windows.MessageBox.Show("Сохранить внесенные изменения?", "Сохранить", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (MessageBox.Show("Сохранить внесенные изменения?", "Сохранить", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             SaveChange.Execute(new object());
                         }
@@ -390,10 +360,13 @@ namespace Client.ViewModel
 
                         try
                         {
-                            byte[] temp = BitConverter.GetBytes(1);
+                            var temp = BitConverter.GetBytes(1);
                             Model.EF.EntityInstance.socket.Send(temp);
                         }
-                        catch { }
+                        catch
+                        {
+                            // ignored
+                        }
                     }
                 }));
             }
@@ -410,7 +383,7 @@ namespace Client.ViewModel
                     if (CurrentObject.StreetIndex != null && CurrentPKP.PKPIndex != null && Changed && SaveChange != null)
                     {
                         SaveChange.Execute(new object());
-                        System.Windows.MessageBox.Show(WinLink, "Данные сохранены!", "Сохранить");
+                        MessageBox.Show(WinLink, "Данные сохранены!", "Сохранить");
                         CurrentObject.Changed = false;
                         CurrentPKP.Changed = false;
                         changed = false;

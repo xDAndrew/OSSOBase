@@ -7,47 +7,47 @@ namespace Client.Model
 {
     class M_Card
     {
-        private Model.EF.Cards data;
+        private EF.Cards data;
         private string userName;
 
-        public M_Card(Model.EF.Cards data = null)
+        public M_Card(EF.Cards data = null)
         {
             if (data == null)
             {
-                this.data = new Model.EF.Cards();
+                this.data = new EF.Cards();
 
-                var temp = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == Model.EF.EntityInstance.UserID);
+                var temp = EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == EF.EntityInstance.UserID);
                 UserName = temp.Place + " " + temp.Name;
 
-                this.data.Users_ID = Model.EF.EntityInstance.UserID;
+                this.data.Users_ID = EF.EntityInstance.UserID;
                 this.data.MakeDate = DateTime.Now;
                 this.data.Amount = 0.0;
+                this.data.Contract = string.Empty;
             }
             else
             {
                 this.data = data;
-                var temp = Model.EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == data.Users_ID);
+                var temp = EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == data.Users_ID);
                 UserName = temp.Place + " " + temp.Name;
             }
         }
+
+        public bool Changed { get; set; }
 
         public void Save()
         {
             if (data.Cards_ID == 0)
             {
-                Model.EF.EntityInstance.DBContext.CardsSet.Add(data);
+                EF.EntityInstance.DBContext.CardsSet.Add(data);
             }
-            Model.EF.EntityInstance.DBContext.SaveChanges();
+            EF.EntityInstance.DBContext.SaveChanges();
         }
 
-        public int Id
-        {
-            get { return data.Cards_ID; }
-        }
+        public int Id => data.Cards_ID;
 
         public string Owner
         {
-            get { return data.OwnerView; }
+            get => data.OwnerView;
             set 
             { 
                 data.OwnerView = value;
@@ -55,48 +55,58 @@ namespace Client.Model
             }
         }
 
+        public string Contract
+        {
+            get => data.Contract;
+            set
+            {
+                data.Contract = value;
+                Changed = true;
+            }
+        }
+
         public string ObjectView
         {
-            get { return data.ObjectView; }
-            set { data.ObjectView = value; }
+            get => data.ObjectView;
+            set => data.ObjectView = value;
         }
 
         public string Address
         {
-            get { return data.AddressView; }
-            set { data.AddressView = value; }
+            get => data.AddressView;
+            set => data.AddressView = value;
         }
 
         public double UU
         {
-            get { return data.Amount; }
-            set { data.Amount = value; }
+            get => data.Amount;
+            set => data.Amount = value;
         }
 
         public string PKP
         {
-            get { return data.PKPView; }
-            set { data.PKPView = value; }
+            get => data.PKPView;
+            set => data.PKPView = value;
         }
 
         public DateTime MakeDate
         {
-            get { return data.MakeDate; }
-            set { data.MakeDate = value; }
+            get => data.MakeDate;
+            set => data.MakeDate = value;
         }
 
         public int User
         {
-            get { return data.Users_ID; }
-            set { data.Users_ID = value; }
+            get => data.Users_ID;
+            set => data.Users_ID = value;
         }
 
         public string UserName
         {
-            get { return userName; }
+            get => userName;
             set 
             { 
-                this.userName = value;
+                userName = value;
                 OnPropertyChanged("UserName");
             }
         }
@@ -104,7 +114,7 @@ namespace Client.Model
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/16/2017 16:36:00
--- Generated from EDMX file: C:\Users\Work\documents\visual studio 2013\Projects\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 07/27/2020 19:58:58
+-- Generated from EDMX file: D:\Git\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -105,7 +105,8 @@ CREATE TABLE [dbo].[CardsSet] (
     [OwnerView] nvarchar(max)  NOT NULL,
     [ObjectView] nvarchar(max)  NOT NULL,
     [AddressView] nvarchar(max)  NOT NULL,
-    [PKPView] nvarchar(max)  NOT NULL
+    [PKPView] nvarchar(max)  NOT NULL,
+    [Contract] nchar(20)  NULL
 );
 GO
 
@@ -302,6 +303,7 @@ ADD CONSTRAINT [FK_StreetsObject]
     REFERENCES [dbo].[StreetsSet]
         ([Streets_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_StreetsObject'
 CREATE INDEX [IX_FK_StreetsObject]
@@ -316,6 +318,7 @@ ADD CONSTRAINT [FK_UsersCards]
     REFERENCES [dbo].[UsersSet]
         ([Users_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UsersCards'
 CREATE INDEX [IX_FK_UsersCards]
@@ -330,6 +333,7 @@ ADD CONSTRAINT [FK_TSOGroupTSO]
     REFERENCES [dbo].[TSOGroupSet]
         ([TSOGroup_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_TSOGroupTSO'
 CREATE INDEX [IX_FK_TSOGroupTSO]
@@ -344,6 +348,7 @@ ADD CONSTRAINT [FK_PKPPKPModels]
     REFERENCES [dbo].[PKPModelsSet]
         ([PKPModels_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PKPPKPModels'
 CREATE INDEX [IX_FK_PKPPKPModels]
@@ -358,6 +363,7 @@ ADD CONSTRAINT [FK_ModulesPKP_Modules]
     REFERENCES [dbo].[ModulesSet]
         ([Modules_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ModulesPKP_Modules'
 CREATE INDEX [IX_FK_ModulesPKP_Modules]
@@ -372,6 +378,7 @@ ADD CONSTRAINT [FK_PKPPKP_Modules]
     REFERENCES [dbo].[PKPSet]
         ([PKP_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PKPPKP_Modules'
 CREATE INDEX [IX_FK_PKPPKP_Modules]
@@ -386,6 +393,7 @@ ADD CONSTRAINT [FK_TSOEquipment_TSO]
     REFERENCES [dbo].[TSOSet]
         ([TSO_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_TSOEquipment_TSO'
 CREATE INDEX [IX_FK_TSOEquipment_TSO]
@@ -400,6 +408,7 @@ ADD CONSTRAINT [FK_CardsBranch]
     REFERENCES [dbo].[CardsSet]
         ([Cards_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CardsBranch'
 CREATE INDEX [IX_FK_CardsBranch]
@@ -414,6 +423,7 @@ ADD CONSTRAINT [FK_CardsCards_TSO]
     REFERENCES [dbo].[CardsSet]
         ([Cards_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CardsCards_TSO'
 CREATE INDEX [IX_FK_CardsCards_TSO]
@@ -428,6 +438,7 @@ ADD CONSTRAINT [FK_CardsObject]
     REFERENCES [dbo].[CardsSet]
         ([Cards_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CardsObject'
 CREATE INDEX [IX_FK_CardsObject]
@@ -442,6 +453,7 @@ ADD CONSTRAINT [FK_CardsPKP]
     REFERENCES [dbo].[CardsSet]
         ([Cards_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CardsPKP'
 CREATE INDEX [IX_FK_CardsPKP]
