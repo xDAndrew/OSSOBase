@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Client.Model
 {
-    class M_PKP
+    public class M_PKP
     {
         EF.PKP data;
         EF.PKP objRef;

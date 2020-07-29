@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Client.Model.EquipmentModel
 {
-    class Equipment : INotifyPropertyChanged
+    public class Equipment : INotifyPropertyChanged
     {
         private TSO_Collection TSOModels = new TSO_Collection();
         public TSO_Collection Models

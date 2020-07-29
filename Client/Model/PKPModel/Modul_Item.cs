@@ -1,6 +1,6 @@
 ﻿namespace Client.Model.PKPModel
 {
-    class Modul_Item
+    public class Modul_Item
     {
         Model.EF.Modules data;
         int count = 1;

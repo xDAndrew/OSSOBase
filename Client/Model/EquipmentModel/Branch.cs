@@ -6,7 +6,7 @@ using System;
 
 namespace Client.Model.EquipmentModel
 {
-    class Branch : INotifyPropertyChanged
+    public class Branch : INotifyPropertyChanged
     {
         Model.EF.Branch data;
         double UUAmount = 0.0;

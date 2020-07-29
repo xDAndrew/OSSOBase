@@ -2,7 +2,7 @@
 
 namespace Client.Model.EquipmentModel
 {
-    class TSO_Item
+    public class TSO_Item
     {
         Model.EF.TSO data;
         double UUAmount = 0.0;

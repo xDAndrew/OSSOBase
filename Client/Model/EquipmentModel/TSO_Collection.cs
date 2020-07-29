@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Client.Model.EquipmentModel
 {
-    class TSO_Collection
+    public class TSO_Collection
     {
         public void Save(int ID)
         {

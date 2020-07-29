@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Client.Model.PKPModel
 {
-    class Modul_Collection
+    public class Modul_Collection
     {
         ObservableCollection<Modul_Item> items = new ObservableCollection<Modul_Item>();
 

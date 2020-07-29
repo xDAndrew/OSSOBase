@@ -5,7 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-
+using Client.Services;
+using Client.Services.Interfaces;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Client.ViewModel
@@ -13,6 +14,7 @@ namespace Client.ViewModel
     class VM_EditWindow : INotifyPropertyChanged
     {
         private View.EditWindow WinLink;
+        private readonly IPrintService _printService;
 
         private bool changed = false;
         public bool Changed => CurrentObject.Changed || CurrentPKP.Changed || changed || CurrentCard.Changed;
@@ -64,6 +66,7 @@ namespace Client.ViewModel
         //Конструктор VM_EditWindow
         public VM_EditWindow(View.EditWindow HNDL = null, int? CurrentCardId = null)
         {
+            _printService = new PrintService();
             WinLink = HNDL;
 
             if (CurrentCardId == null)
@@ -168,18 +171,17 @@ namespace Client.ViewModel
             {
                 return print ?? (print = new Command(obj =>
                 {
-                    Excel.Application excelApp = new Excel.Application();
-                    excelApp.Visible = false;
-                    excelApp.DisplayAlerts = false;
-
-                    Excel.Workbook workBook;
-                    Excel.Worksheet workSheet;
-
+                    _printService.PrintCardDocument(CurrentCard, CurrentPKP, CurrentEquipment);
+                    
+                    /*
+                    var excelApp = new Excel.Application {Visible = false, DisplayAlerts = false};
                     byte type = 0;
 
                     try
                     {
-                        string str = Environment.CurrentDirectory;
+                        // Выбираем документ
+                        var str = Environment.CurrentDirectory;
+                        Excel.Workbook workBook;
                         if (CurrentEquipment.LimbsCount <= 8)
                         {
                             workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
@@ -207,7 +209,7 @@ namespace Client.ViewModel
                                     }
                                     else
                                     {
-                                        System.Windows.MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
+                                        MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
                                         excelApp.Quit();
                                         return;
                                     }
@@ -215,37 +217,37 @@ namespace Client.ViewModel
                             }
                         }
 
-                        workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
+                        var workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
                         Excel.Range rng = workSheet.Range["A3"];
-                        rng.Value = currentCard.Owner + " " + currentCard.ObjectView + ", " + currentCard.Address;
+                        rng.Value = CurrentCard.Owner + " " + CurrentCard.ObjectView + ", " + CurrentCard.Address;
 
                         rng = workSheet.Range["B9"];
-                        rng.Value = currentPKP.PKPIndex.Name;
+                        rng.Value = CurrentPkp.PKPIndex.Name;
 
                         rng = workSheet.Range["D9"];
-                        rng.Value = currentPKP.Serial;
+                        rng.Value = CurrentPkp.Serial;
 
                         rng = workSheet.Range["G9"];
-                        rng.Value = currentPKP.Password;
+                        rng.Value = CurrentPkp.Password;
 
                         rng = workSheet.Range["J9"];
-                        rng.Value = currentPKP.Phone;
+                        rng.Value = CurrentPkp.Phone;
 
                         rng = workSheet.Range["X9"];
-                        rng.Value = currentPKP.SelectedDate.ToLongDateString();
+                        rng.Value = CurrentPkp.SelectedDate.ToLongDateString();
 
                         var sumbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                        for (int i = 0; i < currentPKP.Moduls.Items.Count; i++)
+                        for (var i = 0; i < CurrentPkp.Moduls.Items.Count; i++)
                         {
                             rng = workSheet.Range[sumbols[i + 1].ToString() + "12"];
-                            rng.Value = currentPKP.Moduls.Items[i].Name;
+                            rng.Value = CurrentPkp.Moduls.Items[i].Name;
                             rng = workSheet.Range[sumbols[i + 1].ToString() + "15"];
-                            rng.Value = currentPKP.Moduls.Items[i].Count;
+                            rng.Value = CurrentPkp.Moduls.Items[i].Count;
                         }
                         rng = workSheet.Range["AC15"];
-                        rng.Value = currentPKP.Moduls.FullSumm;
+                        rng.Value = CurrentPkp.Moduls.FullSumm;
 
-                        for (int i = 0; i < currentEquipment.Models.Items.Count; i++)
+                        for (var i = 0; i < CurrentEquipment.Models.Items.Count; i++)
                         {
                             if (i + 12 < 26)
                             {
@@ -255,18 +257,18 @@ namespace Client.ViewModel
                             {
                                 rng = workSheet.Range["AA12"];
                             }
-                            rng.Value = currentEquipment.Models.Items[i].Name;
+                            rng.Value = CurrentEquipment.Models.Items[i].Name;
                         }
 
-                        for (int i = 0; i < currentEquipment.Branches.Count; i++)
+                        for (var i = 0; i < CurrentEquipment.Branches.Count; i++)
                         {
                             rng = workSheet.Range["A" + (i + 16).ToString()];
-                            rng.Value = currentEquipment.Branches[i].Number;
+                            rng.Value = CurrentEquipment.Branches[i].Number;
 
                             rng = workSheet.Range["B" + (i + 16).ToString()];
-                            rng.Value = currentEquipment.Branches[i].Name;
+                            rng.Value = CurrentEquipment.Branches[i].Name;
 
-                            for (int j = 0; j < currentEquipment.Models.Items.Count; j++)
+                            for (var j = 0; j < CurrentEquipment.Models.Items.Count; j++)
                             {
                                 if (j + 12 < 26)
                                 {
@@ -277,38 +279,42 @@ namespace Client.ViewModel
                                     rng = workSheet.Range["AA" + (i + 16).ToString()];
                                 }
 
-                                rng.Value = currentEquipment.Branches[i][j];
+                                rng.Value = CurrentEquipment.Branches[i][j];
                             }
 
                             rng = workSheet.Range["AC" + (i + 16).ToString()];
-                            rng.Value = currentEquipment.Branches[i].Summ;
+                            rng.Value = CurrentEquipment.Branches[i].Summ;
                         }
 
+                        // Save date and user name
                         switch (type)
                         {
                             case 0:
                                 rng = workSheet.Range["B28"];
-                                rng.Value = currentCard.UserName;
+                                rng.Value = CurrentCard.UserName;
                                 rng = workSheet.Range["B30"];
-                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                rng.Value = CurrentCard.MakeDate.ToLongDateString();
                                 break;
+
                             case 1:
                                 rng = workSheet.Range["B36"];
-                                rng.Value = currentCard.UserName;
+                                rng.Value = CurrentCard.UserName;
                                 rng = workSheet.Range["B38"];
-                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                rng.Value = CurrentCard.MakeDate.ToLongDateString();
                                 break;
+
                             case 2:
                                 rng = workSheet.Range["B52"];
-                                rng.Value = currentCard.UserName;
+                                rng.Value = CurrentCard.UserName;
                                 rng = workSheet.Range["B54"];
-                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                rng.Value = CurrentCard.MakeDate.ToLongDateString();
                                 break;
+
                             case 3:
                                 rng = workSheet.Range["B84"];
-                                rng.Value = currentCard.UserName;
+                                rng.Value = CurrentCard.UserName;
                                 rng = workSheet.Range["B86"];
-                                rng.Value = currentCard.MakeDate.ToLongDateString();
+                                rng.Value = CurrentCard.MakeDate.ToLongDateString();
                                 break;
                         }
 
@@ -317,7 +323,7 @@ namespace Client.ViewModel
                     finally
                     {
                         excelApp.Quit();
-                    }
+                    }*/
                 }));
             }
         }
