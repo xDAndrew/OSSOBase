@@ -112,7 +112,7 @@ namespace Client.ViewModel
 
             UpdateGrid();
 
-            _updateTimer.Interval = 4000;
+            _updateTimer.Interval = 10000;
             _updateTimer.Tick += (o, e) => { UpdateGrid(); };
             _updateTimer.Start();
         }
