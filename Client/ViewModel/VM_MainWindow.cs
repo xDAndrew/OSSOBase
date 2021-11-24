@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Net;
-using System.Net.Sockets;
-using System.Configuration;
 
 namespace Client.ViewModel
 {
@@ -19,7 +13,6 @@ namespace Client.ViewModel
         private readonly System.Windows.Forms.Timer _updateTimer = new System.Windows.Forms.Timer();
 
         //Свойство SearchContent хранит данные введеные в строку "Поиск"
-
         private string _contractSearchContent = "";
         private string _ownerSearchContent = "";
         private string _objectSearchContent = "";
@@ -31,7 +24,7 @@ namespace Client.ViewModel
             set
             {
                 _contractSearchContent = value;
-                UpdateGrid(true);
+                UpdateGrid();
             }
         }
 
@@ -41,7 +34,7 @@ namespace Client.ViewModel
             set
             {
                 _ownerSearchContent = value;
-                UpdateGrid(true);
+                UpdateGrid();
             }
         }
 
@@ -51,7 +44,7 @@ namespace Client.ViewModel
             set
             {
                 _objectSearchContent = value;
-                UpdateGrid(true);
+                UpdateGrid();
             }
         }
 
@@ -61,7 +54,7 @@ namespace Client.ViewModel
             set
             {
                 _addressSearchContent = value;
-                UpdateGrid(true);
+                UpdateGrid();
             }
         }
 
@@ -72,7 +65,7 @@ namespace Client.ViewModel
             set
             {
                 myCardsState = value;
-                UpdateGrid(true);
+                UpdateGrid();
                 OnPropertyChanged("Cards");
             }
             get { return myCardsState; }
@@ -117,101 +110,38 @@ namespace Client.ViewModel
             CurrentUser = tempUser.Place + " " + tempUser.Name;
             OnPropertyChanged($"CurrentUser");
 
-            _updateTimer.Interval = 10;
-            _updateTimer.Tick += ((o, e) => { UpdateGrid(); });
+            UpdateGrid();
+
+            _updateTimer.Interval = 4000;
+            _updateTimer.Tick += (o, e) => { UpdateGrid(); };
             _updateTimer.Start();
-
-            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse((string)ConfigurationManager.AppSettings["ServerHost"]), 8005);
-            Model.EF.EntityInstance.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                Model.EF.EntityInstance.socket.Connect(ipPoint);
-                Thread SocketReading = new Thread(() =>
-                {
-                    while (true)
-                    {
-                        var data = new byte[256];
-                        StringBuilder builder = new StringBuilder();
-                        int bytes = 0;
-
-                        try
-                        {
-                            byte[] temp = BitConverter.GetBytes(0);
-                            Model.EF.EntityInstance.socket.Send(temp);
-
-                            do
-                            {
-                                bytes = Model.EF.EntityInstance.socket.Receive(data, data.Length, 0);
-                                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-                            }
-                            while (Model.EF.EntityInstance.socket.Available > 0);
-
-                            Model.EF.EntityInstance.ServerUpdate = DateTime.Parse(builder.ToString());
-                            Thread.Sleep(100);
-                        }
-                        catch 
-                        {
-                            var SReading = new Thread(() =>
-                            {
-                                while (true)
-                                {
-                                    Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
-                                    Thread.Sleep(4000);
-                                }
-                            });
-                            SReading.IsBackground = true;
-                            SReading.Start();
-                        };
-                    }
-                });
-                SocketReading.IsBackground = true;
-                SocketReading.Start();
-            }
-            catch
-            {
-                System.Windows.MessageBox.Show("Подключение к серверу не удалось!\nПрограмма работает в автономном режиме...");
-
-                Thread SocketReading = new Thread(() =>
-                {
-                    while (true)
-                    {
-                        Model.EF.EntityInstance.ServerUpdate = DateTime.Now;
-                        Thread.Sleep(4000);
-                    }
-                });
-                SocketReading.IsBackground = true;
-                SocketReading.Start();
-            }
         }
 
         //Обновляет содержимое главной таблицы
-        public void UpdateGrid(bool bStart = false)
+        public void UpdateGrid()
         {
-            if (Model.EF.EntityInstance.ServerUpdate.CompareTo(Model.EF.EntityInstance.LocalUpdate) > 0 || bStart)
+            var focus = WinLink.MG.IsKeyboardFocusWithin;
+            var index = itemIndex;
+
+            Cards.Clear();
+            var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking()
+                .Where(p => ContractSearchContent == "" || p.Contract.Contains(_contractSearchContent))
+                .Where(p => OwnerSearchContent == "" || p.OwnerView.Contains(_ownerSearchContent))
+                .Where(p => ObjectSearchContent == "" || p.ObjectView.Contains(_objectSearchContent))
+                .Where(p => AddressSearchContent == "" || p.AddressView.Contains(_addressSearchContent))
+                .Where(p => !myCardsState || p.Users_ID == Model.EF.EntityInstance.UserID)
+                .OrderBy(p => p.MakeDate);
+
+            foreach (var item in temp)
             {
-                var focus = WinLink.MG.IsKeyboardFocusWithin;
-                var index = itemIndex;
-
-                Cards.Clear();
-                var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking()
-                    .Where(p => ContractSearchContent == "" || p.Contract.Contains(_contractSearchContent))
-                    .Where(p => OwnerSearchContent == "" || p.OwnerView.Contains(_ownerSearchContent))
-                    .Where(p => ObjectSearchContent == "" || p.ObjectView.Contains(_objectSearchContent))
-                    .Where(p => AddressSearchContent == "" || p.AddressView.Contains(_addressSearchContent))
-                    .Where(p => !myCardsState || p.Users_ID == Model.EF.EntityInstance.UserID).ToList();
-
-                foreach (var item in temp)
-                {
-                    Cards.Add(new Model.M_Card(item));
-                }
-
-                ItemIndex = index;
-                if (focus) WinLink.MG.Focus();
-
-                OnPropertyChanged("CardsCount");
-                OnPropertyChanged("Cards");
-                Model.EF.EntityInstance.LocalUpdate = DateTime.Now;
+                Cards.Add(new Model.M_Card(item));
             }
+
+            ItemIndex = index;
+            if (focus) WinLink.MG.Focus();
+
+            OnPropertyChanged("CardsCount");
+            OnPropertyChanged("Cards");
         }
 
         //Комманда для добавления нового объекта (Открывает соответствующее окно)

@@ -357,16 +357,6 @@ namespace Client.ViewModel
                         currentObject.Save(currentCard.Id);
                         currentPKP.Save(currentCard.Id);
                         currentEquipment.Save(currentCard.Id);
-
-                        try
-                        {
-                            var temp = BitConverter.GetBytes(1);
-                            Model.EF.EntityInstance.socket.Send(temp);
-                        }
-                        catch
-                        {
-                            // ignored
-                        }
                     }
                 }));
             }
