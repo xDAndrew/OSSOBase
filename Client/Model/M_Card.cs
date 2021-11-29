@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Client.Model
 {
-    class M_Card
+    public class M_Card
     {
         private EF.Cards data;
         private string userName;

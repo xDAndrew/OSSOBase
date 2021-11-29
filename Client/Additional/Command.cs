@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Client.ViewModel
 {
-    class Command : ICommand
+    public class Command : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;

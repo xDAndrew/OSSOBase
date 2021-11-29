@@ -78,6 +78,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingContexts\BaseBindingContext.cs" />
+    <Compile Include="BindingContexts\ReportWindowContext.cs" />
     <Compile Include="Model\EF\Branch.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -94,6 +96,9 @@
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
     <Compile Include="ViewModel\VM_TSOEditWindow.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
+    <Compile Include="View\ReportWindow.xaml.cs">
+      <DependentUpon>ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TSOEditWindow.xaml.cs">
       <DependentUpon>TSOEditWindow.xaml</DependentUpon>
     </Compile>
@@ -170,6 +175,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TSOEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,6 +210,21 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Documents\16.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\32.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\64.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\8.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\Report.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Model\EF\DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataModel.Context.cs</LastGenOutput>
@@ -226,6 +250,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Source\Excel-export.png" />
     <Resource Include="Source\Edit.png" />
     <Resource Include="Source\Add.png" />
     <Resource Include="Source\security.ico" />
@@ -237,6 +262,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>SET path=$(TargetDir)\Reports
+if not exist "%25path%25" mkdir "%25path%25"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

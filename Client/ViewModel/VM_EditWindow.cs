@@ -182,32 +182,32 @@ namespace Client.ViewModel
                         string str = Environment.CurrentDirectory;
                         if (CurrentEquipment.LimbsCount <= 8)
                         {
-                            workBook = excelApp.Workbooks.Open(str + @"\Data\8.xls");
+                            workBook = excelApp.Workbooks.Open(str + @"\Documents\8.xls");
                         }
                         else
                         {
                             if (CurrentEquipment.LimbsCount <= 16)
                             {
-                                workBook = excelApp.Workbooks.Open(str + @"\Data\16.xls");
+                                workBook = excelApp.Workbooks.Open(str + @"\Documents\16.xls");
                                 type = 1;
                             }
                             else
                             {
                                 if (CurrentEquipment.LimbsCount <= 32)
                                 {
-                                    workBook = excelApp.Workbooks.Open(str + @"\Data\32.xls");
+                                    workBook = excelApp.Workbooks.Open(str + @"\Documents\32.xls");
                                     type = 2;
                                 }
                                 else
                                 {
                                     if (CurrentEquipment.LimbsCount <= 64)
                                     {
-                                        workBook = excelApp.Workbooks.Open(str + @"\Data\64.xls");
+                                        workBook = excelApp.Workbooks.Open(str + @"\Documents\64.xls");
                                         type = 3;
                                     }
                                     else
                                     {
-                                        System.Windows.MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
+                                        MessageBox.Show("Печать для " + CurrentEquipment.LimbsCount + " шлейфов - невозможна!", "Ошибка");
                                         excelApp.Quit();
                                         return;
                                     }
