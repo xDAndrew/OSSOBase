@@ -1,0 +1,61 @@
+﻿<Window x:Class="Client.View.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.View"
+        mc:Ignorable="d"
+        Title="Экспорт объектов" Height="200" Width="250"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Icon="..\.\Source\security.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Name="rowToHide">
+                <RowDefinition.Style>
+                    <Style TargetType="{x:Type RowDefinition}">
+                        <Setter Property="Height" Value="1*" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsYearVisible}" Value="True">
+                                <Setter Property="Height" Value="0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+            <RowDefinition Name="toRow">
+                <RowDefinition.Style>
+                    <Style TargetType="{x:Type RowDefinition}">
+                        <Setter Property="Height" Value="0" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsYearVisible}" Value="False">
+                                <Setter Property="Height" Value="0" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsYearVisible}" Value="True">
+                                <Setter Property="Height" Value="1*" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ComboBox 
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            Margin="10,10"
+            VerticalAlignment="Bottom" 
+            IsEditable="False"
+            ItemsSource="{Binding Path=ReportTypes}"
+            SelectedIndex="{Binding Path=TypeIndex}" />
+        <Label Grid.Row="0" Content="Тип отчета" HorizontalAlignment="Stretch" Margin="5,5" VerticalAlignment="Top" />
+
+        <Button Content="Export" HorizontalAlignment="Right" Grid.Row="3" Margin="10, 10" Width="100" VerticalAlignment="Bottom" IsEnabled="{Binding IsFormValid}" Command="{Binding OnClickExport}"/>
+
+        <Label Content="Отчетный год" HorizontalAlignment="Left" Margin="5, 0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="1" Height="22" Margin="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Text="{Binding SelectedYear,UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" />
+    </Grid>
+</Window>

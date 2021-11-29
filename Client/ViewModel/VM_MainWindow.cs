@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Client.BindingContexts;
+using Client.View;
 
 namespace Client.ViewModel
 {
@@ -220,6 +222,18 @@ namespace Client.ViewModel
                 }));
             }
         }
+
+        public Command OpenReportWindow => new Command(obj =>
+        {
+            _updateTimer.Stop();
+            var eForm = new ReportWindow();
+            var dataContext = new ReportWindowContext(Cards.ToList());
+            eForm.Owner = WinLink;
+            eForm.DataContext = dataContext;
+            eForm.ShowDialog();
+            UpdateGrid();
+            _updateTimer.Start();
+        });
 
         //Комманда для кнопки Меню -> Выход
         private Command closeApp;
