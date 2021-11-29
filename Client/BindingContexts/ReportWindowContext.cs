@@ -26,7 +26,7 @@ namespace Client.BindingContexts
 
         public List<string> ReportTypes => new List<string>
         {
-            "Текущая выборка", "Старше 5 лет (ТО)", "Старше 10 лет (Кап.ремонт)"
+            "Текущая выборка", "Объекты 5 лет (ТО)", "Старше 10 лет (Кап.ремонт)"
         };
 
         private int _type;
@@ -70,7 +70,7 @@ namespace Client.BindingContexts
                     SaveToFile(_cards);
                     break;
                 case 1:
-                    SaveToFile(GetCardToTechService(5).ToList());
+                    SaveToFile(GetCardToTechService(5, true).ToList());
                     break;
                 case 2:
                     SaveToFile(GetCardToTechService(10).ToList());
@@ -78,9 +78,21 @@ namespace Client.BindingContexts
             }
         });
 
-        private IEnumerable<M_Card> GetCardToTechService(int years)
+        private IEnumerable<M_Card> GetCardToTechService(int years, bool currentYear = false)
         {
             var year = int.Parse(SelectedYear) - years;
+
+            if (currentYear)
+            {
+                return EntityInstance
+                    .DBContext
+                    .PKPSet
+                    .AsNoTracking()
+                    .Where(x => x.Date.Year == year)
+                    .Include(x => x.Cards)
+                    .ToList()
+                    .Select(x => new M_Card(x.Cards));
+            }
 
             return EntityInstance
                 .DBContext
