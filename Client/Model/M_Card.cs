@@ -24,12 +24,17 @@ namespace Client.Model
                 this.data.MakeDate = DateTime.Now;
                 this.data.Amount = 0.0;
                 this.data.Contract = string.Empty;
+                StartService = DateTime.Now;
             }
             else
             {
                 this.data = data;
+
                 var temp = EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == data.Users_ID);
                 UserName = temp.Place + " " + temp.Name;
+
+                var pkp = EF.EntityInstance.DBContext.PKPSet.AsNoTracking().First(p => p.Cards_ID == data.Cards_ID);
+                StartService = pkp.Date;
             }
         }
 
@@ -140,6 +145,8 @@ namespace Client.Model
                 OnPropertyChanged("UserName");
             }
         }
+
+        public DateTime StartService { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
