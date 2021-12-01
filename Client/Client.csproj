@@ -94,6 +94,7 @@
     <Compile Include="Model\M_Card.cs" />
     <Compile Include="Model\PKPModel\Modul_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
+    <Compile Include="Model\StatusRow.cs" />
     <Compile Include="ViewModel\VM_TSOEditWindow.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
     <Compile Include="View\ReportWindow.xaml.cs">
@@ -220,9 +221,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Documents\8.xls">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Documents\Report.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Model\EF\DataModel.Context.tt">

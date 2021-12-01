@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Client.ViewModel;
+using System.Configuration;
 using System.Windows;
 
 namespace Client
@@ -10,12 +11,20 @@ namespace Client
             InitializeComponent();
             Model.EF.EntityInstance.UserID = int.Parse(ConfigurationManager.AppSettings["userId"]);
             Show();
-            DataContext = new ViewModel.VM_MainWindow(this);
+            DataContext = new VM_MainWindow(this);
         }
 
         private void RowDoubleClick(object sender, RoutedEventArgs e)
         {
-            (DataContext as ViewModel.VM_MainWindow).EditCard.Execute(new object());
+            ((VM_MainWindow)DataContext).EditCard.Execute(new object());
+        }
+
+        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            var context = ((VM_MainWindow)DataContext);
+            context.UpdateGrid();
+            DataContext = context;
+            e.Handled = true;
         }
     }
 }

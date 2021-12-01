@@ -91,7 +91,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Content="Улица"/>
-                            <ComboBox IsEnabled="True" Height="22" VerticalAlignment="Bottom" Margin="4, 0" IsEditable="False" ItemsSource="{Binding Path=CurrentObject.Streets}"
+                            <ComboBox Grid.Column="0" IsEnabled="True" Height="22" VerticalAlignment="Bottom" Margin="4, 0" IsEditable="False" ItemsSource="{Binding Path=CurrentObject.Streets}"
                                       SelectedItem="{Binding CurrentObject.StreetIndex}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>

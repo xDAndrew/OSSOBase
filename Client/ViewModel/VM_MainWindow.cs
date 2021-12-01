@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Client.BindingContexts;
+using Client.Model;
 using Client.View;
 
 namespace Client.ViewModel
@@ -112,6 +113,13 @@ namespace Client.ViewModel
             CurrentUser = tempUser.Place + " " + tempUser.Name;
             OnPropertyChanged($"CurrentUser");
 
+            StatusesFilter = new List<StatusRow>
+            {
+                new StatusRow { IsSelected = true, StatusName = "Черновик"},
+                new StatusRow { IsSelected = true, StatusName = "Охраняется"},
+                new StatusRow { IsSelected = true, StatusName = "Снят"}
+            };
+
             UpdateGrid();
 
             _updateTimer.Interval = 10000;
@@ -126,11 +134,16 @@ namespace Client.ViewModel
             var index = itemIndex;
 
             Cards.Clear();
+            var isDraft = StatusesFilter.First().IsSelected;
+            var isActive = StatusesFilter.Skip(1).First().IsSelected;
+            var isNotActive = StatusesFilter.Skip(2).First().IsSelected;
+
             var temp = Model.EF.EntityInstance.DBContext.CardsSet.AsNoTracking()
                 .Where(p => ContractSearchContent == "" || p.Contract.Contains(_contractSearchContent))
                 .Where(p => OwnerSearchContent == "" || p.OwnerView.Contains(_ownerSearchContent))
                 .Where(p => ObjectSearchContent == "" || p.ObjectView.Contains(_objectSearchContent))
                 .Where(p => AddressSearchContent == "" || p.AddressView.Contains(_addressSearchContent))
+                .Where(p => (isActive && p.StatusView == 1) || (isDraft && p.StatusView == 0) || (isNotActive && p.StatusView == 2))
                 .Where(p => !myCardsState || p.Users_ID == Model.EF.EntityInstance.UserID)
                 .OrderBy(p => p.MakeDate);
 
@@ -241,6 +254,10 @@ namespace Client.ViewModel
         {
             get { return closeApp ?? (closeApp = new Command(obj => { WinLink.Close(); })); }
         }
+
+        #region Statuses
+        public List<StatusRow> StatusesFilter { get; set; }
+        #endregion
 
         //Свойство для обновления UI при изменении данных
         public event PropertyChangedEventHandler PropertyChanged;

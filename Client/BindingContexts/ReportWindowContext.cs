@@ -89,6 +89,7 @@ namespace Client.BindingContexts
                     .PKPSet
                     .AsNoTracking()
                     .Where(x => x.Date.Year == year)
+                    .Where(x => x.Cards.StatusView == 1)
                     .Include(x => x.Cards)
                     .ToList()
                     .Select(x => new M_Card(x.Cards));
@@ -99,6 +100,7 @@ namespace Client.BindingContexts
                 .PKPSet
                 .AsNoTracking()
                 .Where(x => x.Date.Year <= year)
+                .Where(x => x.Cards.StatusView == 1)
                 .Include(x => x.Cards)
                 .ToList()
                 .Select(x => new M_Card(x.Cards));
@@ -106,12 +108,15 @@ namespace Client.BindingContexts
 
         private void SaveToFile(IEnumerable<M_Card> cards)
         {
-            var mCards = cards.ToList();
+            var enumerable = cards.ToList();
+            var mCards = enumerable.ToList();
             if (!mCards.Any())
             {
                 MessageBox.Show("Не найдено объектов для экспорта", "Ошибка экспорта");
                 return;
             }
+
+            var rowCount = enumerable.Count();
 
             var excelApp = new Application
             {
@@ -120,15 +125,51 @@ namespace Client.BindingContexts
             };
 
             var dir = Directory.GetCurrentDirectory();
-            var workBook = excelApp.Workbooks.Open($@"{dir}\Documents\Report.xls");
+            var workBook = excelApp.Workbooks.Add(Type.Missing);
 
             var fileCount = 0;
             if (Directory.Exists($"{dir}/reports"))
             {
-                fileCount = Directory.GetFiles($"{dir}/reports").Count();
+                var directory = new DirectoryInfo($"{dir}/Reports");
+                var files = directory.GetFiles();
+                fileCount = files.Count(f => !f.Attributes.HasFlag(FileAttributes.Hidden));
+            }
+            else
+            {
+                Directory.CreateDirectory($"{dir}/Reports");
             }
 
             var workSheet = (Worksheet)workBook.ActiveSheet;
+
+            workSheet.Cells[1, 1] = "п/п";
+            workSheet.Cells[1, 2] = "Договор";
+            workSheet.Cells[1, 3] = "Заказчик";
+            workSheet.Cells[1, 4] = "Объект";
+            workSheet.Cells[1, 5] = "Адрес";
+            workSheet.Cells[1, 6] = "Кол-во У.У.";
+            workSheet.Cells[1, 7] = "Автор";
+            workSheet.Cells[1, 8] = "Дата приемки";
+
+            workSheet.Columns[1].ColumnWidth = 11;
+            workSheet.Columns[2].ColumnWidth = 11;
+            workSheet.Columns[3].ColumnWidth = 60;
+            workSheet.Columns[4].ColumnWidth = 60;
+            workSheet.Columns[5].ColumnWidth = 30;
+            workSheet.Columns[6].ColumnWidth = 30;
+            workSheet.Columns[7].ColumnWidth = 30;
+            workSheet.Columns[8].ColumnWidth = 30;
+
+            workSheet.Range["A1", "H1"].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+            workSheet.Range["C2", $"E{rowCount + 1}"].HorizontalAlignment = XlHAlign.xlHAlignLeft;
+            workSheet.Range["A1", $"B{rowCount + 1}"].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+            workSheet.Range["F1", $"F{rowCount + 1}"].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+            workSheet.Range["H1", $"H{rowCount + 1}"].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+
+            var range = workSheet.UsedRange;
+            var cell = range.Range["A1", $"H{rowCount + 1}"];
+            var border = cell.Borders;
+            border.LineStyle = XlLineStyle.xlContinuous;
+            border.Weight = 2d;
 
             var index = 2;
             foreach (var card in mCards)
@@ -144,13 +185,17 @@ namespace Client.BindingContexts
                 index++;
             }
 
-            var filename = $@"{dir}\Reports\{fileCount + 1}.{ReportTypes[TypeIndex]}_отчет.xls";
+            var filename = $@"{dir}\Reports\{fileCount + 1}.{ReportTypes[TypeIndex]}_отчет.xlsx";
             workBook.SaveAs(filename);
             workBook.Close();
             excelApp.Quit();
 
-            MessageBox.Show($"Выборка сохранена: {filename}", "Экспорт в файл");
-            Process.Start($"{dir}/reports");
+            if (MessageBox.Show(
+                    $"Выборка сохранена: \"{fileCount + 1}.{ReportTypes[TypeIndex]}_отчет.xlsx\"\nОткрыть папку?",
+                    "Экспорт в файл", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Process.Start($"{dir}/reports");
+            }
         }
     }
 }

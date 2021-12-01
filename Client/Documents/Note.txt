@@ -20,3 +20,8 @@
     //var row = (DataGridRow)sender;
     //MessageBox.Show(row.GetIndex().ToString());
     //row.DetailsVisibility = row.DetailsVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+
+Статусы карточки:
+	1. Черновик - 0
+	2. Под охраной - 1
+	2. Снятый - 2
