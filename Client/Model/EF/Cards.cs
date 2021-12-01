@@ -31,6 +31,7 @@ namespace Client.Model.EF
         public string AddressView { get; set; }
         public string PKPView { get; set; }
         public string Contract { get; set; }
+        public byte StatusView { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual ICollection<Branch> Branch { get; set; }

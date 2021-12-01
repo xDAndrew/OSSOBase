@@ -46,11 +46,25 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
 
                     <Label Content="Договор" HorizontalAlignment="Center"></Label>
                     <TextBox Grid.Column="1" Margin="5" Width="100px" HorizontalAlignment="Left" DataContext="{Binding Path=CurrentCard}" Text="{Binding Contract, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Label Grid.Column="2" Content="Статус" HorizontalAlignment="Left"></Label>
+                    <ComboBox 
+                        Grid.Column="2"
+                        Width="110"
+                        IsEnabled="True"
+                        Height="22"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="10, 0"
+                        IsEditable="False"
+                        ItemsSource="{Binding Statuses}"
+                        SelectedIndex="{Binding CurrentCard.SelectedStatus}" />
                 </Grid>
 
 

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 namespace Client.Model
 {
@@ -81,6 +82,35 @@ namespace Client.Model
         {
             get => data.Amount;
             set => data.Amount = value;
+        }
+
+        public int SelectedStatus
+        {
+            get => data.StatusView;
+            set
+            {
+                data.StatusView = (byte)value;
+                Changed = true;
+                OnPropertyChanged("SelectedStatus");
+            }
+        }
+
+        public Brush GetStatusColor
+        {
+            get
+            {
+                switch (data.StatusView)
+                {
+                    case 0:
+                        return Brushes.DimGray;
+                    case 1:
+                        return Brushes.Green;
+                    case 2:
+                        return Brushes.Red;
+                    default: 
+                        return new SolidColorBrush();
+                }
+            }
         }
 
         public string PKP

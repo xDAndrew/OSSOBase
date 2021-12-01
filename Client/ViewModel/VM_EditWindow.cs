@@ -521,5 +521,9 @@ namespace Client.ViewModel
         {
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
+
+        #region Statuses
+        public List<string> Statuses => new List<string> { "Черновик", "Охраняется", "Снят с охраны" };
+        #endregion
     }
 }
