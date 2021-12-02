@@ -13,7 +13,7 @@ namespace Client
 
         private static void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            var errorMessage = $"{DateTime.Now.ToShortDateString()}: An unhandled exception occurred: {e.Exception.Message}\n";
+            var errorMessage = $"\n{DateTime.Now:dd.MM.yyyy hh:mm:ss}: {e.Exception}\n";
             File.AppendAllText("log.txt", errorMessage);
         }
     }
