@@ -181,7 +181,7 @@ namespace Client.BindingContexts
                 workSheet.Cells[index, 5] = card.Address;
                 workSheet.Cells[index, 6] = card.UU;
                 workSheet.Cells[index, 7] = card.UserName;
-                workSheet.Cells[index, 8] = card.StartService.ToString("dd.MM.yyyy");
+                workSheet.Cells[index, 8] = card.StartService.Year > 2000 ? card.StartService.ToString("dd.MM.yyyy") : "Не установлено";
                 index++;
             }
 
