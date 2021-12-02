@@ -95,7 +95,7 @@
     <Compile Include="Model\PKPModel\Modul_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
     <Compile Include="Model\StatusRow.cs" />
-    <Compile Include="ViewModel\VM_TSOEditWindow.cs" />
+    <Compile Include="ViewModel\TsoEditWindowContext.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
     <Compile Include="View\ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>

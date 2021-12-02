@@ -424,7 +424,7 @@ namespace Client.ViewModel
                     }
 
                     var wTemp = new View.TSOEditWindow();
-                    var cTemp = new ViewModel.VM_TSOEditWindow(wTemp, tempTSO);
+                    var cTemp = new TsoEditWindowContext(tempTSO);
                     wTemp.Owner = WinLink;
                     wTemp.DataContext = cTemp;
                     wTemp.ShowDialog();

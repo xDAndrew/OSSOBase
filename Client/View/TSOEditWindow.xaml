@@ -1,6 +1,8 @@
 ﻿<Window x:Class="Client.View.TSOEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         Title="Оборудование"
         Width="540"
         Height="380"
@@ -27,11 +29,11 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button Content=">>" Height="20" Width="30" VerticalAlignment="Bottom" Margin="0, 8" IsEnabled="{Binding SetButtonStatus}" Command="{Binding SetModul}"/>
-            <Button Grid.Row="1" Content="&lt;&lt;" Height="20" Width="30" VerticalAlignment="Top" Margin="0, 8" IsEnabled="{Binding DelButtonStatus}" Command="{Binding DelModul}"/>
+            <Button Content=">>" Height="20" Width="30" VerticalAlignment="Bottom" Margin="0, 8" IsEnabled="{Binding SetButtonStatus}" Command="{Binding SetModule}"/>
+            <Button Grid.Row="1" Content="&lt;&lt;" Height="20" Width="30" VerticalAlignment="Top" Margin="0, 8" IsEnabled="{Binding DelButtonStatus}" Command="{Binding DelModule}"/>
         </Grid>
 
-        <ListBox Margin="8, 40, 8, 4" ItemsSource="{Binding TSO}" SelectedIndex="{Binding TSOIndex}">
+        <ListBox Grid.Row="0" Grid.Column="0" Margin="8, 40, 8, 4" ItemsSource="{Binding Tso}" SelectedIndex="{Binding TsoIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="3">
@@ -41,7 +43,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Grid.Column="2" Margin="8,8,8,4" ItemsSource="{Binding ActiveTSOList}" SelectedIndex="{Binding ActiveTSOIndex}">
+        <ListBox Grid.Row="0" Grid.Column="2" Margin="8,8,8,4" ItemsSource="{Binding ActiveTsoList}" SelectedIndex="{Binding ActiveTsoIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="3">
@@ -50,13 +52,22 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
-        <Button Grid.Row="1" Grid.Column="2" Width="100" Height="22" HorizontalAlignment="Right" Margin="8, 0" Content="Сохранить" Command="{Binding SaveChange}"/>
-        <StatusBar Grid.Row="2" Grid.ColumnSpan="3" Height="22" VerticalAlignment="Bottom">
+
+        <Button 
+            Grid.Row="1"
+            Grid.Column="2"
+            Width="100"
+            Height="22"
+            HorizontalAlignment="Right"
+            Margin="8, 0"
+            Content="Сохранить"
+            Command="{Binding SaveChange}"
+            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Height="22" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding Count}"/>
         </StatusBar>
 
-        <ComboBox Grid.Row="0" Height="22" Margin="8, 8" VerticalAlignment="Top" ItemsSource="{Binding Groups}" SelectedIndex="{Binding GroupsIndex}">
+        <ComboBox Grid.Row="0" Grid.Column="0" Height="22" Margin="8, 8" VerticalAlignment="Top" ItemsSource="{Binding Groups}" SelectedIndex="{Binding GroupsIndex}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
