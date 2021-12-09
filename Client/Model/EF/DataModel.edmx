@@ -4,319 +4,319 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BranchSet">
-          <Key>
-            <PropertyRef Name="Branch_ID" />
-          </Key>
-          <Property Name="Branch_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Number" Type="tinyint" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-          <Property Name="Cards_ID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Cards_TSOSet">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TSO_ID" Type="int" Nullable="false" />
-          <Property Name="Number" Type="tinyint" Nullable="false" />
-          <Property Name="Cards_ID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CardsSet">
-          <Key>
-            <PropertyRef Name="Cards_ID" />
-          </Key>
-          <Property Name="Cards_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Users_ID" Type="int" Nullable="false" />
-          <Property Name="MakeDate" Type="datetime" Nullable="false" />
-          <Property Name="Amount" Type="float" Nullable="false" />
-          <Property Name="OwnerView" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ObjectView" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="AddressView" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="PKPView" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Contract" Type="nvarchar(max)" />
-          <Property Name="StatusView" Type="tinyint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ModulesSet">
-          <Key>
-            <PropertyRef Name="Modules_ID" />
-          </Key>
-          <Property Name="Modules_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
-          <Property Name="UUCount" Type="float" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ObjectSet">
-          <Key>
-            <PropertyRef Name="Object_ID" />
-          </Key>
-          <Property Name="Object_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Owner" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Home" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Corp" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Room" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Streets_ID" Type="int" Nullable="false" />
-          <Property Name="Cards_ID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PKP_ModulesSet">
-          <Key>
-            <PropertyRef Name="PKP_Modules_ID" />
-          </Key>
-          <Property Name="PKP_Modules_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Modules_ID" Type="int" Nullable="false" />
-          <Property Name="PKP_ID" Type="int" Nullable="false" />
-          <Property Name="Count" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PKPModelsSet">
-          <Key>
-            <PropertyRef Name="PKPModels_ID" />
-          </Key>
-          <Property Name="PKPModels_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PKPSet">
-          <Key>
-            <PropertyRef Name="PKP_ID" />
-          </Key>
-          <Property Name="PKP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Serial" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="UUAmount" Type="float" Nullable="false" />
-          <Property Name="PKPModels_ID" Type="int" Nullable="false" />
-          <Property Name="Cards_ID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StreetsSet">
-          <Key>
-            <PropertyRef Name="Streets_ID" />
-          </Key>
-          <Property Name="Streets_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Type" Type="tinyint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TSOGroupSet">
-          <Key>
-            <PropertyRef Name="TSOGroup_ID" />
-          </Key>
-          <Property Name="TSOGroup_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Amount" Type="float" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TSOSet">
-          <Key>
-            <PropertyRef Name="TSO_ID" />
-          </Key>
-          <Property Name="TSO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
-          <Property Name="Group_ID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UsersSet">
-          <Key>
-            <PropertyRef Name="Users_ID" />
-          </Key>
-          <Property Name="Users_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Place" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_CardsBranch">
-          <End Role="CardsSet" Type="Self.CardsSet" Multiplicity="1" />
-          <End Role="BranchSet" Type="Self.BranchSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CardsSet">
-              <PropertyRef Name="Cards_ID" />
-            </Principal>
-            <Dependent Role="BranchSet">
-              <PropertyRef Name="Cards_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CardsCards_TSO">
-          <End Role="CardsSet" Type="Self.CardsSet" Multiplicity="1" />
-          <End Role="Cards_TSOSet" Type="Self.Cards_TSOSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CardsSet">
-              <PropertyRef Name="Cards_ID" />
-            </Principal>
-            <Dependent Role="Cards_TSOSet">
-              <PropertyRef Name="Cards_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CardsObject">
-          <End Role="CardsSet" Type="Self.CardsSet" Multiplicity="1" />
-          <End Role="ObjectSet" Type="Self.ObjectSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CardsSet">
-              <PropertyRef Name="Cards_ID" />
-            </Principal>
-            <Dependent Role="ObjectSet">
-              <PropertyRef Name="Cards_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CardsPKP">
-          <End Role="CardsSet" Type="Self.CardsSet" Multiplicity="1" />
-          <End Role="PKPSet" Type="Self.PKPSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CardsSet">
-              <PropertyRef Name="Cards_ID" />
-            </Principal>
-            <Dependent Role="PKPSet">
-              <PropertyRef Name="Cards_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ModulesPKP_Modules">
-          <End Role="ModulesSet" Type="Self.ModulesSet" Multiplicity="1" />
-          <End Role="PKP_ModulesSet" Type="Self.PKP_ModulesSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ModulesSet">
-              <PropertyRef Name="Modules_ID" />
-            </Principal>
-            <Dependent Role="PKP_ModulesSet">
-              <PropertyRef Name="Modules_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PKPPKP_Modules">
-          <End Role="PKPSet" Type="Self.PKPSet" Multiplicity="1" />
-          <End Role="PKP_ModulesSet" Type="Self.PKP_ModulesSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PKPSet">
-              <PropertyRef Name="PKP_ID" />
-            </Principal>
-            <Dependent Role="PKP_ModulesSet">
-              <PropertyRef Name="PKP_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PKPPKPModels">
-          <End Role="PKPModelsSet" Type="Self.PKPModelsSet" Multiplicity="1" />
-          <End Role="PKPSet" Type="Self.PKPSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PKPModelsSet">
-              <PropertyRef Name="PKPModels_ID" />
-            </Principal>
-            <Dependent Role="PKPSet">
-              <PropertyRef Name="PKPModels_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StreetsObject">
-          <End Role="StreetsSet" Type="Self.StreetsSet" Multiplicity="1" />
-          <End Role="ObjectSet" Type="Self.ObjectSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StreetsSet">
-              <PropertyRef Name="Streets_ID" />
-            </Principal>
-            <Dependent Role="ObjectSet">
-              <PropertyRef Name="Streets_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TSOEquipment_TSO">
-          <End Role="TSOSet" Type="Self.TSOSet" Multiplicity="1" />
-          <End Role="Cards_TSOSet" Type="Self.Cards_TSOSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TSOSet">
-              <PropertyRef Name="TSO_ID" />
-            </Principal>
-            <Dependent Role="Cards_TSOSet">
-              <PropertyRef Name="TSO_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TSOGroupTSO">
-          <End Role="TSOGroupSet" Type="Self.TSOGroupSet" Multiplicity="1" />
-          <End Role="TSOSet" Type="Self.TSOSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TSOGroupSet">
-              <PropertyRef Name="TSOGroup_ID" />
-            </Principal>
-            <Dependent Role="TSOSet">
-              <PropertyRef Name="Group_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsersCards">
-          <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1" />
-          <End Role="CardsSet" Type="Self.CardsSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UsersSet">
-              <PropertyRef Name="Users_ID" />
-            </Principal>
-            <Dependent Role="CardsSet">
-              <PropertyRef Name="Users_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="DataModelStoreContainer">
-          <EntitySet Name="BranchSet" EntityType="Self.BranchSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cards_TSOSet" EntityType="Self.Cards_TSOSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CardsSet" EntityType="Self.CardsSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ModulesSet" EntityType="Self.ModulesSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ObjectSet" EntityType="Self.ObjectSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PKP_ModulesSet" EntityType="Self.PKP_ModulesSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PKPModelsSet" EntityType="Self.PKPModelsSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PKPSet" EntityType="Self.PKPSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="StreetsSet" EntityType="Self.StreetsSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TSOGroupSet" EntityType="Self.TSOGroupSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TSOSet" EntityType="Self.TSOSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UsersSet" EntityType="Self.UsersSet" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_CardsBranch" Association="Self.FK_CardsBranch">
-            <End Role="CardsSet" EntitySet="CardsSet" />
-            <End Role="BranchSet" EntitySet="BranchSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CardsCards_TSO" Association="Self.FK_CardsCards_TSO">
-            <End Role="CardsSet" EntitySet="CardsSet" />
-            <End Role="Cards_TSOSet" EntitySet="Cards_TSOSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CardsObject" Association="Self.FK_CardsObject">
-            <End Role="CardsSet" EntitySet="CardsSet" />
-            <End Role="ObjectSet" EntitySet="ObjectSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CardsPKP" Association="Self.FK_CardsPKP">
-            <End Role="CardsSet" EntitySet="CardsSet" />
-            <End Role="PKPSet" EntitySet="PKPSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ModulesPKP_Modules" Association="Self.FK_ModulesPKP_Modules">
-            <End Role="ModulesSet" EntitySet="ModulesSet" />
-            <End Role="PKP_ModulesSet" EntitySet="PKP_ModulesSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PKPPKP_Modules" Association="Self.FK_PKPPKP_Modules">
-            <End Role="PKPSet" EntitySet="PKPSet" />
-            <End Role="PKP_ModulesSet" EntitySet="PKP_ModulesSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PKPPKPModels" Association="Self.FK_PKPPKPModels">
-            <End Role="PKPModelsSet" EntitySet="PKPModelsSet" />
-            <End Role="PKPSet" EntitySet="PKPSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StreetsObject" Association="Self.FK_StreetsObject">
-            <End Role="StreetsSet" EntitySet="StreetsSet" />
-            <End Role="ObjectSet" EntitySet="ObjectSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TSOEquipment_TSO" Association="Self.FK_TSOEquipment_TSO">
-            <End Role="TSOSet" EntitySet="TSOSet" />
-            <End Role="Cards_TSOSet" EntitySet="Cards_TSOSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TSOGroupTSO" Association="Self.FK_TSOGroupTSO">
-            <End Role="TSOGroupSet" EntitySet="TSOGroupSet" />
-            <End Role="TSOSet" EntitySet="TSOSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsersCards" Association="Self.FK_UsersCards">
-            <End Role="UsersSet" EntitySet="UsersSet" />
-            <End Role="CardsSet" EntitySet="CardsSet" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DataModelStoreContainer">
+    <EntitySet Name="CardsSet" EntityType="DataModel.Store.CardsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ObjectSet" EntityType="DataModel.Store.ObjectSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StreetsSet" EntityType="DataModel.Store.StreetsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UsersSet" EntityType="DataModel.Store.UsersSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TSOGroupSet" EntityType="DataModel.Store.TSOGroupSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TSOSet" EntityType="DataModel.Store.TSOSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PKPSet" EntityType="DataModel.Store.PKPSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BranchSet" EntityType="DataModel.Store.BranchSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PKPModelsSet" EntityType="DataModel.Store.PKPModelsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ModulesSet" EntityType="DataModel.Store.ModulesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PKP_ModulesSet" EntityType="DataModel.Store.PKP_ModulesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cards_TSOSet" EntityType="DataModel.Store.Cards_TSOSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="StreetsObject" Association="DataModel.Store.StreetsObject">
+      <End Role="Streets" EntitySet="StreetsSet" />
+      <End Role="Object" EntitySet="ObjectSet" />
+    </AssociationSet>
+    <AssociationSet Name="UsersCards" Association="DataModel.Store.UsersCards">
+      <End Role="Users" EntitySet="UsersSet" />
+      <End Role="Cards" EntitySet="CardsSet" />
+    </AssociationSet>
+    <AssociationSet Name="TSOGroupTSO" Association="DataModel.Store.TSOGroupTSO">
+      <End Role="TSOGroup" EntitySet="TSOGroupSet" />
+      <End Role="TSO" EntitySet="TSOSet" />
+    </AssociationSet>
+    <AssociationSet Name="PKPPKPModels" Association="DataModel.Store.PKPPKPModels">
+      <End Role="PKP" EntitySet="PKPSet" />
+      <End Role="PKPModels" EntitySet="PKPModelsSet" />
+    </AssociationSet>
+    <AssociationSet Name="ModulesPKP_Modules" Association="DataModel.Store.ModulesPKP_Modules">
+      <End Role="Modules" EntitySet="ModulesSet" />
+      <End Role="PKP_Modules" EntitySet="PKP_ModulesSet" />
+    </AssociationSet>
+    <AssociationSet Name="PKPPKP_Modules" Association="DataModel.Store.PKPPKP_Modules">
+      <End Role="PKP" EntitySet="PKPSet" />
+      <End Role="PKP_Modules" EntitySet="PKP_ModulesSet" />
+    </AssociationSet>
+    <AssociationSet Name="TSOEquipment_TSO" Association="DataModel.Store.TSOEquipment_TSO">
+      <End Role="TSO" EntitySet="TSOSet" />
+      <End Role="Equipment_TSO" EntitySet="Cards_TSOSet" />
+    </AssociationSet>
+    <AssociationSet Name="CardsBranch" Association="DataModel.Store.CardsBranch">
+      <End Role="Cards" EntitySet="CardsSet" />
+      <End Role="Branch" EntitySet="BranchSet" />
+    </AssociationSet>
+    <AssociationSet Name="CardsCards_TSO" Association="DataModel.Store.CardsCards_TSO">
+      <End Role="Cards" EntitySet="CardsSet" />
+      <End Role="Cards_TSO" EntitySet="Cards_TSOSet" />
+    </AssociationSet>
+    <AssociationSet Name="CardsObject" Association="DataModel.Store.CardsObject">
+      <End Role="Cards" EntitySet="CardsSet" />
+      <End Role="Object" EntitySet="ObjectSet" />
+    </AssociationSet>
+    <AssociationSet Name="CardsPKP" Association="DataModel.Store.CardsPKP">
+      <End Role="Cards" EntitySet="CardsSet" />
+      <End Role="PKP" EntitySet="PKPSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CardsSet">
+    <Key>
+      <PropertyRef Name="Cards_ID" />
+    </Key>
+    <Property Name="Cards_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Users_ID" Type="int" Nullable="false" />
+    <Property Name="MakeDate" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="float" Nullable="false" />
+    <Property Name="OwnerView" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ObjectView" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AddressView" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PKPView" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Contract" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="StatusView" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ObjectSet">
+    <Key>
+      <PropertyRef Name="Object_ID" />
+    </Key>
+    <Property Name="Object_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Owner" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Home" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Corp" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Room" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Streets_ID" Type="int" Nullable="false" />
+    <Property Name="Cards_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StreetsSet">
+    <Key>
+      <PropertyRef Name="Streets_ID" />
+    </Key>
+    <Property Name="Streets_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersSet">
+    <Key>
+      <PropertyRef Name="Users_ID" />
+    </Key>
+    <Property Name="Users_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Place" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TSOGroupSet">
+    <Key>
+      <PropertyRef Name="TSOGroup_ID" />
+    </Key>
+    <Property Name="TSOGroup_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Amount" Type="float" Nullable="false" />
+    <Property Name="Visible" Type="bit" Nullable="false" DefaultValue="true" />
+  </EntityType>
+  <EntityType Name="TSOSet">
+    <Key>
+      <PropertyRef Name="TSO_ID" />
+    </Key>
+    <Property Name="TSO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Visible" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="Group_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PKPSet">
+    <Key>
+      <PropertyRef Name="PKP_ID" />
+    </Key>
+    <Property Name="PKP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Serial" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="UUAmount" Type="float" Nullable="false" />
+    <Property Name="PKPModels_ID" Type="int" Nullable="false" />
+    <Property Name="Cards_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BranchSet">
+    <Key>
+      <PropertyRef Name="Branch_ID" />
+    </Key>
+    <Property Name="Branch_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Number" Type="tinyint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Cards_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PKPModelsSet">
+    <Key>
+      <PropertyRef Name="PKPModels_ID" />
+    </Key>
+    <Property Name="PKPModels_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Visible" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ModulesSet">
+    <Key>
+      <PropertyRef Name="Modules_ID" />
+    </Key>
+    <Property Name="Modules_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Visible" Type="bit" Nullable="false" />
+    <Property Name="UUCount" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PKP_ModulesSet">
+    <Key>
+      <PropertyRef Name="PKP_Modules_ID" />
+    </Key>
+    <Property Name="PKP_Modules_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Modules_ID" Type="int" Nullable="false" />
+    <Property Name="PKP_ID" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cards_TSOSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TSO_ID" Type="int" Nullable="false" />
+    <Property Name="Number" Type="tinyint" Nullable="false" />
+    <Property Name="Cards_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="StreetsObject">
+    <End Role="Streets" Type="DataModel.Store.StreetsSet" Multiplicity="1" />
+    <End Role="Object" Type="DataModel.Store.ObjectSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Streets">
+        <PropertyRef Name="Streets_ID" />
+      </Principal>
+      <Dependent Role="Object">
+        <PropertyRef Name="Streets_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsersCards">
+    <End Role="Users" Type="DataModel.Store.UsersSet" Multiplicity="1" />
+    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Users_ID" />
+      </Principal>
+      <Dependent Role="Cards">
+        <PropertyRef Name="Users_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TSOGroupTSO">
+    <End Role="TSOGroup" Type="DataModel.Store.TSOGroupSet" Multiplicity="1" />
+    <End Role="TSO" Type="DataModel.Store.TSOSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TSOGroup">
+        <PropertyRef Name="TSOGroup_ID" />
+      </Principal>
+      <Dependent Role="TSO">
+        <PropertyRef Name="Group_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PKPPKPModels">
+    <End Role="PKP" Type="DataModel.Store.PKPSet" Multiplicity="*" />
+    <End Role="PKPModels" Type="DataModel.Store.PKPModelsSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="PKPModels">
+        <PropertyRef Name="PKPModels_ID" />
+      </Principal>
+      <Dependent Role="PKP">
+        <PropertyRef Name="PKPModels_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ModulesPKP_Modules">
+    <End Role="Modules" Type="DataModel.Store.ModulesSet" Multiplicity="1" />
+    <End Role="PKP_Modules" Type="DataModel.Store.PKP_ModulesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modules">
+        <PropertyRef Name="Modules_ID" />
+      </Principal>
+      <Dependent Role="PKP_Modules">
+        <PropertyRef Name="Modules_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PKPPKP_Modules">
+    <End Role="PKP" Type="DataModel.Store.PKPSet" Multiplicity="1" />
+    <End Role="PKP_Modules" Type="DataModel.Store.PKP_ModulesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PKP">
+        <PropertyRef Name="PKP_ID" />
+      </Principal>
+      <Dependent Role="PKP_Modules">
+        <PropertyRef Name="PKP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TSOEquipment_TSO">
+    <End Role="TSO" Type="DataModel.Store.TSOSet" Multiplicity="1" />
+    <End Role="Equipment_TSO" Type="DataModel.Store.Cards_TSOSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TSO">
+        <PropertyRef Name="TSO_ID" />
+      </Principal>
+      <Dependent Role="Equipment_TSO">
+        <PropertyRef Name="TSO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CardsBranch">
+    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="1" />
+    <End Role="Branch" Type="DataModel.Store.BranchSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cards">
+        <PropertyRef Name="Cards_ID" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="Cards_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CardsCards_TSO">
+    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="1" />
+    <End Role="Cards_TSO" Type="DataModel.Store.Cards_TSOSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cards">
+        <PropertyRef Name="Cards_ID" />
+      </Principal>
+      <Dependent Role="Cards_TSO">
+        <PropertyRef Name="Cards_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CardsObject">
+    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="1" />
+    <End Role="Object" Type="DataModel.Store.ObjectSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cards">
+        <PropertyRef Name="Cards_ID" />
+      </Principal>
+      <Dependent Role="Object">
+        <PropertyRef Name="Cards_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CardsPKP">
+    <End Role="Cards" Type="DataModel.Store.CardsSet" Multiplicity="1" />
+    <End Role="PKP" Type="DataModel.Store.PKPSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cards">
+        <PropertyRef Name="Cards_ID" />
+      </Principal>
+      <Dependent Role="PKP">
+        <PropertyRef Name="Cards_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -662,8 +662,7 @@
     <EntitySetMapping Name="CardsSet">
       <EntityTypeMapping TypeName="IsTypeOf(DataModel.Cards)">
         <MappingFragment StoreEntitySet="CardsSet">
-          <ScalarProperty Name="StatusView" ColumnName="StatusView" />
-                <ScalarProperty Name="Cards_ID" ColumnName="Cards_ID" />
+          <ScalarProperty Name="Cards_ID" ColumnName="Cards_ID" />
           <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
           <ScalarProperty Name="MakeDate" ColumnName="MakeDate" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
@@ -672,6 +671,7 @@
           <ScalarProperty Name="AddressView" ColumnName="AddressView" />
           <ScalarProperty Name="PKPView" ColumnName="PKPView" />
           <ScalarProperty Name="Contract" ColumnName="Contract" />
+          <ScalarProperty Name="StatusView" ColumnName="StatusView" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

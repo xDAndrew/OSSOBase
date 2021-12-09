@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/27/2020 22:03:56
--- Generated from EDMX file: D:\Git\OSSOBase\Client\Model\EF\DataModel.edmx
+-- Date Created: 12/09/2021 16:38:30
+-- Generated from EDMX file: C:\Git\OSSOBase\Client\Model\EF\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,27 +17,6 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_StreetsObject]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ObjectSet] DROP CONSTRAINT [FK_StreetsObject];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UsersCards]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_UsersCards];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TSOGroupTSO]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[TSOSet] DROP CONSTRAINT [FK_TSOGroupTSO];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PKPPKPModels]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PKPSet] DROP CONSTRAINT [FK_PKPPKPModels];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ModulesPKP_Modules]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PKP_ModulesSet] DROP CONSTRAINT [FK_ModulesPKP_Modules];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PKPPKP_Modules]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PKP_ModulesSet] DROP CONSTRAINT [FK_PKPPKP_Modules];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TSOEquipment_TSO]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Cards_TSOSet] DROP CONSTRAINT [FK_TSOEquipment_TSO];
-GO
 IF OBJECT_ID(N'[dbo].[FK_CardsBranch]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[BranchSet] DROP CONSTRAINT [FK_CardsBranch];
 GO
@@ -50,22 +29,58 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CardsPKP]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PKPSet] DROP CONSTRAINT [FK_CardsPKP];
 GO
+IF OBJECT_ID(N'[dbo].[FK_ModulesPKP_Modules]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PKP_ModulesSet] DROP CONSTRAINT [FK_ModulesPKP_Modules];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PKPPKP_Modules]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PKP_ModulesSet] DROP CONSTRAINT [FK_PKPPKP_Modules];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PKPPKPModels]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PKPSet] DROP CONSTRAINT [FK_PKPPKPModels];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StreetsObject]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ObjectSet] DROP CONSTRAINT [FK_StreetsObject];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TSOEquipment_TSO]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Cards_TSOSet] DROP CONSTRAINT [FK_TSOEquipment_TSO];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TSOGroupTSO]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TSOSet] DROP CONSTRAINT [FK_TSOGroupTSO];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsersCards]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CardsSet] DROP CONSTRAINT [FK_UsersCards];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[BranchSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BranchSet];
+GO
+IF OBJECT_ID(N'[dbo].[Cards_TSOSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Cards_TSOSet];
+GO
 IF OBJECT_ID(N'[dbo].[CardsSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CardsSet];
+GO
+IF OBJECT_ID(N'[dbo].[ModulesSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ModulesSet];
 GO
 IF OBJECT_ID(N'[dbo].[ObjectSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ObjectSet];
 GO
+IF OBJECT_ID(N'[dbo].[PKP_ModulesSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PKP_ModulesSet];
+GO
+IF OBJECT_ID(N'[dbo].[PKPModelsSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PKPModelsSet];
+GO
+IF OBJECT_ID(N'[dbo].[PKPSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PKPSet];
+GO
 IF OBJECT_ID(N'[dbo].[StreetsSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StreetsSet];
-GO
-IF OBJECT_ID(N'[dbo].[UsersSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UsersSet];
 GO
 IF OBJECT_ID(N'[dbo].[TSOGroupSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TSOGroupSet];
@@ -73,23 +88,8 @@ GO
 IF OBJECT_ID(N'[dbo].[TSOSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TSOSet];
 GO
-IF OBJECT_ID(N'[dbo].[PKPSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PKPSet];
-GO
-IF OBJECT_ID(N'[dbo].[BranchSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BranchSet];
-GO
-IF OBJECT_ID(N'[dbo].[PKPModelsSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PKPModelsSet];
-GO
-IF OBJECT_ID(N'[dbo].[ModulesSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ModulesSet];
-GO
-IF OBJECT_ID(N'[dbo].[PKP_ModulesSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PKP_ModulesSet];
-GO
-IF OBJECT_ID(N'[dbo].[Cards_TSOSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Cards_TSOSet];
+IF OBJECT_ID(N'[dbo].[UsersSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UsersSet];
 GO
 
 -- --------------------------------------------------
@@ -106,7 +106,8 @@ CREATE TABLE [dbo].[CardsSet] (
     [ObjectView] nvarchar(max)  NOT NULL,
     [AddressView] nvarchar(max)  NOT NULL,
     [PKPView] nvarchar(max)  NOT NULL,
-    [Contract] nvarchar(max)  NULL
+    [Contract] nvarchar(max)  NULL,
+    [StatusView] tinyint  NOT NULL
 );
 GO
 

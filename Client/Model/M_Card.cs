@@ -29,12 +29,8 @@ namespace Client.Model
             else
             {
                 this.data = data;
-
-                var temp = EF.EntityInstance.DBContext.UsersSet.AsNoTracking().First(p => p.Users_ID == data.Users_ID);
-                UserName = temp.Place + " " + temp.Name;
-
-                var pkp = EF.EntityInstance.DBContext.PKPSet.AsNoTracking().FirstOrDefault(p => p.Cards_ID == data.Cards_ID);
-                StartService = pkp?.Date ?? new DateTime();
+                UserName = $"{data.Users.Place} {data.Users.Name}";
+                StartService = data.PKP.FirstOrDefault(x => x.Cards_ID == data.Cards_ID)?.Date ?? new DateTime();
             }
         }
 
