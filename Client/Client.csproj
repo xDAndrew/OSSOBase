@@ -54,6 +54,10 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -95,6 +99,9 @@
     <Compile Include="Model\PKPModel\Modul_Collection.cs" />
     <Compile Include="Model\PKPModel\Modul_Item.cs" />
     <Compile Include="Model\StatusRow.cs" />
+    <Compile Include="Services\Extensions\WordDocumentExtension.cs" />
+    <Compile Include="Services\Models\SimReportData.cs" />
+    <Compile Include="Services\PrintService.cs" />
     <Compile Include="ViewModel\TsoEditWindowContext.cs" />
     <Compile Include="ViewModel\VM_TSOWindow.cs" />
     <Compile Include="View\ReportWindow.xaml.cs">
@@ -223,6 +230,9 @@
     <None Include="Documents\8.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Documents\SimReport.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Model\EF\DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataModel.Context.cs</LastGenOutput>
@@ -246,7 +256,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\Types\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Source\Excel-export.png" />
     <Resource Include="Source\Edit.png" />

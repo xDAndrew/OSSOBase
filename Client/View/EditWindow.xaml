@@ -21,6 +21,9 @@
                     <Separator/>
                     <MenuItem Header="Закрыть" Command="{Binding MenuCloseWindow}"/>
                 </MenuItem>
+                <MenuItem Header="Тест">
+                    <MenuItem Header="Печать" Command="{Binding PrintSimReport}"/>
+                </MenuItem>
             </Menu>
 
             <StatusBar DockPanel.Dock="Bottom" Height="24" VerticalAlignment="Bottom">

@@ -5,7 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-
+using Client.Services;
+using Client.Services.Models;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Client.ViewModel
@@ -525,5 +526,17 @@ namespace Client.ViewModel
         #region Statuses
         public List<string> Statuses => new List<string> { "Черновик", "Охраняется", "Снят с охраны" };
         #endregion
+
+        public Command PrintSimReport => new Command(obj =>
+        {
+            var service = new PrintService();
+            service.PrintSimReport(new SimReportData
+            {
+                ContractNumber = currentCard.Contract,
+                ContractDate = DateTime.Now,
+                ConnectionType = ConnectionType.Signalization,
+                Maker = currentCard.UserName
+            });
+        });
     }
 }
