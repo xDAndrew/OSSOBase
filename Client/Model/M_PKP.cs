@@ -133,5 +133,17 @@ namespace Client.Model
         {
             get { return moduls; }
         }
+
+        private DateTime _contractDate = DateTime.Now.AddDays(-10);
+
+        public DateTime ContractDate
+        {
+            get => _contractDate;
+            set
+            {
+                _contractDate = value;
+                changed = true;
+            }
+        }
     }
 }

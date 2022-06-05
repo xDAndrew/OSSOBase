@@ -46,19 +46,52 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Grid>
+                <Grid Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Договор" HorizontalAlignment="Center"></Label>
-                    <TextBox Grid.Column="1" Margin="5" Width="100px" HorizontalAlignment="Left" DataContext="{Binding Path=CurrentCard}" Text="{Binding Contract, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Договор" HorizontalAlignment="Left" Margin="5px 0px"></Label>
+                    <TextBox 
+                        Grid.Column="0"
+                        Margin="5"
+                        Width="100px"
+                        HorizontalAlignment="Right"
+                        DataContext="{Binding Path=CurrentCard}"
+                        Text="{Binding Contract, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Label Grid.Column="2" Content="Статус" HorizontalAlignment="Left"></Label>
+                    <Label Grid.Column="1" Content="от" HorizontalAlignment="Left" Margin="5px 0px"></Label>
+                    <DatePicker 
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Width="130"
+                        Height="24"
+                        Margin="8, 0"
+                        ToolTip="Дата заключения договора"
+                        SelectedDateFormat="Short"
+                        DataContext="{Binding CurrentPKP}"
+                        SelectedDate="{Binding ContractDate, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Label Grid.Column="2" Content="Тип" HorizontalAlignment="Left" Margin="10px 0px"></Label>
                     <ComboBox 
                         Grid.Column="2"
+                        Width="110"
+                        IsEnabled="True"
+                        Height="22"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="10, 0"
+                        IsEditable="False"
+                        ItemsSource="{Binding ContractType}"
+                        SelectedIndex="{Binding CurrentCard.SelectedStatus}" />
+
+                    <Label Grid.Column="3" Content="Статус" HorizontalAlignment="Left"></Label>
+                    <ComboBox 
+                        Grid.Column="3"
                         Width="110"
                         IsEnabled="True"
                         Height="22"
@@ -139,7 +172,6 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Row="1" Margin="8, 0" Height="22" Content="Список модулей" Command="{Binding OpenTSOList}" ToolTip="{Binding ToolTipView}" ToolTipService.ShowDuration="60000" />
 
                         <Label Grid.Column="1" Content="Зав. №" VerticalAlignment="Center"/>
                         <TextBox Grid.Column="1" Width="110" Height="22" HorizontalAlignment="Right" DataContext="{Binding Path=CurrentPKP}" Text="{Binding Serial, UpdateSourceTrigger=PropertyChanged}"/>
@@ -176,12 +208,13 @@
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Оборудование" Command="{Binding OpenTSOEdit}"/>
+                                    <MenuItem Header="Список модулей" Command="{Binding OpenTSOList}" ToolTip="{Binding ToolTipView}" ToolTipService.ShowDuration="60000"/>
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="25" Header="№" IsReadOnly="True" Binding="{Binding Number}"/>
-                                <DataGridTextColumn Header="Наименование" Width="140" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Наименование" Width="140" Binding="{Binding Name}"></DataGridTextColumn>
 
                                 <DataGridTextColumn Width="*" Binding="{Binding arg0, UpdateSourceTrigger=PropertyChanged}">
                                     <DataGridTextColumn.Header>

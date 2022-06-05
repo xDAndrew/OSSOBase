@@ -525,6 +525,8 @@ namespace Client.ViewModel
 
         #region Statuses
         public List<string> Statuses => new List<string> { "Черновик", "Охраняется", "Снят с охраны" };
+
+        public List<string> ContractType => new List<string> { "ОС", "КТС" };
         #endregion
 
         public Command PrintSimReport => new Command(obj =>
@@ -533,7 +535,7 @@ namespace Client.ViewModel
             service.PrintSimReport(new SimReportData
             {
                 ContractNumber = currentCard.Contract,
-                ContractDate = DateTime.Now,
+                ContractDate = currentPKP.ContractDate,
                 ConnectionType = ConnectionType.Signalization,
                 Maker = currentCard.UserName
             });
